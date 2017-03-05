@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>nossidge tilde town shell things</title>
+  <style>body {background-color: black; padding: 0; text-align: left; color: #00ff00;}</style>
+</head>
+<body>
+<pre>
+
+################################################################################
+# PROFILE - Unix stuff
+################################################################################
+# Quick-link to update ~/.profile
+pro()     { vi ~/.profile ; }
+runpro()  { .  ~/.profile ; }
+greppro() { grep "$@" ~/.profile ; }
+
+# List only the files, directories or links.
+lsf() { ls -l "$@" | grep '^-' ; }
+lsd() { ls -l "$@" | grep '^d' ; }
+lsl() { ls -l "$@" | grep '^l' ; }
+
+# List the directories, links and files in that order.
+lsa() { lsd "$@" ; lsl "$@" ; lsf "$@" ; }
+
+# Navigate to a directory, and immediately list all contents.
+cds() {
+  DirOrig=`pwd` ; cd "$@" ; DirNew=`pwd`
+  # Only need to list all if we have successfully moved to a different directory
+  if [[ "$DirOrig" != "$DirNew" ]] ; then
+    lsa
+  fi
+}
+cda() { cds "$@" ; }
+
+# Misc.
+f() { finger "$@" ; }
+x() { chmod +x "$@" ; }
+
+
+################################################################################
+# PROFILE - Tilde stuff
+################################################################################
+# Chat & social stuff.
+grepchat()  { grep "$@" ~karlen/reference/irc/#tildetown.log ; }
+mentions()  { ~karlen/bin/mensch ; }
+chatty()    { ~karlen/bin/chatty ; }
+vanity()    { ~dan/proggies/vanity.py ; }
+
+# Quote stuff.
+quote()     { ~frs/quotes/randquote.py ; }
+quoteadd()  { ~frs/quotes/addquote.py "$@" ; }
+wikiquote() { ~nossidge/quotes/wikiquote "$@" ; }
+wq()        { wikiquote "$@" ; }
+liff()      { shuf -n1 ~nossidge/quotes/liff.txt ; }
+
+# Get all users, logged in or not.
+allusers()  { cat /etc/passwd | grep "/home" | grep -v "/bin/false" \
+              | cut -d: -f1 | sort ; }
+
+
+################################################################################
+# PROFILE - Poem and randomgen stuff
+################################################################################
+band()     { ~nossidge/randomgen/gothy_band "$@" ; }
+therese()  { ~nossidge/poems/therese "$@" ; }
+findsnow() { ~nossidge/snowball/find_snowballs "$@" ; }
+getsnow()  { findsnow "$@" ; }
+
+
+################################################################################
+# SHELL - Cool stuff that I need to play with more
+################################################################################
+# bash ~james/shrimper.sh
+# figlet Hello world!
+# /var/local/poetry/bin/mkpoem
+# haiku
+################################################################################
+
+</pre>
+</body>
+<!--
+  I'll never be prolific.
+  I'll never be relevant.
+  I just want to be helpful.
+-->
+</html>

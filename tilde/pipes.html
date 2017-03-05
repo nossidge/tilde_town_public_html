@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"></meta>
+    <title>0% tilde</title>
+    <script>
+    
+autoTilde = false;
+//autoTilde = true;
+
+// Random direction pipe characters.
+var charsToOutput = [
+  unescape(JSON.parse('"\\u2551"')),
+  unescape(JSON.parse('"\\u2550"')),
+  unescape(JSON.parse('"\\u255A"')),
+  unescape(JSON.parse('"\\u2554"')),
+  unescape(JSON.parse('"\\u2557"')),
+  unescape(JSON.parse('"\\u255D"')),
+  unescape(JSON.parse('"\\u2560"')),
+  unescape(JSON.parse('"\\u2566"')),
+  unescape(JSON.parse('"\\u2563"')),
+  unescape(JSON.parse('"\\u2569"')),
+  unescape(JSON.parse('"\\u256C"'))
+];
+function randBetween(min,max) {
+  return Math.floor(Math.random()*(max-min+1)+min);
+}
+function randBoxChar() {
+  return charsToOutput[randBetween(0,charsToOutput.length-1)];
+}
+
+// Directional pipe characters.
+var pipeChars = new Object();
+pipeChars['NE'] = unescape(JSON.parse('"\\u255A"'));
+pipeChars['NS'] = unescape(JSON.parse('"\\u2551"'));
+pipeChars['NW'] = unescape(JSON.parse('"\\u255D"'));
+pipeChars['NES'] = unescape(JSON.parse('"\\u2560"'));
+pipeChars['NEW'] = unescape(JSON.parse('"\\u2569"'));
+pipeChars['NSW'] = unescape(JSON.parse('"\\u2563"'));
+pipeChars['NESW'] = unescape(JSON.parse('"\\u256C"'));
+pipeChars['ES'] = unescape(JSON.parse('"\\u2554"'));
+pipeChars['EW'] = unescape(JSON.parse('"\\u2550"'));
+pipeChars['ESW'] = unescape(JSON.parse('"\\u2566"'));
+pipeChars['SW'] = unescape(JSON.parse('"\\u2557"'));
+pipeChars[''] = pipeChars['NESW'];
+/*
+// Straight lines.
+pipeChars['N'] = pipeChars['NS'];
+pipeChars['E'] = pipeChars['EW'];
+pipeChars['S'] = pipeChars['NS'];
+pipeChars['W'] = pipeChars['EW'];
+
+// T junctions.
+pipeChars['N'] = pipeChars['NEW'];
+pipeChars['E'] = pipeChars['NES'];
+pipeChars['S'] = pipeChars['ESW'];
+pipeChars['W'] = pipeChars['NSW'];
+*/
+// Pseudo-cursive.
+pipeChars['N'] = pipeChars['NE'];
+pipeChars['E'] = pipeChars['ES'];
+pipeChars['S'] = pipeChars['SW'];
+pipeChars['W'] = pipeChars['EW'];
+
+////////////////////////////////////////////////////////////////////////////////
+
+// http://stackoverflow.com/questions/5623838
+function rgbToHex(r, g, b) {
+  function denToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  return "#" + denToHex(r) + denToHex(g) + denToHex(b);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// CharacterCell class.
+var maxLife = 100;
+var convertedGreenTildes = 0;
+
+function CharacterCell(xCell,yCell) {
+  this.xCell = xCell;
+  this.yCell = yCell;
+  this.ID = "x" + this.xCell + "y" + this.yCell;
+  this.colour = '#000000';
+  this.cellTag = 'green';
+  this.isTilde = false;
+  this.colourMax = 255;
+  
+  // Random character and random lifespan.
+  this.charSymbol = randBoxChar();
+  this.lifeLeft = randBetween(0,maxLife*0.8);
+  
+  // When the time runs out, the character and brightness will be reset.
+  this.tick = function() {
+    this.lifeLeft = this.lifeLeft - 1;
+    if ( this.lifeLeft <= 0 ) {
+      this.lifeLeft = randBetween(maxLife/5,maxLife);
+      this.charSymbol = randBoxChar();
+      if ( percentTilde() == 100 ) {
+        this.charSymbol = '~';
+        if ( this.colourMax != 96 ) {
+          this.colourMax = 96;
+          convertedGreenTildes++;
+          if ( convertedGreenTildes == tableSizeX * tableSizeY ) {
+            document.body.style.cursor = 'pointer';
+          }
+        }
+      }
+    }
+    
+    if (this.cellTag == 'green') {
+      var colourVal = Math.floor( this.lifeLeft*(this.colourMax/maxLife) );
+      this.colour = rgbToHex(0,colourVal,0);
+    } else if (this.cellTag == 'tilde') {
+      var colourVal = Math.floor( this.lifeLeft*(128/maxLife)+128 );
+      this.colour = rgbToHex(colourVal,0,0);
+      if ( convertedGreenTildes < 100 ) {
+        this.examineNeighbours();
+      }
+      this.charSymbol = pipeChars[ this.tildeNeighbours ];
+    }
+  }
+  
+  ////////////////////////////////////////
+  
+  this.examineNeighbours = function() {
+    var cellN = '';
+    var cellS = '';
+    var cellE = '';
+    var cellW = '';
+    var cell = cellArray2Dim[this.xCell][this.yCell-1];
+    if (cell != null) {
+      if (cell.cellTag == 'tilde') { cellN = 'N'; }
+    }
+    cell = cellArray2Dim[this.xCell][this.yCell+1];
+    if (cell != null) {
+      if (cell.cellTag == 'tilde') { cellS = 'S'; }
+    }
+    cell = cellArray2Dim[this.xCell+1][this.yCell];
+    if (cell != null) {
+      if (cell.cellTag == 'tilde') { cellE = 'E'; }
+    }
+    cell = cellArray2Dim[this.xCell-1][this.yCell];
+    if (cell != null) {
+      if (cell.cellTag == 'tilde') { cellW = 'W'; }
+    }
+    this.tildeNeighbours = cellN + cellE + cellS + cellW;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+var tildeCellCount = 0;
+var tildeCellFound = 0;
+
+var tableSizeX = 40;
+var tableSizeY = 16;
+
+var cellArray2Dim = [tableSizeX];
+for (var i = 0; i < tableSizeX; i++) {
+  cellArray2Dim[i] = new Array(tableSizeY);
+}
+var cellArray1Dim = [];
+
+function makeTable() {
+  var oX = randBetween(2,tableSizeX-26); // Origin cells for the Tilde.
+  var oY = randBetween(1,tableSizeY-6);
+
+  tableHTML = "";
+  for(var y = 0; y < tableSizeY; y++) {
+    row = "<tr>";
+    for(var x = 0; x < tableSizeX; x++) {
+      row = row + "<td id='x" + x + "y" + y + "' onmouseover='hoverCell(" + x + "," + y + ");'> </td>";
+      
+      var newCell = new CharacterCell(x,y);
+      
+      // Determine whether Tilde or not (green or red).
+      function markTildeCell(cell) {
+        tildeCellCount++;
+        cell.isTilde = true;
+        if (autoTilde) { cell.cellTag = 'tilde'; }
+      }
+      var aX = x - oX;
+      var aY = y - oY;
+      if ( aY == 0 && ( (aX>=0)&&(aX<=4) || (aX==7) || (aX==10) || (aX>=15)&&(aX<=17) || (aX>=21)&&(aX<=23) ) ) {
+        markTildeCell(newCell);
+      } else if ( aY == 1 && ( (aX==2) || (aX==7) || (aX==10) || (aX==15)||(aX==17)||(aX==18) || (aX==21) ) ) {
+        markTildeCell(newCell);
+      } else if ( aY == 2 && ( (aX==2) || (aX==7) || (aX==10) || (aX==15)||(aX==18) || (aX>=21)&&(aX<=23) ) ) {
+        markTildeCell(newCell);
+      } else if ( aY == 3 && ( (aX==2) || (aX==7) || (aX==10) || (aX==15)||(aX==17)||(aX==18) || (aX==21) ) ) {
+        markTildeCell(newCell);
+      } else if ( aY == 4 && ( (aX==2) || (aX==7) || (aX>=10)&&(aX<=12) || (aX>=15)&&(aX<=17) || (aX>=21)&&(aX<=23) ) ) {
+        markTildeCell(newCell);
+      }
+      
+      cellArray1Dim.push(newCell);
+      cellArray2Dim[x][y] = newCell;
+    }
+    row = row + "</tr>\n";
+    tableHTML = tableHTML + row;
+  }
+  var container = document.getElementById("pipeTable");
+  container.innerHTML = tableHTML;
+  
+  document.body.style.cursor = 'context-menu';
+  
+  if (autoTilde) { tildeCellFound = tildeCellCount; }
+  updateDocumentTitle();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// This runs every tick.
+function displayTable() {
+  for(var i = 0; i < cellArray1Dim.length; i++) {
+    cellArray1Dim[i].tick();
+    var id = cellArray1Dim[i].ID;
+    var symbol = cellArray1Dim[i].charSymbol;
+    document.getElementById( id ).innerHTML = symbol;
+    document.getElementById( id ).style.color = cellArray1Dim[i].colour;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+function hoverCell(x,y) {
+  var cell = cellArray2Dim[x][y];
+  if (cell.isTilde == true) {
+    if (cell.cellTag != 'tilde') {
+      tildeCellFound++;
+      cell.cellTag = 'tilde';
+      updateDocumentTitle();
+    }
+  } else {
+    cell.charSymbol = '~';
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+function percentTilde() {
+  return Math.ceil(tildeCellFound / tildeCellCount * 100);  
+}
+function updateDocumentTitle() {
+  document.title = percentTilde() + "% tilde";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+function clickBody() {
+  if ( (percentTilde() == 100) && (convertedGreenTildes == tableSizeX * tableSizeY) ) {
+    window.location.href = 'words.html'; 
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Change every so often.
+window.setInterval(
+  function() { displayTable(); }, 100
+);
+
+////////////////////////////////////////////////////////////////////////////////
+     
+    </script>
+  
+  <style type="text/css">
+    body {
+      font-family: "Courier New", Courier, monospace;
+      background-color: black;
+      text-align: center;
+      margin: 0px;
+      padding: 0px;
+    }
+    table {
+      margin: 0 auto;
+      font-size: 220%;
+    }
+    tr td { padding: 0px; }
+    .exactCenter {
+      position: fixed;
+      top:  50%;
+      left: 50%;
+      height: 640px;
+      width:  880px;
+      margin-top:  -320px;
+      margin-left: -440px;
+    }
+  </style>
+    
+  </head>
+  <body onload="makeTable()" onclick="clickBody()">
+    <div class="exactCenter">
+      <table id="pipeTable" cellspacing="0px" cellpadding="0px"></table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8"></meta>
+    <title>0% tilde</title>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        
+        background-color: white;
+        background: white; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(left, white, #E0B0FF, white); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(right, white, #E0B0FF, white); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(right, white, #E0B0FF, white); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to right, white, #E0B0FF, white); /* Standard syntax */
+      }
+    </style>
+  </head>
+  <body>
+  	<canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+/*
+
+Heavily cribbed from:
+http://www.html5canvastutorials.com/tutorials/html5-canvas-bursting-particle-effect/
+
+Cool characters to use:
+~.|🐝💩➜▲◆✖♥💫🌠
+⬛,■,◾,▪
+✡,☪,☬,✝,☯
+✹,✶,✴,✦,★,✷,🌙
+❄,❅,❆
+*/
+
+
+//set the variables
+var a = document.getElementById('canvas'),
+    c = a.getContext('2d'),
+    w = a.width = window.innerWidth,
+    h = a.height = window.innerHeight - 4,
+    area = w * h,
+    grd = c.createLinearGradient(0,0,w,0),
+    particleNum = 800,
+    tildeCountParticles = 0,
+    nOffset = 20,
+    sOffset = 10,
+    character = '~',
+    ANIMATION;
+
+var particles = [];
+
+// Set character to the URL arg if it exists.
+if ( document.location.search.substring(1) != '' ) {
+  character = document.location.search.substring(1);
+  character = decodeURI(character).split(',');
+}
+
+
+//create the particles
+function Particle(i) {
+  this.id = i;
+  this.hue = rand(50, 0, 1);
+  this.active = false;
+  this.inFormation = false;
+}
+
+Particle.prototype.build = function(newScene) {
+  if(newScene == 1) {
+    this.x = rand(0, w, 1);
+  } else {
+    this.x = -11;
+  }
+  this.y = rand(nOffset, h - sOffset, 1);
+  this.vx = Math.abs( (w/2) - this.x ) / 100 + 0.1 ;
+  this.vy = rand(-0.6, 0.6, 0);
+  this.xMidOffset = rand(-60, 60, 0);
+  this.active = true;
+  this.char = character[Math.floor(Math.random()*character.length)];
+  this.paint();
+};
+
+Particle.prototype.draw = function() {
+  this.active = true;
+  this.x += this.vx;
+  this.y += this.vy;
+  this.hue -= 0.5;
+  this.vx = Math.abs( (w/2) - (this.x + this.xMidOffset) ) / 100 + 0.1 ;
+  if (this.vx >= 10) { this.vx = 10 }
+  
+  if (this.vx <= 1 && this.inFormation == false) {
+    this.inFormation = true;
+    tildeCountParticles += 1;
+  } else if (this.vx > 1 && this.inFormation == true) {
+    this.inFormation = false;
+    tildeCountParticles -= 1;
+  }
+  
+  // Middle (do nothing)
+  if ( Math.abs( (h/2) - this.y ) <= (h/2.1) ) {
+  
+  // Top
+  } else if ( ( (h/2) - this.y ) >= 0 ) {
+    this.vy = Math.abs(this.vy);
+    
+  // Bottom
+  } else {
+    this.vy = - Math.abs(this.vy);
+  }
+  
+  this.paint();
+
+  // reset particle
+  if(this.x + this.xMidOffset >= w + 50) {
+    this.active = false;
+  }
+};
+
+Particle.prototype.paint = function() {
+  this.fontPix = 50 - Math.ceil( this.vx * 10 ) / 2 ;
+  c.font = this.fontPix + "px Calibri";
+  c.fillStyle = "hsla(" + this.hue + ",100%,50%,1)";
+  c.fillText(this.char, this.x, this.y);
+};
+
+
+//functionality
+function drawScene() {
+  c.fillStyle = grd;
+  c.fillRect(0,0,w,h);
+
+  for(var i = 0; i < particles.length; i++) {
+    if(particles[i].active === true) {
+      particles[i].draw();
+    } else {
+      particles[i].build(0);
+    }
+  }
+  
+  c.textAlign = "center";
+  c.textBaseline = "middle";
+
+  ANIMATION = requestAnimationFrame(drawScene);
+}
+
+
+function initCanvas() {
+  grd.addColorStop(0,"white");
+  grd.addColorStop(0.5,"#E0B0FF");
+  grd.addColorStop(1,"white");
+
+  if(particles.length) {
+    particles = [];
+    cancelAnimationFrame(ANIMATION);
+    ANIMATION;
+    console.log(ANIMATION);
+  }
+  
+  w = a.width = window.innerWidth;
+  h = a.height = window.innerHeight - 4;
+
+  for(var i = 0; i < particleNum; i++) {
+    particles.push(new Particle(i));
+    particles[i].build(1);
+  }
+
+  drawScene();
+  console.log(ANIMATION);
+}
+
+
+//init
+(function() {
+  initCanvas();
+  addEventListener('resize', initCanvas, false);
+})();
+
+
+//helper functions
+function rand(max, min, _int) {
+  var max = (max === 0 || max)?max:1, 
+      min = min || 0, 
+      gen = min + (max - min) * Math.random();
+
+  return (_int) ? Math.round(gen) : gen;
+};
+
+
+// Update the document title.
+var percentTildeTimer = 200;
+function percentTilde() {
+  return Math.min(100, Math.ceil(tildeCountParticles / (particleNum * 0.85) * 100));  
+}
+window.setInterval(function() {
+  var percent = percentTilde();
+  document.title = percent + "% tilde";
+  if (percent == 100) {
+    document.body.style.cursor = 'pointer';
+  } else {
+    document.body.style.cursor = 'context-menu';
+    
+  }
+}, percentTildeTimer);
+
+// Click through.
+a.addEventListener('click', function() {
+  if ( (percentTilde() == 100) ) {
+    window.location.href = 'pipes.html'; 
+  }
+}, false);
+
+
+    </script>
+  </body>
+</html>

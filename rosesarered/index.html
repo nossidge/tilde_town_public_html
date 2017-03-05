@@ -1,0 +1,172 @@
+<html>
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>roses are red</title>
+  <style>
+    body {
+      background-color: black;
+      background-image: url('http://www.publicdomainpictures.net/pictures/20000/velka/red-rose-background-1329127805jZm.jpg');
+      background-size: 100% 100%;
+      font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+      text-align: center;
+      font-size:500%;
+      overflow:hidden;
+    }
+    div.container {
+      width: 920px;
+      float: center;
+      margin: 0 auto;
+    }
+    div.box {
+      position: fixed;
+      width: 920px;
+      margin: 100px auto 10px auto;
+      word-wrap: break-word;
+      z-index: 1000;
+      
+      padding: 10px;
+      border-radius: 25px;
+      border: 6px solid rgba(231, 128, 164, 0.9);
+      background-color:rgba(0, 0, 0, 0.2);
+    }
+    
+    /* http://enjoycss.com/gallery/text_effects/39#text */
+    .neon {
+      text-decoration: normal;
+      -o-text-overflow: clip;
+      text-overflow: clip;
+      color: rgba(255, 192, 203, 1);
+      text-shadow: 3px 2px 2px rgba(208, 65, 126, 0.9);
+    }
+  </style>
+  <script>
+    
+    // Random number between two values.
+    function rand(max, min, _int) {
+      var max = (max === 0 || max)?max:1,
+          min = min || 0,
+          gen = min + (max - min) * Math.random();
+      return (_int) ? Math.round(gen) : gen;
+    };
+    
+    var verses = [
+"Roses are red<br>violets are blue<br>Did you do CS<br>in undergrad too?",
+"Roses are red<br>violets are blue<br>There&#39;s plenty of<br>other stuff to do",
+"Roses are red<br>violets are blue<br>Its so ridiculous<br>it must be true",
+"Roses are red<br>violets are blue<br>I have a ton<br>of work to do :(",
+"Roses are red<br>violets are blue<br>Yeah I worried<br>about that too",
+"Roses are red<br>violets are blue<br>The following statement<br>is not true...",
+"Roses are red<br>violets are blue<br>You&#39;ve done what you<br>have been able to",
+"Roses are red<br>violets are blue<br>I think I just<br>validated you",
+"Roses are red<br>violets are blue<br>I&#39;ve found the<br>perfect one for you",
+"Roses are red<br>violets are blue<br>I bit off way more<br>than I can chew",
+"Roses are red<br>violets are blue<br>Horrible pictures<br>are ok too",
+"Roses are red<br>violets are blue<br>I should probably...<br>try other things too",
+"Roses are red<br>violets are blue<br>But thats all I ever<br>want to do",
+"Roses are red<br>violets are blue<br>They made a tv<br>channel for you",
+"Roses are red<br>violets are blue<br>Haha you star<br>crossed lovers you",
+"Roses are red<br>violets are blue<br>Sorry I wasn&#39;t<br>here for you",
+"Roses are red<br>violets are blue<br>A new exciting<br>point of view",
+"Roses are red<br>violets are blue<br>Theres a lot of<br>salt in there too",
+"Roses are red<br>violets are blue<br>Sometimes I had to<br>take shit too",
+"Roses are red<br>violets are blue<br>I would probably<br>have a pop at you",
+"Roses are red<br>violets are blue<br>Kinda intimidating<br>too",
+"Roses are red<br>violets are blue<br>I&#39;ll hold my own hand<br>the whole way through",
+"Roses are red<br>violets are blue<br>Thats when you dreams<br>will all come true",
+"Roses are red<br>violets are blue<br>Hope everything<br>is good with you",
+"Roses are red<br>violets are blue<br>I live vicariously<br>through you",
+"Roses are red<br>violets are blue<br>What do teenagers<br>listen to?",
+"Roses are red<br>violets are blue<br>It&#39;s something I just<br>need to work through",
+"Roses are red<br>violets are blue<br>I feel sorry for<br>sending so few",
+"Roses are red<br>violets are blue<br>Look around you,<br>look around you",
+"Roses are red<br>violets are blue<br>It&#39;s always interesting,<br>very true",
+"Roses are red<br>violets are blue<br>Well, she is unwell<br>that is true",
+"Roses are red<br>violets are blue<br>As my typos<br>can attest to",
+"Roses are red<br>violets are blue<br>I guess a karlen<br>is fine, too",
+"Roses are red<br>violets are blue<br>Now i have no idea<br>what to do",
+"Roses are red<br>violets are blue<br>You don&#39;t know who<br>might try and sniff you",
+"Roses are red<br>violets are blue<br>I don&#39;t know who<br>I need to tell no to",
+"Roses are red<br>violets are blue<br>And there will be<br>nothing left of you",
+"Roses are red<br>violets are blue<br>Forever is<br>a long time, pooh",
+"Roses are red<br>violets are blue<br>I like the places<br>it goes through",
+"Roses are red<br>violets are blue<br>What makes today<br>special for you?",
+"Roses are red<br>violets are blue<br>Notebook doodles<br>are all I can do",
+"Roses are red<br>violets are blue<br>Start small is what<br>I didn&#39;t do",
+"Roses are red<br>violets are blue<br>I appreciate<br>everything you do",
+"Roses are red<br>violets are blue<br>I still don&#39;t but<br>pretend I do",
+"Roses are red<br>violets are blue<br>Believe it and<br>it will come true",
+"Roses are red<br>violets are blue<br>But I find those<br>unnatural too",
+"Roses are red<br>violets are blue<br>I am only an hour<br>late for you",
+"Roses are red<br>violets are blue<br>What&#39;s making today<br>dreary for you?",
+"Roses are red<br>violets are blue<br>Thats about all<br>i have for you",
+"Roses are red<br>violets are blue<br>Should be done<br>in an hour or two",
+"Roses are red<br>violets are blue<br>I need to snap<br>more chats for you",
+"Roses are red<br>violets are blue<br>A new fantastic<br>point of view",
+"Roses are red<br>violets are blue<br>I would lick my<br>elbow for you",
+"Roses are red<br>violets are blue<br>Poor lad, i hope<br>he makes it through",
+"Roses are red<br>violets are blue<br>Been having some<br>weird fever dreams too",
+"Roses are red<br>violets are blue<br>And it has<br>aliteration, too",
+"Roses are red<br>violets are blue<br>Just a quick reminder<br>-- I love you",
+"Roses are red<br>violets are blue<br>A wet fantastic<br>point of view",
+"Roses are red<br>violets are blue<br>Who knows what<br>they might be up to?",
+"Roses are red<br>violets are blue<br>I gradually<br>pull upward too",
+"Roses are red<br>violets are blue<br>Web pages is<br>all I can do",
+"Roses are red<br>violets are blue<br>Does their opinion<br>matter to you?",
+"Roses are red<br>violets are blue<br>Bad programming<br>gets you pretty far too",
+"Roses are red<br>violets are blue<br>So, Dear Abbey,<br>what should I do?",
+"Roses are red<br>violets are blue<br>So in that regard<br>hats off to you",
+"Roses are red<br>violets are blue<br>If that&#39;s not too much<br>headache for you",
+"Roses are red<br>violets are blue<br>Nuclear power<br>stations too",
+"Roses are red<br>violets are blue<br>Been hoping to<br>bump into you",
+"Roses are red<br>violets are blue<br>If you had a twin<br>i&#39;d still choose you",
+"Roses are red<br>violets are blue<br>Yeah, it is harsh <br>ut so totally true",
+"Roses are red<br>violets are blue<br>A bit of differece<br>between the two",
+"Roses are red<br>violets are blue<br>Now my dreams will<br>never come true :(",
+"Roses are red<br>violets are blue<br>You feel like no one<br>will ever read you?",
+"Roses are red<br>violets are blue<br>Be glad that logic<br>comes easy for you",
+"Roses are red<br>violets are blue<br>Nothing worrying,<br>but lots to do",
+"Roses are red<br>violets are blue<br>My resting heart rate<br>is shooting up too",
+"Roses are red<br>violets are blue<br>You can do it!<br>we believe in you!",
+"Roses are red<br>violets are blue<br>Mental fitness<br>is fitness too",
+"Roses are red<br>violets are blue<br>That has been already<br>mapped for you",
+"Roses are red<br>violets are blue<br>How will this<br>directly impact you?",
+"Roses are red<br>violets are blue<br>Strange day. stressed<br>out. how about you?"
+    ]
+    
+    // Global vars for DOM elements.
+    var lyricsDiv;
+    
+    // Add a random verse to the div.
+    function addVerse() {
+      var verse = verses[ rand(0,verses.length-1,1) ];
+      lyricsDiv.innerHTML = "<p>" + verse + "</p>";
+    }
+    
+    // Add verse on spacebar press, redraw images on R press.
+    window.addEventListener("keydown", addVerse_on_space, false);
+    function addVerse_on_space(e) {
+      if (e.keyCode == 32) {
+        addVerse();
+      }
+    }
+    
+    // Disable default space scroll down behaviour.
+    window.onkeydown = function(e) {
+      return !(e.keyCode == 32);
+    };
+    
+    // Run when loaded.
+    function pageInit() {
+      lyricsDiv = document.getElementById('lyrics');
+      addVerse();
+    }
+  </script>
+</head>
+<body onload='pageInit()'>
+  <div class='container'>
+    <div class='box neon'>
+      <div id='lyrics'></div>
+    </div>
+  </div>
+</body>
+</html>

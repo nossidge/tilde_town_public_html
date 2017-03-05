@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"></meta>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Crossword</title>
+<style type="text/css">
+#content {
+  width: 700px;
+  margin:0 auto;
+}
+
+#crossword {
+  text-align:center;
+}
+
+.crossword {
+  border-collapse:collapse;
+  font-family:"Courier New", Courier, monospace;
+  margin-left:auto;
+  margin-right:auto;
+  clear:both;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+.crossword td {
+  border:1px solid black;
+  padding:0;
+  margin:0;
+  vertical-align:middle;
+  padding:0;
+  text-align:center;
+  width:30px;
+  height:30px;
+}
+
+.crossword .no-border {
+  border:none;
+}
+
+#clues {
+  margin:auto;
+}
+
+#clues td {
+  vertical-align:top;
+}
+
+input:focus {
+  background-color:yellow;
+}
+</style>
+<script type="text/javascript" src="crossword.js"></script>
+
+<script type="text/javascript">
+window.addEventListener("load", function() {
+
+  // Grab data from the JSON file.
+  var x = new XMLHttpRequest();
+  x.open("GET", "chat_quotes.json", true);
+  x.responseType = "json";
+  x.onload = function() {
+    var objJSON = x.response;
+    
+    // Grab random first level prop.
+    function pickRandomProperty(obj) {
+      var result;
+      var count = 0;
+      for (var prop in obj)
+        if (Math.random() < 1/++count) result = prop;
+      return result;
+    }
+    
+    // Grab 20 random users.
+    users = [];
+    while (users.length < 20) {
+      wee = pickRandomProperty(objJSON);
+      if(users.indexOf(wee) == -1) {
+        users.push(wee);
+      }
+    }
+    
+    // Grab a random quote for each user.
+    quotes = [];
+    for (var i = 0; i < users.length; i++) {
+      var userQuotes = objJSON[users[i]];
+      var randQuote = userQuotes[Math.floor(Math.random() * userQuotes.length)];
+      quotes[i] = randQuote;
+    }
+    
+    // Create crossword object with the users as words, and quotes as clues
+    var cw = new Crossword(users, quotes);
+
+    // create the crossword grid (try to make it have a 1:1 width to height ratio in 10 tries)
+    var tries = 100; 
+    var grid = cw.getSquareGrid(tries);
+
+    // report a problem with the words in the crossword
+    if(grid == null){
+        var bad_words = cw.getBadWords();
+        var str = [];
+        for(var i = 0; i < bad_words.length; i++){
+            str.push(bad_words[i].word);
+        }
+        alert("Shoot! A grid could not be created with these words:\n" + str.join("\n"));
+        return;
+    }
+
+    // turn the crossword grid into HTML
+    var show_answers = true;
+    document.getElementById("crossword").innerHTML = CrosswordUtils.toHtml(grid, show_answers);
+
+    // make a nice legend for the clues
+    var legend = cw.getLegend(grid);
+    addLegendToPage(legend);
+  }
+  x.send(null);
+});
+
+function addLegendToPage(groups){
+    for(var k in groups){
+        var html = [];
+        for(var i = 0; i < groups[k].length; i++){
+            html.push("<li><strong>" + groups[k][i]['position'] + ".</strong> " + groups[k][i]['clue'] + "</li>");
+        }
+        document.getElementById(k).innerHTML = html.join("\n");
+    }
+}
+</script>
+</head>
+
+<body>
+  <div id="content">
+    <big>Tilde Town IRC Crossword!</big>
+    <br>
+    You have to guess who said what in #tildetown chat.
+  </div>
+  <hr>
+  <div id="crossword"></div>
+  <table id="clues">
+    <thead><tr><th>Across</th><th>Down</th></tr></thead>
+    <tbody><tr><td><ul id="across"></ul></td><td><ul id="down"></ul></td></tr></tbody>
+  </table>
+</body>
+</html>

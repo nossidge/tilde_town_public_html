@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8"></meta>
+    <title>0% tilde</title>
+    <style>
+      body {
+        background-color: black;
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+/*
+Heavily cribbed from:
+http://www.html5canvastutorials.com/tutorials/html5-canvas-bursting-particle-effect/
+*/
+
+
+//set the variables
+var a = document.getElementById('canvas'),
+    c = a.getContext('2d'),
+    w = a.width = window.innerWidth,
+    h = a.height = window.innerHeight - 4,
+    area = w * h,
+    particleNum = 800,
+    ANIMATION;
+
+var particles = [];
+
+
+
+
+//create the particles
+function Particle(i) {
+  this.id = i;
+  this.hue = rand(50, 0, 1);
+  this.active = false;
+}
+
+Particle.prototype.build = function(newScene) {
+  if(newScene == 1) {
+    this.x = rand(0, w, 1);
+  } else {
+    this.x = -11;
+  }
+  this.y = rand(32, h, 1);
+  this.vx = Math.random() * 5;
+  this.vy = 0;
+  this.opacity = Math.random() + .5;
+  this.active = true;
+
+  c.fillStyle = "hsla(" + this.hue + ",100%,50%,1)";
+  c.fillText("~", this.x, this.y);
+};
+
+Particle.prototype.draw = function() {
+  this.active = true;
+  this.x += this.vx;
+  this.y += this.vy;
+  this.hue -= 0.5;
+  this.vx = Math.abs( (w/2) - this.x ) / 100 + 0.1 ;
+
+  c.fillStyle = "hsla(" + this.hue + ",100%,50%,1)";
+  c.fillText("~", this.x, this.y);
+
+  // reset particle
+  if(this.x >= w) {
+    this.active = false;
+  }
+};
+
+
+//functionality
+function drawScene() {
+  c.fillStyle = "black";
+  c.fillRect(0,0,w,h);
+
+  for(var i = 0; i < particles.length; i++) {
+    if(particles[i].active === true) {
+      particles[i].draw();
+    } else {
+      particles[i].build(0);
+    }
+  }
+  
+  c.font = "30px Calibri";
+  c.textAlign = "center";
+
+  ANIMATION = requestAnimationFrame(drawScene);
+}
+
+function initCanvas() {
+  var s = getComputedStyle(a);
+
+  if(particles.length) {
+    particles = [];
+    cancelAnimationFrame(ANIMATION);
+    ANIMATION;
+    console.log(ANIMATION);
+  }
+  
+  w = a.width = window.innerWidth;
+  h = a.height = window.innerHeight - 4;
+
+  for(var i = 0; i < particleNum; i++) {
+    particles.push(new Particle(i));
+    particles[i].build(1);
+  }
+
+  drawScene();
+  console.log(ANIMATION);
+}
+
+
+//init
+(function() {
+  initCanvas();
+  addEventListener('resize', initCanvas, false);
+})();
+
+
+//helper functions
+function rand(max, min, _int) {
+  var max = (max === 0 || max)?max:1, 
+      min = min || 0, 
+      gen = min + (max - min) * Math.random();
+
+  return (_int) ? Math.round(gen) : gen;
+};
+
+
+// Update the document title.
+var percentTilde = 0;
+var percentTildeIncrement = 2;
+var percentTildeTimer = 200;
+window.setInterval(function() {
+  if (percentTilde < 100) {
+    percentTilde += percentTildeIncrement;
+    document.title = percentTilde + "% tilde";
+    if (percentTilde >= 100) {
+      percentTilde = 100;
+      document.body.style.cursor = 'pointer';
+    }
+  }
+}, percentTildeTimer);
+
+// Click through.
+a.addEventListener('click', function() {
+  if ( (percentTilde == 100) ) {
+    window.location.href = 'pipes.html'; 
+  }
+}, false);
+
+
+    </script>
+  </body>
+</html>

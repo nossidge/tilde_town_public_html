@@ -1,0 +1,483 @@
+<html>
+<!--
+Thanks to:
+http://tilde.town/~novas1x/
+http://tvtropes.org/pmwiki/pmwiki.php/Main/CommonMeter
+-->
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>Christmas Sing-along!</title>
+  <style>
+    body {
+      background-color: black;
+      background-image: url("http://tilde.town/~novas1x/christmas-tree-forest.jpg");
+      font-family: 'Lucida Console', Monaco, monospace;
+      text-align: center;
+      color: #ffffff;
+      font-size:175%
+    }
+    div.contents {
+      width: 1080px;
+      float: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    div.header, div.player, div.lyrics {
+      background-color: black;
+      border: 2px solid #ffffff;
+      padding: 30px;
+      margin: 50px 20px 50px 20px;
+      word-wrap: break-word;
+    }
+    div.header {
+      padding: 10px 30px;
+    }
+    img { margin: 0px 8px; }
+    a:link, a:visited { color: #fff; }
+    a:hover, a:active { color: #ccc; }
+  </style>
+	<script src="http://tilde.town/~novas1x/snowstorm/snowstorm.js"></script>
+  <script>
+		var songs = {
+			"https://dl.dropboxusercontent.com/u/45206465/christmas/bethlehem.mp3": "O little town of Bethlehem,<br>How still we see thee lie!<br>Above your deep and dreamless sleep,<br>The silent stars go by.",
+			"https://dl.dropboxusercontent.com/u/45206465/christmas/shepherds.mp3": "While shepherds watched their flocks by night,<br>All seated on the ground,<br>The angel of the Lord came down,<br>And glory shone around.",
+			"https://dl.dropboxusercontent.com/u/45206465/christmas/midnight.mp3": "It came upon the midnight clear,<br>That glorious song of old,<br>From angels bending near the earth,<br>To touch their harps of gold:"
+		}
+		
+		var verses = [
+"Here we come a-wassailing<br>Among the leaves so green,<br>Here we come a-wand&#39;ring<br>So fair to be seen.",
+"We are not daily beggars<br>That beg from door to door;<br>But we are neighbours&#39; children,<br>Whom you have seen before.",
+"Call up the butler of this house,<br>Put on his golden ring.<br>Let him bring us a glass of beer,<br>And better we shall sing.",
+"We have got a little purse<br>Of stretching leather skin;<br>We want a little of your coin<br>To line it well within.",
+"Bring us out a table<br>And spread it with a cloth;<br>Bring us out a mouldy cheese,<br>And of your Christmas loaf.",
+"God bless the master of this house,<br>Likewise the mistress too;<br>And all the little children<br>That round the table go.",
+"Good master and good mistress,<br>As you sit beside the fire,<br>Pray think of us poor children<br>Who are wand&#39;ring in the mire.",
+"It came upon the midnight clear,<br>That glorious song of old,<br>From angels bending near the earth,<br>To touch their harps of gold:",
+"&quot;Peace on the earth, goodwill to men,<br>From heaven&#39;s all-gracious King.&quot;<br>The world in solemn stillness lay,<br>To hear the angels sing.",
+"Still through the cloven skies they come,<br>With peaceful wings unfurled,<br>And still their heavenly music floats<br>O&#39;er all the weary world;",
+"Above its sad and lowly plains,<br>They bend on hovering wing,<br>And ever o&#39;er its Babel sounds<br>The blessèd angels sing.",
+"Yet with the woes of sin and strife<br>The world has suffered long;<br>Beneath the angel-strain have rolled<br>Two thousand years of wrong;",
+"And man, at war with man, hears not<br>The love-song which they bring;<br>O hush the noise, ye men of strife,<br>And hear the angels sing.",
+"And ye, beneath life&#39;s crushing load,<br>Whose forms are bending low,<br>Who toil along the climbing way<br>With painful steps and slow,",
+"Look now! for glad and golden hours<br>Come swiftly on the wing.<br>O rest beside the weary road,<br>And hear the angels sing!",
+"For lo!, the days are hastening on,<br>By prophet bards foretold,<br>When with the ever-circling years<br>Comes round the age of gold",
+"When peace shall over all the earth<br>Its ancient splendors fling,<br>And the whole world give back the song<br>Which now the angels sing.",
+"While shepherds watched their flocks by night,<br>All seated on the ground,<br>The angel of the Lord came down,<br>And glory shone around.",
+"Fear not, said he, for mighty dread<br>Had seized their troubled mind.<br>Glad tidings of great joy I bring<br>To you and all mankind.",
+"To you, in David&#39;s town, this day<br>Is born of David&#39;s line<br>A Saviour, which is Christ the Lord,<br>And this shall be the sign.",
+"The heavenly Babe you there shall find<br>To human view displayed,<br>All meanly wrapped in swaddling bands,<br>And in a manger laid.",
+"Thus spake the Seraph, and forthwith<br>Appeared a heavenly throng<br>Of Angels praising God and thus,<br>Addressed their joyful song.",
+"All glory be to God on high,<br>And to the earth be peace;<br>Good will henceforth from heaven to earth<br>Begin and never cease!",
+"O little town of Bethlehem,<br>How still we see thee lie!<br>Above your deep and dreamless sleep,<br>The silent stars go by.",
+"Yet in thy dark streets shineth<br>The everlasting Light,<br>The hopes and fears of all the years,<br>Are met in thee tonight.",
+"O morning stars, together<br>Proclaim thy holy birth<br>And praises sing to God, the King,<br>And peace to men on earth.",
+"For Christ is born of Mary,<br>And gathered all above,<br>While mortals sleep, the angels keep<br>Their watch of wondering love.",
+"How silently, how silently,<br>The wondrous Gift is giv&#39;n!<br>So God imparts to human hearts<br>The blessings of His heaven.",
+"No ear may hear His coming,<br>But in this world of sin,<br>Where meek souls will receive Him still,<br>The dear Christ enters in.",
+"O holy Child of Bethlehem<br>Descend to us, we pray.<br>Cast out our sin and enter in,<br>Be born to us today.",
+"We hear the Christmas angels,<br>The great glad tidings tell.<br>O come to us, abide with us,<br>Our Lord Emmanuel!",
+"God rest ye merry, gentlemen<br>Let nothing you dismay<br>Remember, Christ, our Saviour<br>Was born on Christmas day",
+"In Bethlehem, in Israel,<br>This blessed Babe was born<br>And laid within a manger<br>Upon this blessed morn",
+"From God our Heavenly Father<br>A blessed Angel came;<br>And unto certain Shepherds<br>Brought tidings of the same",
+"This day is born a Saviour<br>Of a pure Virgin bright,<br>To free all those who trust in Him<br>From Satan&#39;s power and might.&quot;",
+"The shepherds at those tidings<br>Rejoiced much in mind,<br>And left their flocks a-feeding<br>In tempest, storm and wind",
+"And when they came to Bethlehem<br>Where our dear Saviour lay,<br>They found Him in a manger,<br>Where oxen feed on hay",
+"Now to the Lord sing praises,<br>All you within this place,<br>And with true love and brotherhood<br>Each other now embrace",
+"Strange fits of passion have I known:<br>And I will dare to tell,<br>But in the Lover&#39;s ear alone,<br>What once to me befell.",
+"When she I loved looked every day<br>Fresh as a rose in June,<br>I to her cottage bent my way,<br>Beneath an evening-moon.",
+"Upon the moon I fixed my eye,<br>All over the wide lea;<br>With quickening pace my horse drew nigh<br>Those paths so dear to me.",
+"And now we reached the orchard-plot;<br>And, as we climbed the hill,<br>The sinking moon to Lucy&#39;s cot<br>Came near, and nearer still.",
+"In one of those sweet dreams I slept,<br>Kind Nature&#39;s gentlest boon!<br>And all the while my eyes I kept<br>On the descending moon.",
+"My horse moved on; hoof after hoof<br>He raised, and never stopped:<br>When down behind the cottage roof,<br>At once, the bright moon dropped.",
+"What fond and wayward thoughts will slide<br>Into a Lover&#39;s head!<br>&quot;O mercy!&quot; to myself I cried,<br>&quot;If Lucy should be dead!&quot;",
+"A slumber did my spirit seal;<br>I had no human fears:<br>She seemed a thing that could not feel<br>The touch of earthly years.",
+"No motion has she now, no force;<br>She neither hears nor sees;<br>Rolled round in earth&#39;s diurnal course,<br>With rocks, and stones, and trees.",
+"I travelled among unknown men,<br>In lands beyond the sea;<br>Nor, England! did I know till then<br>What love I bore to thee.",
+"&#39;Tis past, that melancholy dream!<br>Nor will I quit thy shore<br>A second time; for still I seem<br>To love thee more and more.",
+"Among thy mountains did I feel<br>The joy of my desire;<br>And she I cherished turned her wheel<br>Beside an English fire.",
+"Thy mornings showed, thy nights concealed<br>The bowers where Lucy played;<br>And thine too is the last green field<br>That Lucy&#39;s eyes surveyed.",
+"She dwelt among the untrodden ways<br>Beside the springs of Dove,<br>A Maid whom there were none to praise<br>And very few to love:",
+"A violet by a mossy stone<br>Half hidden from the eye!<br>--Fair as a star, when only one<br>Is shining in the sky.",
+"She lived unknown, and few could know<br>When Lucy ceased to be;<br>But she is in her grave, and, oh,<br>The difference to me!",
+"A simple child, dear brother Jim,<br>That lightly draws its breath,<br>And feels its life in every limb,<br>What should it know of death?",
+"I met a little cottage girl,<br>She was eight years old, she said;<br>Her hair was thick with many a curl<br>That cluster&#39;d round her head.",
+"She had a rustic, woodland air,<br>And she was wildly clad;<br>Her eyes were fair, and very fair,<br>--Her beauty made me glad.",
+"&quot;And where are they, I pray you tell?&quot;<br>She answered, &quot;Seven are we,<br>And two of us at Conway dwell,<br>And two are gone to sea.&quot;",
+"&quot;Two of us in the church-yard lie,<br>My sister and my brother,<br>And in the church-yard cottage, I<br>Dwell near them with my mother.&quot;",
+"&quot;You say that two at Conway dwell,<br>And two are gone to sea,<br>Yet you are seven; I pray you tell<br>Sweet Maid, how this may be?&quot;",
+"Then did the little Maid reply,<br>&quot;Seven boys and girls are we;<br>Two of us in the church-yard lie,<br>Beneath the church-yard tree.&quot;",
+"&quot;You run about, my little maid,<br>Your limbs they are alive;<br>If two are in the church-yard laid,<br>Then ye are only five.&quot;",
+"&quot;Their graves are green, they may be seen,&quot;<br>The little Maid replied,<br>&quot;Twelve steps or more from my mother&#39;s door,<br>And they are side by side.&quot;",
+"&quot;My stockings there I often knit,<br>My &#39;kerchief there I hem;<br>And there upon the ground I sit--<br>I sit and sing to them.&quot;",
+"&quot;And often after sunset, Sir,<br>When it is light and fair,<br>I take my little porringer,<br>And eat my supper there.&quot;",
+"&quot;The first that died was little Jane;<br>In bed she moaning lay,<br>Till God released her of her pain,<br>And then she went away.&quot;",
+"&quot;So in the church-yard she was laid,<br>And all the summer dry,<br>Together round her grave we played,<br>My brother John and I.&quot;",
+"&quot;And when the ground was white with snow,<br>And I could run and slide,<br>My brother John was forced to go,<br>And he lies by her side.&quot;",
+"&quot;How many are you then,&quot; said I,<br>&quot;If they two are in Heaven?&quot;<br>The little Maiden did reply,<br>&quot;O Master! we are seven.&quot;",
+"&quot;Hope&quot; is the thing with feathers -<br>That perches in the soul -<br>And sings the tune without the words -<br>And never stops - at all -",
+"And sweetest - in the Gale - is heard -<br>And sore must be the storm -<br>That could abash the little Bird<br>That kept so many warm -",
+"I’ve heard it in the chillest land -<br>And on the strangest Sea -<br>Yet - never - in Extremity,<br>It asked a crumb - of me.",
+"The morns are meeker than they were -<br>The nuts are getting brown -<br>The berry’s cheek is plumper -<br>The rose is out of town.",
+"The maple wears a gayer scarf -<br>The field a scarlet gown -<br>Lest I sh&#39;d be old-fashioned<br>I’ll put a trinket on.",
+"The Bridegroom&#39;s doors are opened wide,<br>And I am next of kin;<br>The guests are met, the feast is set:<br>May&#39;st hear the merry din.&#39;",
+"He holds him with his skinny hand,<br>&#39;There was a ship,&#39; quoth he.<br>&#39;Hold off! unhand me, grey-beard loon!&#39;<br>Eftsoons his hand dropt he.",
+"He holds him with his glittering eye—<br>The Wedding-Guest stood still,<br>And listens like a three years&#39; child:<br>The Mariner hath his will.",
+"The Wedding-Guest sat on a stone:<br>He cannot choose but hear;<br>And thus spake on that ancient man,<br>The bright-eyed Mariner.",
+"&#39;The ship was cheered, the harbour cleared,<br>Merrily did we drop<br>Below the kirk, below the hill,<br>Below the lighthouse top.",
+"The Sun came up upon the left,<br>Out of the sea came he!<br>And he shone bright, and on the right<br>Went down into the sea.",
+"Higher and higher every day,<br>Till over the mast at noon—&#39;<br>The Wedding-Guest here beat his breast,<br>For he heard the loud bassoon.",
+"The bride hath paced into the hall,<br>Red as a rose is she;<br>Nodding their heads before her goes<br>The merry minstrelsy.",
+"The Wedding-Guest he beat his breast,<br>Yet he cannot choose but hear;<br>And thus spake on that ancient man,<br>The bright-eyed Mariner.",
+"And now the STORM-BLAST came, and he<br>Was tyrannous and strong:<br>He struck with his o&#39;ertaking wings,<br>And chased us south along.",
+"And now there came both mist and snow,<br>And it grew wondrous cold:<br>And ice, mast-high, came floating by,<br>As green as emerald.",
+"And through the drifts the snowy clifts<br>Did send a dismal sheen:<br>Nor shapes of men nor beasts we ken—<br>The ice was all between.",
+"The ice was here, the ice was there,<br>The ice was all around:<br>It cracked and growled, and roared and howled,<br>Like noises in a swound!",
+"At length did cross an Albatross,<br>Thorough the fog it came;<br>As if it had been a Christian soul,<br>We hailed it in God&#39;s name.",
+"It ate the food it ne&#39;er had eat,<br>And round and round it flew.<br>The ice did split with a thunder-fit;<br>The helmsman steered us through!",
+"In mist or cloud, on mast or shroud,<br>It perched for vespers nine;<br>Whiles all the night, through fog-smoke white,<br>Glimmered the white Moon-shine.&#39;",
+"&#39;God save thee, ancient Mariner!<br>From the fiends, that plague thee thus!—<br>Why look&#39;st thou so?&#39;—With my cross-bow<br>I shot the ALBATROSS.",
+"The Sun now rose upon the right:<br>Out of the sea came he,<br>Still hid in mist, and on the left<br>Went down into the sea.",
+"And I had done a hellish thing,<br>And it would work &#39;em woe:<br>For all averred, I had killed the bird<br>That made the breeze to blow.",
+"Nor dim nor red, like God&#39;s own head,<br>The glorious Sun uprist:<br>Then all averred, I had killed the bird<br>That brought the fog and mist.",
+"The fair breeze blew, the white foam flew,<br>The furrow followed free;<br>We were the first that ever burst<br>Into that silent sea.",
+"Down dropt the breeze, the sails dropt down,<br>&#39;Twas sad as sad could be;<br>And we did speak only to break<br>The silence of the sea!",
+"All in a hot and copper sky,<br>The bloody Sun, at noon,<br>Right up above the mast did stand,<br>No bigger than the Moon.",
+"Water, water, every where,<br>And all the boards did shrink;<br>Water, water, every where,<br>Nor any drop to drink.",
+"The very deep did rot: O Christ!<br>That ever this should be!<br>Yea, slimy things did crawl with legs<br>Upon the slimy sea.",
+"About, about, in reel and rout<br>The death-fires danced at night;<br>The water, like a witch&#39;s oils,<br>Burnt green, and blue and white.",
+"And every tongue, through utter drought,<br>Was withered at the root;<br>We could not speak, no more than if<br>We had been choked with soot.",
+"At first it seemed a little speck,<br>And then it seemed a mist;<br>It moved and moved, and took at last<br>A certain shape, I wist.",
+"A speck, a mist, a shape, I wist!<br>And still it neared and neared:<br>As if it dodged a water-sprite,<br>It plunged and tacked and veered.",
+"The Sun&#39;s rim dips; the stars rush out;<br>At one stride comes the dark;<br>With far-heard whisper, o&#39;er the sea,<br>Off shot the spectre-bark.",
+"The souls did from their bodies fly,—<br>They fled to bliss or woe!<br>And every soul, it passed me by,<br>Like the whizz of my cross-bow!",
+"&#39;I fear thee, ancient Mariner!<br>I fear thy skinny hand!<br>And thou art long, and lank, and brown,<br>As is the ribbed sea-sand.",
+"The many men, so beautiful!<br>And they all dead did lie:<br>And a thousand thousand slimy things<br>Lived on; and so did I.",
+"I looked upon the rotting sea,<br>And drew my eyes away;<br>I looked upon the rotting deck,<br>And there the dead men lay.",
+"The cold sweat melted from their limbs,<br>Nor rot nor reek did they:<br>The look with which they looked on me<br>Had never passed away.",
+"The moving Moon went up the sky,<br>And no where did abide:<br>Softly she was going up,<br>And a star or two beside—",
+"The self-same moment I could pray;<br>And from my neck so free<br>The Albatross fell off, and sank<br>Like lead into the sea.",
+"The silly buckets on the deck,<br>That had so long remained,<br>I dreamt that they were filled with dew;<br>And when I awoke, it rained.",
+"My lips were wet, my throat was cold,<br>My garments all were dank;<br>Sure I had drunken in my dreams,<br>And still my body drank.",
+"I moved, and could not feel my limbs:<br>I was so light—almost<br>I thought that I had died in sleep,<br>And was a blessed ghost.",
+"And soon I heard a roaring wind:<br>It did not come anear;<br>But with its sound it shook the sails,<br>That were so thin and sere.",
+"The loud wind never reached the ship,<br>Yet now the ship moved on!<br>Beneath the lightning and the Moon<br>The dead men gave a groan.",
+"The body of my brother&#39;s son<br>Stood by me, knee to knee:<br>The body and I pulled at one rope,<br>But he said nought to me.",
+"For when it dawned—they dropped their arms,<br>And clustered round the mast;<br>Sweet sounds rose slowly through their mouths,<br>And from their bodies passed.",
+"Around, around, flew each sweet sound,<br>Then darted to the Sun;<br>Slowly the sounds came back again,<br>Now mixed, now one by one.",
+"And now &#39;twas like all instruments,<br>Now like a lonely flute;<br>And now it is an angel&#39;s song,<br>That makes the heavens be mute.",
+"Till noon we quietly sailed on,<br>Yet never a breeze did breathe:<br>Slowly and smoothly went the ship,<br>Moved onward from beneath.",
+"Then like a pawing horse let go,<br>She made a sudden bound:<br>It flung the blood into my head,<br>And I fell down in a swound.",
+"The other was a softer voice,<br>As soft as honey-dew:<br>Quoth he, &#39;The man hath penance done,<br>And penance more will do.&#39;",
+"Still as a slave before his lord,<br>The ocean hath no blast;<br>His great bright eye most silently<br>Up to the Moon is cast—",
+"The pang, the curse, with which they died,<br>Had never passed away:<br>I could not draw my eyes from theirs,<br>Nor turn them up to pray.",
+"And now this spell was snapt: once more<br>I viewed the ocean green,<br>And looked far forth, yet little saw<br>Of what had else been seen—",
+"But soon there breathed a wind on me,<br>Nor sound nor motion made:<br>Its path was not upon the sea,<br>In ripple or in shade.",
+"Swiftly, swiftly flew the ship,<br>Yet she sailed softly too:<br>Sweetly, sweetly blew the breeze—<br>On me alone it blew.",
+"Oh! dream of joy! is this indeed<br>The light-house top I see?<br>Is this the hill? is this the kirk?<br>Is this mine own countree?",
+"We drifted o&#39;er the harbour-bar,<br>And I with sobs did pray—<br>O let me be awake, my God!<br>Or let me sleep alway.",
+"The harbour-bay was clear as glass,<br>So smoothly it was strewn!<br>And on the bay the moonlight lay,<br>And the shadow of the Moon.",
+"The rock shone bright, the kirk no less,<br>That stands above the rock:<br>The moonlight steeped in silentness<br>The steady weathercock.",
+"A little distance from the prow<br>Those crimson shadows were:<br>I turned my eyes upon the deck—<br>Oh, Christ! what saw I there!",
+"Each corse lay flat, lifeless and flat,<br>And, by the holy rood!<br>A man all light, a seraph-man,<br>On every corse there stood.",
+"This seraph-band, each waved his hand:<br>It was a heavenly sight!<br>They stood as signals to the land,<br>Each one a lovely light;",
+"This seraph-band, each waved his hand,<br>No voice did they impart—<br>No voice; but oh! the silence sank<br>Like music on my heart.",
+"The Pilot and the Pilot&#39;s boy,<br>I heard them coming fast:<br>Dear Lord in Heaven! it was a joy<br>The dead men could not blast.",
+"He kneels at morn, and noon, and eve—<br>He hath a cushion plump:<br>It is the moss that wholly hides<br>The rotted old oak-stump.",
+"The boat came closer to the ship,<br>But I nor spake nor stirred;<br>The boat came close beneath the ship,<br>And straight a sound was heard.",
+"Upon the whirl, where sank the ship,<br>The boat spun round and round;<br>And all was still, save that the hill<br>Was telling of the sound.",
+"I moved my lips — the Pilot shrieked<br>And fell down in a fit;<br>The holy Hermit raised his eyes,<br>And prayed where he did sit.",
+"And now, all in my own countree,<br>I stood on the firm land!<br>The Hermit stepped forth from the boat,<br>And scarcely he could stand.",
+"Since then, at an uncertain hour,<br>That agony returns:<br>And till my ghastly tale is told,<br>This heart within me burns.",
+"O sweeter than the marriage-feast,<br>&#39;Tis sweeter far to me,<br>To walk together to the kirk<br>With a goodly company!—",
+"Farewell, farewell! but this I tell<br>To thee, thou Wedding-Guest!<br>He prayeth well, who loveth well<br>Both man and bird and beast.",
+"He prayeth best, who loveth best<br>All things both great and small;<br>For the dear God who loveth us,<br>He made and loveth all.",
+"The Mariner, whose eye is bright,<br>Whose beard with age is hoar,<br>Is gone: and now the Wedding-Guest<br>Turned from the bridegroom&#39;s door.",
+"He went like one that hath been stunned,<br>And is of sense forlorn:<br>A sadder and a wiser man,<br>He rose the morrow morn.",
+"When Love with unconfinèd wings<br>Hovers within my gates,<br>And my divine Althea brings<br>To whisper at the grates;",
+"When I lie tangled in her hair<br>And fetter&#39;d to her eye,<br>The birds that wanton in the air<br>Know no such liberty.",
+"When flowing cups run swiftly round<br>With no allaying Thames,<br>Our careless heads with roses bound,<br>Our hearts with loyal flames;",
+"When thirsty grief in wine we steep,<br>When healths and draughts go free—<br>Fishes that tipple in the deep<br>Know no such liberty.",
+"When, like committed linnets, I<br>With shriller throat shall sing<br>The sweetness, mercy, majesty,<br>And glories of my King;",
+"When I shall voice aloud how good<br>He is, how great should be,<br>Enlargèd winds, that curl the flood,<br>Know no such liberty.",
+"Stone walls do not a prison make,<br>Nor iron bars a cage;<br>Minds innocent and quiet take<br>That for an hermitage;",
+"If I have freedom in my love<br>And in my soul am free,<br>Angels alone, that soar above,<br>Enjoy such liberty.",
+"Oh you may not think I&#39;m pretty,<br>But don&#39;t judge on what you see,<br>I&#39;ll eat myself if you can find<br>A smarter hat than me.",
+"You can keep your bowlers black,<br>Your top hats sleek and tall,<br>For I&#39;m the Hogwarts Sorting Hat<br>And I can cap them all.",
+"There&#39;s nothing hidden in your head<br>The Sorting Hat can&#39;t see,<br>So try me on and I will tell you<br>Where you ought to be.",
+"You might belong in Gryffindor,<br>Where dwell the brave at heart,<br>Their daring, nerve, and chivalry<br>Set Gryffindors apart;",
+"You might belong in Hufflepuff,<br>Where they are just and loyal,<br>Those patient Hufflepuffs are true<br>And unafraid of toil;",
+"Or yet in wise old Ravenclaw,<br>If you&#39;ve a ready mind,<br>Where those of wit and learning,<br>Will always find their kind;",
+"Or perhaps in Slytherin<br>You&#39;ll make your real friends,<br>Those cunning folks use any means<br>To achieve their ends.",
+"So put me on! Don&#39;t be afraid!<br>And don&#39;t get in a flap!<br>You&#39;re in safe hands (though I have none)<br>For I&#39;m a Thinking Cap!",
+"A thousand years or more ago<br>When I was newly sewn,<br>There lived four wizards of renown,<br>Whose names are still well known:",
+"Bold Gryffindor, from wild moor,<br>Fair Ravenclaw, from glen,<br>Sweet Hufflepuff, from valley broad,<br>Shrewd Slytherin, from fen.",
+"They shared a wish, a hope, a dream,<br>They hatched a daring plan<br>To educate young sorcerers<br>Thus Hogwarts School began.",
+"Now each of these four founders<br>Formed their own house, for each<br>Did value different virtues<br>In the ones they had to teach.",
+"By Gryffindor, the bravest were<br>Prized far beyond the rest;<br>For Ravenclaw, the cleverest<br>Would always be the best;",
+"For Hufflepuff, hard workers were<br>Most worthy of admission;<br>And power-hungry Slytherin<br>Loved those of great ambition.",
+"While still alive they did divide<br>Their favourites from the throng,<br>Yet how to pick the worthy ones<br>When they were dead and gone?",
+"Twas Gryffindor who found the way,<br>He whipped me off his head<br>The founders put some brains in me<br>So I could choose instead!",
+"Now slip me snug about your ears,<br>I&#39;ve never yet been wrong,<br>I&#39;ll have a look inside your mind<br>And tell where you belong!",
+"So how could it have gone so wrong?<br>How could such friendships fail?<br>Why, I was there, so I can tell<br>The whole sad, sorry tale.",
+"Said Gryffindor, &quot;We&#39;ll teach all those<br>With brave deeds to their name.&quot;<br>Said Hufflepuff, &quot;I&#39;ll teach the lot<br>And treat them just the same.&quot;",
+"The Houses that, like pillars four<br>Had once held up our school<br>Now turned upon each other and<br>Divided, sought to rule.",
+"And now the Sorting Hat is here<br>And you all know the score:<br>I sort you into Houses<br>Because that is what I&#39;m for.",
+"Though I must fulfill my duty<br>And must quarter every year<br>Still I wonder whether sorting<br>May not bring the end I fear.",
+"There was a land I once heard tell<br>&#39;Twas christened Mushroom Down<br>The folk who lived there loved it well<br>And never left their town",
+"They stayed there from the hour of birth<br>Until the day they died<br>They never cared for any earth<br>Except their Mushroom pride",
+"They made their homes beneath the caps<br>Of fungi wide and tall<br>And when time came for tea perhaps<br>A neighbor came to call",
+"And while they sat in shade serene<br>And offered cream and cakes<br>They talked of things they&#39;d never seen<br>Beyond the Mushroom lakes",
+"They did not wish to journey there<br>They were contented so<br>But past the mossy banks somewhere<br>Lie what they did not know",
+"More curious they grew by day<br>And still more so by night<br>They wondered if there were a way<br>To take a Mushroom flight",
+"Tormented by this new desire<br>More restless they became<br>And many began to conspire<br>On blueprints for a frame",
+"A brilliant flying vehicle<br>Of mushroom caps and string<br>One gent proved astronautical<br>And built the very thing",
+"And so the day arrived at last<br>On which the plane should board<br>The celebration went far past<br>What they could best afford",
+"But they were folks of merry ways<br>And when the kegs were drained<br>In unison arose their gaze<br>And on the stroke --- it rained",
+"Now in the history of the town<br>No soul had ever seen<br>A flood the likes of which poured down<br>Upon the Mushroom Green",
+"A gathering was held betwixt<br>The elders late that night<br>And even their votes were unmixed:<br>&quot;We must postpone the flight!&quot;",
+"The disappointment through the land<br>Was more than some could bear<br>For their own world, once thought so grand,<br>They did no longer care",
+"To say the least it was a shame<br>To see the people act<br>As though they&#39;d lost their hope, their flame<br>When their poor plans were sacked",
+"But still the rain continued on<br>For more than fifty days<br>Their mushroom store was almost gone<br>They dreamt of sunshine rays",
+"And that&#39;s when they began to cease<br>Their thoughts of other towns<br>If only this storm would decrease<br>They&#39;d cherish Mushroom Downs",
+"That night was spent in blackness deep<br>No star was seen to shine<br>But when the morning broke their sleep<br>They saw a sight divine",
+"The rain was nowhere to be found<br>The sky was fresh and clear<br>Hurrahs of joy for miles around<br>Were all that one could hear",
+"And what is more, the earth had sprung<br>New mushrooms overnight<br>And many hymns of praise were sung<br>And no one spoke of flight",
+"And so at last the ballad ends<br>With happiness sublime<br>And so the story goes, my friends<br>That is, until next time.",
+"Because I could not stop for Death –<br>He kindly stopped for me –<br>The Carriage held but just Ourselves –<br>And Immortality.",
+"We slowly drove – He knew no haste<br>And I had put away<br>My labor and my leisure too,<br>For His Civility –",
+"We passed the School, where Children strove<br>At Recess – in the Ring –<br>We passed the Fields of Gazing Grain –<br>We passed the Setting Sun –",
+"Or rather – He passed Us –<br>The Dews drew quivering and Chill –<br>For only Gossamer, my Gown –<br>My Tippet – only Tulle –",
+"We paused before a House that seemed<br>A Swelling of the Ground –<br>The Roof was scarcely visible –<br>The Cornice – in the Ground –",
+"Since then – &#39;tis Centuries – and yet<br>Feels shorter than the Day<br>I first surmised the Horses&#39; Heads<br>Were toward Eternity –",
+"I felt a Funeral, in my Brain,<br>And Mourners to and fro<br>Kept treading — treading — till it seemed<br>That Sense was breaking through —",
+"And when they all were seated,<br>A Service, like a Drum —<br>Kept beating — beating — till I thought<br>My Mind was going numb —",
+"And then I heard them lift a Box<br>And creak across my Soul<br>With those same Boots of Lead, again,<br>Then Space — began to toll,",
+"As all the Heavens were a Bell,<br>And Being, but an Ear,<br>And I, and Silence, some strange Race<br>Wrecked, solitary, here —",
+"The Brain – is wider than the Sky –<br>For – put them side by side –<br>The one the other will contain<br>With ease – and You – beside –",
+"The Brain is deeper than the sea –<br>For – hold them – Blue to Blue –<br>The one the other will absorb –<br>As Sponges – Buckets – do –",
+"The Brain is just the weight of God –<br>For – Heft them – Pound for Pound –<br>And they will differ – if they do –<br>As Syllable from Sound –",
+"How noteless Men, and Pleiads, stand,<br>Until a sudden sky<br>Reveals the fact that One is rapt<br>Forever from the Eye —",
+"Members of the Invisible,<br>Existing, while we stare,<br>In Leagueless Opportunity,<br>O&#39;ertakenless, as the Air —",
+"Why didn&#39;t we detain Them?<br>The Heavens with a smile,<br>Sweep by our disappointed Heads<br>Without a syllable —",
+"&#39;Twas just this time, last year, I died.<br>I know I heard the Corn,<br>When I was carried by the Farms —<br>It had the Tassels on —",
+"I thought how yellow it would look —<br>When Richard went to mill —<br>And then, I wanted to get out,<br>But something held my will.",
+"Afraid! Of whom am I afraid?<br>Not Death — for who is He?<br>The Porter of my Father&#39;s Lodge<br>As much abasheth me!",
+"Of Life? &#39;Twere odd I fear a thing<br>That comprehendeth me<br>In one or two existences —<br>As Deity decree —",
+"Of Resurrection? Is the East<br>Afraid to trust the Morn<br>With her fastidious forehead?<br>As soon impeach my Crown!",
+"Because I was afraid to speak<br>When I was just a lad<br>My father gave me nose a tweak<br>And told me I was bad",
+"But then one day I learned a word<br>That saved me achin&#39; nose<br>The biggest word I ever heard<br>And this is how it goes",
+"He traveled all around the world<br>And everywhere he went<br>He&#39;d use his word and all would say<br>There goes a clever gent",
+"When Dukes and Maharajahs pass<br>The time of day with me<br>I say my special word and then<br>They ask me out to tea",
+"So when the cat has got your tongue<br>There&#39;s no need for dismay<br>Just summon up this word and then<br>You&#39;ve got a lot to say",
+"Amazing grace! How sweet the sound<br>That saved a wretch like me!<br>I once was lost, but now am found;<br>Was blind, but now I see.",
+"&#39;Twas grace that taught my heart to fear,<br>And grace my fears relieved;<br>How precious did that grace appear<br>The hour I first believed.",
+"Through many dangers, toils and snares,<br>I have already come;<br>&#39;Tis grace hath brought me safe thus far,<br>And grace will lead me home.",
+"The Lord has promised good to me,<br>His Word my hope secures;<br>He will my Shield and Portion be,<br>As long as life endures.",
+"Yea, when this flesh and heart shall fail,<br>And mortal life shall cease,<br>I shall possess, within the veil,<br>A life of joy and peace.",
+"The earth shall soon dissolve like snow,<br>The sun forbear to shine;<br>But God, who called me here below,<br>Will be forever mine.",
+"When we&#39;ve been there ten thousand years,<br>Bright shining as the sun,<br>We&#39;ve no less days to sing God&#39;s praise<br>Than when we&#39;d first begun.",
+"I wanna be the very best<br>Like no one ever was<br>To catch them is my real test<br>To train them is my cause",
+"I will travel across the land<br>Searching far and wide<br>Each Pokémon to understand<br>The power that&#39;s inside",
+"Every challenge along the way<br>With courage I will face<br>I will battle every day<br>To claim my rightful place",
+"So come with me, the time is right<br>There&#39;s no better team<br>Arm in arm we&#39;ll win the fight<br>It&#39;s always been our dream",
+"There is a house in New Orleans<br>They call the Rising Sun<br>It&#39;s been the ruin of many a boy<br>And God I know I&#39;m one",
+"My mother was a tailor<br>She sewed my new blue jeans<br>My father was a gamblin&#39; man<br>Down in New Orleans",
+"Now the only thing a gambler needs<br>Is a suitcase and trunk<br>And the only time he&#39;s satisfied<br>Is when he&#39;s on a drunk",
+"Oh mother tell your children not<br>To do what I have done<br>Spend your lives in sin and misery<br>In the House of the Rising Sun",
+"I got one foot on the platform<br>The other foot on the train<br>I&#39;m goin&#39; back to New Orleans<br>To wear that ball and chain",
+"There is a house in New Orleans<br>They call the Rising Sun<br>It&#39;s been the ruin of many a girl<br>And God I know I&#39;m one",
+"There is a green hill far away,<br>Without a city wall,<br>Where our dear Lord was crucified<br>Who died to save us all.",
+"We may not know, we cannot tell,<br>What pains he had to bear,<br>But we believe it was for us<br>He hung and suffered there.",
+"He died that we might be forgiven,<br>He died to make us good,<br>That we might go at last to heaven,<br>Saved by his precious blood.",
+"There was no other good enough<br>To pay the price of sin,<br>He only could unlock the gate<br>Of heaven and let us in.",
+"O dearly, dearly has he loved!<br>And we must love him too,<br>And trust in his redeeming blood,<br>And try his works to do.",
+"The girl around her father throws<br>Her arms to make him stay<br>&quot;My daddy dear, it hails, it blows<br>You cannot go today!&quot;",
+"The April mud was on his boots<br>A-clinging through the fields<br>And desperate it send up its shoots<br>But at water&#39;s edge, it yields",
+"The waves were pounding the dock<br>The pillars creak and growl<br>The shoreman loading up the stock<br>The gulls were crying foul",
+"The father called up to the ship:<br>&quot;You need an extra hand?&quot;<br>&quot;Ah yes, for just a little trip<br>One month, be back at land,&quot;",
+"The rain had stirred the sea too well<br>The salt poured on the deck<br>At last the captain rang the bell<br>The ship was left to wreck",
+"It&#39;s calm, but now the fog is thick<br>So which way should they head?<br>The rest knew not and they must be quick<br>So father softly said:",
+"Crimson flames tied through my ears<br>Rollin&#39; high and mighty traps<br>Pounced with fire on flaming roads<br>Using ideas as my maps",
+"&quot;We&#39;ll meet on edges, soon,&quot; said I<br>Proud &#39;neath heated brow<br>But I was so much older then<br>I&#39;m younger than that now",
+"Half-wracked prejudice leaped forth<br>&quot;Rip down all hate,&quot; I screamed<br>Lies that life is black and white<br>Spoke from my skull. I dreamed",
+"Romantic facts of musketeers<br>Foundationed deep, somehow<br>But I was so much older then<br>I&#39;m younger than that now",
+"Girls&#39; faces formed the forward path<br>From phony jealousy<br>To memorizing politics<br>Of ancient history",
+"Flung down by corpse evangelists<br>Unthought of, though, somehow<br>But I was so much older then<br>I&#39;m younger than that now",
+"&quot;Equality,&quot; I spoke the word<br>As if a wedding vow<br>But I was so much older then<br>I&#39;m younger than that now",
+"My guard stood hard when abstract threats<br>Too noble to neglect<br>Deceived me into thinking<br>I had something to protect",
+"There&#39;s a yellow rose in Texas<br>I&#39;m going home to see<br>Though other men have held her<br>Her heart belongs to me",
+"You&#39;ve traveled down some dusty roads<br>Slept out in the rain<br>But this yellow rose is always here<br>When you come home again",
+"She knows I&#39;ve done some hard time<br>You stumbled then you fell<br>I just kept your pride from dying<br>You saved my soul from hell",
+"She&#39;s the diamond of the desert<br>She&#39;s the golden flower of spring<br>She&#39;s the yellow rose of Texas<br>She can make a man a king",
+"There&#39;s a yellow rose in Texas<br>She knows the dues I&#39;ve paid<br>And I&#39;m going home to tell her<br>I wish I&#39;d never strayed",
+"You couldn&#39;t see beyond yourself<br>Your pain and wounded pride<br>But now you know the truth is<br>In the way you feel in side",
+"The Yellow Rose of Texas,<br>And the Man of Laramie<br>Invited Davy Crockett<br>To have a cup of tea.",
+"The tea was so delicious<br>They had another cup<br>And left to Davy Crockett<br>To do the washing up.",
+"Is this a kind of magic?<br>There can be only one.<br>This rage that lasts a thousand years<br>Will soon be done.",
+"&#39;Twas down by Brannigan&#39;s Corner,<br>One morning I did stray<br>I met a fellow rebel,<br>And to me he did say",
+"&quot;We&#39;ve orders from the captain to<br>Assemble at Dunbar<br>But how are we to get there,<br>Without a motor car?&quot;",
+"&quot;Oh, Barney dear, be of good cheer,<br>I&#39;ll tell you what we&#39;ll do<br>The specials they are plentiful,<br>The I.R.A. are few",
+"We&#39;ll send a wire to Johnson<br>To meet us at Stranlar<br>And we&#39;ll give the boys a bloody good ride<br>In Johnson&#39;s Motor Car",
+"When doctor Johnson heard the news<br>He soon put on his shoes<br>He says this is an urgent case,<br>There is no time to lose",
+"He then put on his castor hat<br>And on his breast a star<br>You could hear the din all through Glenfin<br>Of Johnson&#39;s Motor Car",
+"When he got to the railway bridge,<br>Some rebels he saw there<br>Old Johnson knew the game was up,<br>For at him they did stare",
+"He said &quot;I have a permit,<br>To travel near and far&quot;<br>&quot;To hell with your English permit,<br>We want your motor car&quot;",
+"&quot;What will my local brethren think,<br>When they hear the news<br>My car it has been commandeered,<br>By the rebels at Dunluce&quot;",
+"&quot;We&#39;ll give you a receipt for it,<br>All signed by Captain Barr<br>And when Ireland gets her freedom,<br>Boy, you&#39;ll get your motor car&quot;",
+"Well we put that car in motion<br>And filled it to the brim<br>With guns and bayonets shining<br>Which made old Johnson grim",
+"Barney hoisted a Sinn Féin flag,<br>It fluttered like a star<br>We gave three cheers for the I.R.A.<br>And Johnson&#39;s Motor Car",
+"Beneath the cross of Jesus<br>I fain would take my stand,<br>The shadow of a mighty rock<br>Within a weary land",
+"O safe and happy shelter,<br>O refuge tried and sweet,<br>O trysting place where Heaven&#39;s love<br>And Heaven&#39;s justice meet!",
+"As to the holy patriarch<br>That wondrous dream was giv&#39;n,<br>So seems my Savior&#39;s cross to me,<br>A ladder up to Heav&#39;n.",
+"There lies beneath its shadow<br>But on the further side<br>The darkness of an awful grave<br>That gapes both deep and wide",
+"And there between us stands the cross<br>Two arms outstretched to save<br>A watchman set to guard the way<br>From that eternal grave.",
+"Upon that cross of Jesus<br>Mine eye at times can see<br>The very dying form of One<br>Who suffered there for me",
+"And from my stricken heart with tears<br>Two wonders I confess;<br>The wonders of redeeming love<br>And my unworthiness.",
+"Content to let the world go by,<br>To know no gain or loss,<br>My sinful self my only shame,<br>My glory all the cross.",
+"Australians all let us rejoice<br>For we are young and free<br>We&#39;ve golden soil and wealth for toil,<br>Our home is girt by sea",
+"Our land abounds in nature&#39;s gifts<br>Of beauty rich and rare,<br>In history&#39;s page let every stage<br>Advance Australia fair",
+"Beneath our radiant Southern Cross,<br>We&#39;ll toil with hearts and hands,<br>To make this Commonwealth of ours<br>Renowned of all the lands",
+"For those who&#39;ve come across the seas<br>We&#39;ve boundless plains to share,<br>With courage let us all combine<br>To advance Australia fair.",
+"When we pulled into Argo Port<br>In need of R&amp;R,<br>The crew set out investigating<br>Every joint and bar.",
+"We had high expectations<br>Of their hospitality,<br>But found too late it wasn&#39;t geared<br>For spacers such as we.",
+"The Captain&#39;s tastes were simple,<br>But his methods were complex.<br>We found him with five partners, each<br>Of a different world and sex.",
+"The Shore Police were on the way—<br>We had no second chance.<br>We beamed him up in the nick of time—<br>And the remnants of his pants.",
+"Our Engineer would yield to none<br>At putting down the brew;<br>He out-drank seven space marines<br>And a demolition crew.",
+"The Navigator didn&#39;t win,<br>But he out-drank almost all,<br>And now they&#39;ve got a shuttlecraft<br>On the roof of City Hall.",
+"Our proper, cool First Officer<br>Was drugged with something green,<br>And hauled into an alley, where<br>He suffered things obscene.",
+"He sobered up in Sickbay and<br>He&#39;s none the worse for wear,<br>Except he&#39;s somehow taught the bridge<br>Computer how to swear.",
+"She came home with no uniform<br>And an oddly cheerful heart,<br>And a painful way of walking—<br>With her feet a yard apart.",
+"We found him in the city jail,<br>Locked on and beamed him free—<br>Intact except for hickeys<br>And six kinds of VD.",
+"Our Helmsman loves exotic plants;<br>The plants all love him too.<br>He took some down on leave with him<br>And we wondered what they&#39;d do,",
+"The planetary governor called<br>And swore upon his life<br>A gang of plants entwined his house<br>And then seduced his wife!",
+"A gang of pirates landed, and<br>Nobody seemed to care.<br>They stamped into the nearest bar<br>To announce that they were there.",
+"Half our crew was busy there,<br>And invited them to play.<br>The pirates only looked at us,<br>And turned and ran away.",
+"Our crew is Starfleet&#39;s finest, and<br>Our record is our pride.<br>And when we play we tend to leave<br>A trail a mile wide.",
+"You&#39;ve painted up your lips and rolled<br>And curled your tinted hair<br>Ruby, are you contemplating<br>Going out somewhere?",
+"It wasn&#39;t me that started that<br>Old crazy Asian war<br>But I was proud to go and do<br>My patriotic chore",
+"She&#39;s leaving now &#39;cause I just heard<br>The slamming of the door<br>The way I know I&#39;ve heard it slam<br>One hundred times before",
+"I used to be a farmer and<br>I made a living fine<br>I had a little stretch of land<br>Along the C.P. Line",
+"But times went by, and though I tried,<br>The money wasn&#39;t there<br>And bankers came and took my land,<br>And told me &quot;fair is fair&quot;.",
+"I looked for every kind of job,<br>The answer always no<br>&quot;Hire you now,&quot; they&#39;d always laugh,<br>&quot;we just let twenty go!&quot;",
+"The government, they promised me<br>A measly little sum<br>But I&#39;ve got too much pride to end up<br>Just another bum",
+"&#39;Cause they know that Tractor Jack<br>Is hidin&#39; in the bay,<br>I&#39;ll jump the bridge and knock &#39;em cold<br>And sail off with their hay.",
+"Well, Mountie Bob, he chased me,<br>He was always at my throat<br>He followed on the shoreline,<br>&#39;cause he didn&#39;t own a boat,",
+"But cutbacks were a-coming,<br>So the Mountie lost his job<br>So now he&#39;s sailing with me<br>And we call him Salty Bob.",
+"Well pirate life&#39;s appealing but<br>You don&#39;t just find it here<br>I heard that in Alberta there&#39;s<br>A band of buccaneers",
+"Well, winter is a-coming and<br>A chill is in the breeze<br>My pirate days are over once<br>The river starts to freeze",
+"I&#39;ll be back in springtime,<br>But now I have to go<br>I hear there&#39;s lots of plundering<br>Down in New Mexico.",
+"Should Old Acquaintance be forgot,<br>And never thought upon;<br>The flames of Love extinguished,<br>And fully past and gone:",
+"Is thy sweet Heart now grown so cold,<br>That loving Breast of thine;<br>That thou canst never once reflect<br>On old long syne.",
+"On old long syne my Jo,<br>On old long syne,<br>That thou canst never once reflect,<br>On old long syne.",
+"Should old acquaintance be forgot,<br>And never brought to mind?<br>Should old acquaintance be forgot,<br>And old lang syne?",
+"For auld lang syne, my dear,<br>For auld lang syne,<br>We&#39;ll take a cup of kindness yet,<br>For auld lang syne.",
+"And surely you&#39;ll buy your pint cup!<br>And surely I&#39;ll buy mine!<br>We&#39;ll take a cup o&#39; kindness yet,<br>For auld lang syne.",
+"We two have paddled in the stream,<br>From morning sun till dine;<br>But seas between us broad have roared<br>Since auld lang syne.",
+"She tried to hide it by the faded<br>Denim clothes she wore<br>But I knew she&#39;d never been<br>Inside a bar before",
+"And I felt like a peasant<br>Who just had met a queen<br>And she knew I saw right through<br>Her tight fittin&#39; jeans",
+"She said you&#39;ve got me figured out<br>But I&#39;m not what I seem<br>And for a dance I&#39;ll tell you &#39;bout<br>These tight fittin&#39; jeans",
+"As she played out her fantasy<br>Before my eyes it seemed<br>A cowgirl came alive inside<br>Those tight fittin&#39; jeans",
+"Joy to the world, the Lord is come!<br>Let earth receive her King;<br>Let every heart prepare Him room,<br>And heav&#39;n and nature sing.",
+"Joy to the earth, the Savior reigns!<br>Let men their songs employ;<br>While fields and floods, rocks, hills, and plains<br>Repeat the sounding joy.",
+"No more let sins and sorrows grow,<br>Nor thorns infest the ground;<br>He comes to make His blessings flow<br>Far as the curse is found.",
+"He rules the world with truth and grace,<br>And makes the nations prove<br>The glories of His righteousness,<br>And wonders of His love.",
+"I&#39;m gonna be a mighty king<br>So enemies beware<br>(Well, I&#39;ve never seen a king of beasts<br>With quite so little hair)",
+"I&#39;m gonna be the main event<br>Like no king was before<br>I&#39;m brushing up on looking down<br>I&#39;m working on my roar",
+"(I think it&#39;s time that you and I<br>Arranged a heart to heart)<br>Kings don&#39;t need advice<br>From little hornbills for a start",
+"(If this is where the monarchy<br>Is headed count me out<br>Out of service, out of Africa<br>I wouldn&#39;t hang about)",
+"And who are you, the proud lord said,<br>That I must bow so low?<br>Only a cat of a different coat,<br>That&#39;s all the truth I know.",
+"In a coat of gold or a coat of red,<br>A lion still has claws,<br>And mine are long and sharp, my lord,<br>As long and sharp as yours.",
+"And so he spoke, and so he spoke,<br>That lord of Castamere,<br>But now the rains weep o&#39;er his hall,<br>With no one there to hear.",
+"You put me on a roller coaster,<br>Fly me on a plane<br>You send me to another planet,<br>Get inside my brain",
+"I knew right when I met you<br>I would never be the same<br>But I let you take me over, girl,<br>So I&#39;m the one to blame",
+"I feel the walls closing in<br>Inside this padded room<br>Only good thing about it is<br>I&#39;m locked in here with you",
+"I&#39;m always watching you,<br>Wondering what you&#39;ll do next<br>But my favorite part about it is<br>I always have to guess",
+"An old cowboy went ridin&#39; out<br>One dark and windy day<br>Upon a ridge he rested as<br>He went along his way",
+"When all at once a mighty herd<br>Of red eyed cows he saw<br>A-plowing through the ragged sky<br>And up a cloudy draw",
+"Their brands were still on fire and<br>Their hooves were made of steel,<br>Their horns were black and shiny and<br>Their hot breath he could feel",
+"A bolt of fear went through him as<br>They thundered through the sky<br>For he saw the Riders comin&#39; hard<br>And heard their mournful cry",
+"Their faces burned, their eyes was blurred,<br>Their shirts was soaked with sweat<br>They&#39;re ridin&#39; hard to catch that herd,<br>But they ain&#39;t caught &#39;em yet",
+"Then cowboy change your ways today<br>Or with us you will ride<br>Tryin&#39; to catch that Devil&#39;s herd,<br>Across these endless skies",
+"Alone until my eighteenth year,<br>We met four springs ago<br>She was shy and had a fear,<br>Of things she did not know",
+"But we got it on together<br>In such a super way<br>We held each other close at night,<br>And traded dreams each day",
+"We found an old gray house, and you<br>Would not believe the way<br>We worked at night to fix it up,<br>Took classes in the day",
+"Painting walls and sipping wine,<br>Sleeping on the floor<br>With so much love with just two, soon<br>We found there&#39;d be one more",
+"We had lots of problems then,<br>But we had lots of fun<br>Like the birthday party, when<br>Our baby girl turned one",
+"I was proud and satisfied,<br>Life had so much to give<br>Till the day they told me that<br>She didn&#39;t have long to live",
+"Now it&#39;s back to two again<br>My little girl and I<br>Who looks so much like her sweet mother,<br>Sometimes that makes me cry",
+"She said &quot;It&#39;s just a woman thing&quot;<br>And pulled out of the drive<br>I said not to worry<br>I&#39;m an understanding guy",
+"I&#39;ve heard that when you love someone<br>You gotta let &#39;em go<br>She hollered &quot;When I find myself<br>You&#39;ll be the first to know&quot;",
+"I learned to do the laundry, feed the cat,<br>And clean the house<br>I promised to be patient while<br>She worked her problems out",
+"When she packed her bags,<br>Her destination wasn&#39;t clear<br>But I sensed that her intentions<br>Were honest and sincere",
+"Her mama&#39;s been a little vague<br>As to her whereabouts<br>Her sister says &quot;I&#39;m certain your<br>Romance is headed south&quot;"
+		]
+		
+		// Global vars.
+		var keys = Object.keys(songs);
+		var mp3_index = -1;
+		var audio, lyrics_div;
+		
+		// Run when loaded.
+		function page_init() {
+			audio = document.getElementsByTagName("audio")[0];
+			lyrics_div = document.getElementById("lyrics");
+			choose_random_mp3();
+		}
+		
+		// Cycle through the mp3s in the list.
+		function mp3_next() {
+			mp3_index += 1;
+			if (mp3_index >= keys.length) mp3_index = 0;
+			change_mp3(mp3_index);
+		}
+		function mp3_prev() {
+			mp3_index -= 1;
+			if (mp3_index < 0) mp3_index = keys.length - 1;
+			change_mp3(mp3_index);
+		}
+		
+		// Assumes an index in the correct range.
+		function change_mp3(index) {
+			var key = Object.keys(songs)[index];
+			audio.setAttribute("src", key);
+			lyrics_div.innerHTML = "<p>" + songs[key] + "</p>";
+		}
+
+		// Select an mp3 at random.
+		function choose_random_mp3() {
+			mp3_index = Math.floor(keys.length * Math.random());
+			change_mp3(mp3_index);
+		}
+
+		// Add a random verse to the div.
+		function add_verse() {
+			var verse = verses[Math.floor(verses.length * Math.random())];
+			lyrics_div.innerHTML = lyrics_div.innerHTML + "<p>" + verse + "</p>";
+		}
+
+		// Add verse on spacebar press.
+		window.addEventListener("keydown", add_verse_on_space, false);
+		function add_verse_on_space(e) {
+			if (e.keyCode == 32) add_verse();
+		}
+		
+  </script>
+</head>
+<body onload="page_init()">
+	<div class="contents">
+		<div class="header">
+			<h1>Christmas Sing-along!</h1>
+			<p>Let us IRC in each others' good company, gather round the warm CRT glow of the old family monitor, and sing in joyful union our defiance of these desolate short days.</p>
+			<p>( Press the spacebar for the next verse )</p>
+		</div>
+		<div class="player">
+			<img src="prev.png" width="55" height="30" onclick="javascript:mp3_prev()">
+			<audio controls preload="auto" autoplay="autoplay"></audio>
+			<img src="next.png" width="55" height="30" onclick="javascript:mp3_next()">
+		</div>
+		<div class="lyrics">
+			<div id="lyrics"></div>
+		</div>
+	</div>
+</body>
+</html>

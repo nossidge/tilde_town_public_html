@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <title>2D Cellular Automaton</title>
+    <script src='../lib/jscolor.min.js'></script>
+    
+    <style title='life'>
+/* https://philipwalton.github.io/solved-by-flexbox/demos/holy-grail/ */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 97vh;
+}
+.contents {
+  display: flex;
+  flex-direction: column;
+}
+.col_right {
+  flex: 1;
+}
+.col_left {
+  flex: 0 0 12em;
+  order: -1;
+  overflow: auto;
+}
+
+.border {
+  border: 2px solid #000000;
+}
+
+@media (min-width: 768px) {
+  .contents {
+    flex-direction: row;
+    flex: 1;
+  }
+  .col_right {
+    flex: 1;
+  }
+  .col_left {
+    flex: 0 0 32em;
+  }
+}
+
+body {
+  background-color: #E0B0FF;
+  font-family: 'Lucida Console', Monaco, monospace;
+  text-align: center;
+  color: #000000;
+}
+.col_left, .col_right, footer {
+  padding: 10px;
+}
+.canvas {
+  text-align: left;
+}
+canvas {
+  cursor: default;
+}
+
+summary {
+  font-weight: bold;
+  font-size: 1.3em;
+  padding: 5px;
+}
+
+/* Submit button */
+#submit {
+  margin: 20px;
+}
+input[type=button]{
+  font-size: 110%;
+  margin-top: 5px;
+  padding: 8px 25px;
+}
+
+/* Radio button labels */
+.selected         { color: #FFFFFF; }
+.unselected       { color: #000000; }
+.unselected:hover { color: #66FFFF; }
+
+/* Flex of the header and footer */
+.header_div, .footer_div {
+  justify-content: flex-start;
+  display: flex;
+  flex: 1;
+}
+.header_title, .footer_title {
+  flex: 1;
+  order: 0;
+}
+.header_left, .footer_left {
+  text-align: left;
+  margin-left: 8px;
+  flex: 0 0 260px;
+  order: -1;
+}
+.header_right, .footer_right {
+  text-align: right;
+  margin-right: 8px;
+  flex: 0 0 260px;
+  order: 1;
+}
+/* Centre height based on CC image on the right. */
+.footer_title, .footer_left {
+  margin-top: 8px;
+}
+
+/* Select option drop down */
+select {
+  font-family: 'Lucida Console', Monaco, monospace;
+  font-size: 110%;
+  padding: 4px 2px 2px 2px;
+}
+
+summary {
+  cursor: pointer;
+}
+
+table.centre {
+  margin-left:auto;
+  margin-right:auto;
+}
+    </style>
+  </head>
+  <body class='border'>
+    <header class='border'>
+      <div class='header_div'>
+        <div class='header_title'>
+          <h1>2D Cellular Automaton</h1>
+          <p hidden>Yet another Life implementation.</p>
+        </div>
+        <div class='header_left'>
+          <input id='button_pause' type='button' title='Keyboard: p' value='&#10073;&#10073;' onclick='togglePause()'>
+          <input id='button_step' type='button' title='Keyboard: space' value='&#10073;&#9658;' onclick='stepFrame()'>
+        </div>
+        <div class='header_right'>
+          <input id='button_epilepsy' type='button' value='Epilepsy: Safe' onclick='epilepsyToggle()'>
+        </div>
+      </div>
+    </header>
+    <div class='contents'>
+      <div id='col_right' class='col_right border'>
+        <div class='canvas'>
+          <canvas id='canvas' width='776' height='776'>
+            For some reason, your browser is having trouble loading this game. This game runs on javascript, and if you have an addon such as noscript, you may need to tell it to allow scripts from http://tilde.town, which is where this is hosted.<br>If you are not using any addons that might interfere with javascript, try using the latest versions of Chrome or Firefox.
+    </canvas>
+        </div>
+      </div>
+      
+      <div id='col_left' class='col_left border'>
+        <div class='controls'>
+          <div class='canvas_sliders'>
+            <details>
+              <summary>Canvas</summary>
+              <p>Changing these settings will reset the canvas.</p>
+              <div class='sliders'>
+                <table>
+                  <tbody><tr>
+                    <td>Width:</td>
+                    <td><input id='range_width' type='range' min='21' max='299' value='97' step='2' style='width: 200px;' oninput='updateDOMInnerHTML("span_width",this.value)' /></td>
+                    <td width='30'><span id='span_width'>97</span></td>
+                    
+                    <!-- this is really hacky... -->
+                    <td rowspan='3'>
+                      <div id='submit'>
+                        <input type='button' value='Redraw' onclick='clickRedrawButton()' />
+                      </div>
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    <td>Height:</td>
+                    <td><input id='range_height' type='range' min='21' max='299' value='97' step='2' style='width: 200px;' oninput='updateDOMInnerHTML("span_height",this.value)' /></td>
+                    <td width='30'><span id='span_height'>97</span></td>
+                  </tr>
+                  <tr>
+                    <td>Pixels:</td>
+                    <td><input id='range_pixels' type='range' min='1' max='16' value='8' step='1' style='width: 200px;' oninput='updateDOMInnerHTML("span_pixels",this.value)' /></td>
+                    <td width='30'><span id='span_pixels'>8</span></td>
+                  </tr>
+                </tbody></table>
+              </div>
+            </details>
+          </div>
+          
+          <hr>
+          
+          <div>
+            <details>
+              <summary>Settings</summary>
+              <table class='centre'>
+                <tr>
+                  <td style='text-align:right'>Framerate:</td>
+                  <td><input id='range_framerate' type='range' min='0' max='10' value='8' step='1' style='width: 200px;' oninput='updateFramerate(this.value)' /></td>
+                  <td width='40'><span id='span_framerate'>8</span></td>
+                </tr>
+                <tr>
+                  <td style='text-align:right'>Blur:</td>
+                  <td>
+                  <input id='range_blur' type='range' min='0' max='100' value='0' step='5' style='width: 200px;' oninput='updateBlur(this.value)' />
+                  </td>
+                  <td width='40'><span id='span_blur'>1</span></td>
+                </tr>
+                <tr>
+                  <td style='text-align:right'>Live Colour:</td>
+                  <td><input id='jscolor_live' class='jscolor' data-jscolor="{onFineChange:'updateColourLive(this)'}" value='E0B0FF' style="width: 200px; font-family: 'Lucida Console', Monaco, monospace; font-size: 100%;"></td>
+                  <td><input id='colour_live' type='checkbox' title='Also change page background colour?' onchange='setColourLiveIsBackground(this.checked)'></td>
+                </tr>
+                <tr>
+                  <td style='text-align:right'>Dead Colour:</td>
+                  <td><input id='jscolor_dead' class='jscolor' data-jscolor="{onFineChange:'updateColourDead(this)'}" value='000000' style="width: 200px; font-family: 'Lucida Console', Monaco, monospace; font-size: 100%;"></td>
+                  <td><input id='colour_dead' type='checkbox' title='Also change page text colour?' onchange='setColourDeadIsText(this.checked)'></td>
+                </tr>
+              </table>
+            </details>
+          </div>
+          
+          <hr>
+          
+          <div class='radios_rules'>
+            <details>
+              <summary>Life Rules</summary>
+              <p hidden>This defines the rules of the automaton.</p>
+              
+              <br>
+              
+              <table class='centre'>
+                <tr>
+                  <td>Defined Rules: </td>
+                  <td><select id='rules_select' onchange='updateRuleByName(this.value)'></select></td>
+                  <td width='40'><span id='rules_desc_toggle' style='cursor:pointer;' onclick='toggleHtmlRulesDesc()'>&nbsp;▶&nbsp;</span></td>
+                <tr>
+              </table>
+              <span id='rules_desc'></span>
+
+              <br>
+          
+              <table class='centre'>
+                <tr>
+                  <td style='text-align:right'>Neighbours:</td>
+                  <td>0</td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                  <td>8</td>
+                <tr>
+                <tr>
+                  <td style='text-align:right'>Birth:</td>
+                  <td><input id='birth_0' type='checkbox' onchange='checkLifeRules();zeroNeighboursB()'></td>
+                  <td><input id='birth_1' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_2' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_3' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_4' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_5' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_6' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_7' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='birth_8' type='checkbox' onchange='checkLifeRules()'></td>
+                <tr>
+                </tr>
+                  <td style='text-align:right'>Survival:</td>
+                  <td><input id='survival_0' type='checkbox' onchange='checkLifeRules();zeroNeighboursS()'></td>
+                  <td><input id='survival_1' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_2' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_3' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_4' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_5' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_6' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_7' type='checkbox' onchange='checkLifeRules()'></td>
+                  <td><input id='survival_8' type='checkbox' onchange='checkLifeRules()'></td>
+                </tr>
+              </table>
+            </details>
+          </div>
+          
+          <hr>
+          
+          <div class='radios_loop'>
+            <details>
+              <summary>Loop Type</summary>
+              
+              <br>
+              
+              <table class='centre'>
+                <tr>
+                  <td>Presets: </td>
+                  <td><select id='loop_type' onchange='updateLoopType(this.value)'></select></td>
+                  <td width='40'><span id='loop_type_desc_toggle' style='cursor:pointer;' onclick='toggleHtmlLoopTypeDesc()'>&nbsp;▶&nbsp;</span></td>
+                </tr>
+              </table>
+              <span id='loop_type_desc'></span>
+              
+              <br>
+              
+              <table class='centre'>
+                <tr>
+                  <td>Loop 1: </td>
+                  <td><select id='loop_rule_0' onchange='updateLoopRule(0,this.value)'></select></td>
+                  <td><input id='loop_rate_0' type='range' min='1' max='200' value='20' step='1' style='width:100px;' oninput='updateLoopRate(0,this.value)' /></td>
+                  <td width='30'><span id='span_loop_rate_0'>20</span></td>
+                <tr>
+                </tr>
+                  <td>Loop 2: </td>
+                  <td><select id='loop_rule_1' onchange='updateLoopRule(1,this.value)'></select></td>
+                  <td><input id='loop_rate_1' type='range' min='1' max='200' value='20' step='1' style='width:100px;' oninput='updateLoopRate(1,this.value)' /></td>
+                  <td width='30'><span id='span_loop_rate_1'>20</span></td>
+                </tr>
+              </table>
+            </details>
+          </div>
+          
+          <hr>
+          
+          <div class='draw_patterns'>
+            <details>
+              <summary>Draw Patterns</summary>
+              
+              <p>Use left and middle mouse buttons to draw/kill cells.</p>
+              
+              <table class='centre'>
+                <tr>
+                  <td colspan=4>Mirror Symmetry:</td>
+                <tr>
+                <tr>
+                  <td width=50>N/S</td>
+                  <td width=50>E/W</td>
+                  <td width=70>NE/SW</td>
+                  <td width=70>NW/SE</td>
+                <tr>
+                <tr>
+                  <td><input id='mirror_NS' type='checkbox' onchange='toggleMirrorNS()'></td>
+                  <td><input id='mirror_EW' type='checkbox' onchange='toggleMirrorEW()'></td>
+                  <td><input id='mirror_NESW' type='checkbox' onchange='toggleMirrorNESW()'></td>
+                  <td><input id='mirror_NWSE' type='checkbox' onchange='toggleMirrorNWSE()'></td>
+                <tr>
+              </table>
+              
+              <input type='button' value='Clear canvas and pause' onclick='clearCanvas()'>
+              <br>
+              <input type='button' value='Randomise cells' onclick='randomise()'>
+              <br>
+              <input type='button' value='Central rectangle' onclick='randomiseCentralBlock()'>
+              <br>
+              
+            </details>
+          </div>
+          
+          <hr>
+          
+          <div class='save_state'>
+            <details>
+              <summary>Save State</summary>
+              
+              <textarea id='state_text' style='width: 80%' rows='5' spellcheck='false'></textarea>
+              <br>
+              <input type='button' value='Save State' onclick='stateSave()'>
+              <input type='button' value='Load State' onclick='stateLoad()'>
+              <br>
+              
+            </details>
+          </div>
+          
+          <hr>
+          
+        </div>
+      </div>
+    </div>
+  
+    <footer class='border'>
+      <div class='footer_div'>
+        <div class='footer_title'>(incomplete; please don't distribute beyond tilde town yet)</div>
+        <div class='footer_left'>by nossidge</div>
+        <div class='footer_right'>
+          <a hidden rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/88x31.png' /></a>
+        </div>
+      </div>
+    </footer>
+  
+  <script src='./life.js'></script>
+</body></html>

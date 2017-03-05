@@ -1,0 +1,137 @@
+<html>
+  <head>
+    <meta charset="UTF-8"></meta>
+    <script>
+    
+// Global. All the double-line box drawing characters.
+var charsToOutput = [
+  unescape(JSON.parse('"\\u2551"')),
+  unescape(JSON.parse('"\\u2550"')),
+  unescape(JSON.parse('"\\u255A"')),
+  unescape(JSON.parse('"\\u2554"')),
+  unescape(JSON.parse('"\\u2557"')),
+  unescape(JSON.parse('"\\u255D"')),
+  unescape(JSON.parse('"\\u2560"')),
+  unescape(JSON.parse('"\\u2566"')),
+  unescape(JSON.parse('"\\u2563"')),
+  unescape(JSON.parse('"\\u2569"')),
+  unescape(JSON.parse('"\\u256C"'))
+];
+
+function randBetween(min,max) {
+  return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// http://stackoverflow.com/questions/5623838
+function rgbToHex(r, g, b) {
+  function denToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  return "#" + denToHex(r) + denToHex(g) + denToHex(b);
+} //alert( rgbToHex(0,2,0) );
+
+////////////////////////////////////////////////////////////////////////////////
+
+// CharacterCell class.
+var maxLife = 100;
+function CharacterCell(xCell,yCell) {
+  this.xCell = xCell;
+  this.yCell = yCell;
+  this.colour = '#000000';
+  
+  // Random character and random lifespan.
+  this.charSymbol = charsToOutput[randBetween(0,charsToOutput.length-1)];
+  this.lifeLeft = randBetween(0,maxLife*0.8);
+  
+  // When the time runs out, the character and brightness will be reset.
+  this.tick = function() {
+    this.lifeLeft = this.lifeLeft - 1;
+    if (this.lifeLeft <= 0) {
+      this.lifeLeft = randBetween(maxLife/5,maxLife);
+      this.charSymbol = charsToOutput[randBetween(0,charsToOutput.length-1)];
+    }
+    var colourVal = Math.floor( this.lifeLeft*(255/maxLife) );
+    this.colour = rgbToHex(0,colourVal,0);
+  }
+  
+  this.getTableCellHTML = function() {
+    this.tick();
+    return "<td style='color:" + this.colour + "'>" + this.charSymbol + "</td>";
+  }
+  
+  this.getTableCellID = function() {
+    var output = "x" + this.xCell + "y" + this.yCell;
+    return output;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+var cells = [];
+function makeTable() {
+  var charRand = charsToOutput[randBetween(0,charsToOutput.length-1)];
+
+  tableHTML = "";
+  for(var y = 0; y < 7; y++) {
+    row = "<tr>";
+    for(var x = 0; x < 20; x++) {
+      row = row + "<td id='x" + x + "y" + y + "'>" + charRand + "</td>";
+      
+      var newCell = new CharacterCell(x,y);
+      cells.push(newCell);
+      newCell.getTableCellHTML();
+    }
+    row = row + "</tr>\n";
+    tableHTML = tableHTML + row;
+  }
+  var container = document.getElementById("pipeTable");
+  container.innerHTML = tableHTML;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+function displayTable() {
+  for(var i = 0; i < cells.length; i++) {
+    cells[i].tick();
+    var id = cells[i].getTableCellID();
+    var symbol = cells[i].charSymbol;
+    document.getElementById( id ).innerHTML = symbol;
+    document.getElementById( id ).style.color = cells[i].colour;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Change every so often.
+window.setInterval(
+  function() { displayTable(); },
+  100
+);
+
+////////////////////////////////////////////////////////////////////////////////
+     
+    </script>
+  
+  <style type="text/css">
+    body {
+      font-family: "Courier New", Courier, monospace;
+      background-color:black;
+      text-align:center;
+      margin: 0px;
+      padding: 0px;
+    }
+    table {
+      margin: 0 auto;
+      font-size: 220%;
+    }
+    tr td { padding: 0px; }
+  </style>
+    
+  </head>
+  <body onload="makeTable()" >
+    <table id="pipeTable" cellspacing="0px" cellpadding="0px"></table>
+  </body>
+</html>

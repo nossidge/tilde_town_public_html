@@ -1,0 +1,664 @@
+<html>
+<head>
+  <title>feel like a natural pacman</title>
+  <style>
+    body {
+      background-color:black;
+      text-align:left;
+      font-size:160%;
+      color:#00ff00;
+      margin: 18px;
+      padding:0;
+    }
+    a:link    { color: #00ff00; }
+    a:visited { color: #00aa00; }
+    a:hover   { color: #00ff00; }
+    a:active  { color: #00ff00; }
+    .header {
+      padding: 18px;
+      border: 2px solid #00ff00;
+      margin-bottom: 50px; 
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+<p><a href="https://en.wikipedia.org/wiki/NATURAL">ADABAS Natural</a> is a proprietary language developed in the 1970s to run on ADABAS, Software AG's mainframe database program.</p>
+<p>It's a legacy system these days; there's no call for development work. As soon as I became qualified for a development role, our client cancelled their contract. And that was five years ago. It's like a less well used, more obscure COBOL.</p>
+<p>It's also the fucking worst. Of all possible things.</p>
+<p>But when we're trapped in Plato's cave, we must make the best of things. Creativity will out.</p>
+<p>There are no events in Natural other than the keypress. There's no timing, clock tick, or automatic screen refreshes. If you were going to write a computer game in Natural, you would write something turn-based, like <a href="https://en.wikipedia.org/wiki/Sokoban">Sokoban</a> or <a href="https://en.wikipedia.org/wiki/Theseus_and_the_Minotaur">Theseus and the Minotaur</a>.</p>
+<p>Only an imbecile would attempt to remake Pacman using an ADABAS Natural mainframe.</p>
+<p>Here is my attempt to remake Pacman using an ADABAS Natural mainframe.</p>
+</div>
+<pre>
+************************************************************************
+* PACMAN                                  * PAUL THOMPSON * 26/10/2010 *
+* 09/11/2010 - UP TO 10 GHOSTS!                                        *
+* 10/11/2010 - CALCULATE THE STARTING POSITION OF GHOSTS               *
+*            - ADD MORE LEVELS                                         *
+* 11/11/2010 - UP TO 26 GHOSTS! ONE FOR EACH ALPHA CHARACTER           *
+* 12/11/2010 - DODGY DOT COUNTERS WHEN GHOSTS ARE TRANSPARENT          *
+* 14/12/2010 - GOT RID OF GHOST TRANSPARENCY                           *
+************************************************************************
+DEFINE DATA LOCAL                                                      
+*                                                                      
+1 #SR-DIRECTION-SWITCH  (A1)                                           
+*                                                                      
+1 #GHOST-MAX            (N2) CONST<26>                                 
+1 #X-MAX                (I2) CONST<28>  /* THE MAXIMUM WIDTH           
+1 #Y-MAX                (I2) CONST<24>  /* THE MAXIMUM HEIGHT          
+*                                                                      
+1 #MAZE                 (A28/1:24)      /* PAC MAZE                    
+1 #DOTS-PACMAN          (N3) INIT<0>                                   
+1 #DOTS-TOTAL           (N3) INIT<0>                                   
+1 #DOTS-LEFT            (N3) INIT<0>                                   
+1 #DOTS-IN-MAZE         (N3) INIT<0>                                   
+1 #DOTS-UNDER-GHOSTS    (N3) INIT<0>                                   
+*                                                                      
+* LEVEL VARIABLES                                                      
+1 #MAZE-LEVEL           (N2) INIT <02>                                 
+1 #GHOST-COUNT          (N2) INIT <26>                                 
+1 #PACMAN-LIVES         (N2) INIT <10>                                 
+*                                                                      
+* THE X AND Y LOCATION OF PACMAN AND THE GHOSTS                        
+1 #X                    (I2) INIT <14>  /* THE ROW                     
+1 #Y                    (I2) INIT <12>  /* THE ARRAY INDEX             
+1 #X-GHOST              (I2/#GHOST-MAX)                                
+1 #Y-GHOST              (I2/#GHOST-MAX)                                
+1 #GHOST-DIR            (A1/#GHOST-MAX) INIT (*) <'R'>                 
+1 #GHOST-LIVE           (L/#GHOST-MAX)  INIT (*) <FALSE>               
+*                                                                      
+* THE POTENTIAL NEXT LOCATION OF MOBS                                  
+1 #X-DEST               (I2)   /* THE ROW                              
+1 #Y-DEST               (I2)   /* THE ARRAY INDEX                      
+1 #X-GHOST-CURRENT      (I2)   /* THE CURRENT GHOST'S X ORDINATE       
+1 #Y-GHOST-CURRENT      (I2)   /* THE CURRENT GHOST'S Y ORDINATE       
+*                                                                      
+1 #CURRENTLY-MOVING     (A1)   /* 'P'=PACMAN - 'G'=GHOST               
+1 #GHOST-CURRENT        (N2)   /* THE CURRENT GHOST INDEX              
+1 #GHOST-DIR-STRING     (A4)   /* ALL POSSIBLE DIRECTIONS              
+1 #GHOST-DIR-CURRENT    (A1)   /* THE CURRENT GHOST'S DIRECTION VECTOR 
+1 #CHAR-DEST            (A1)   /* THE CHAR OF THE ADDRESS TO MOVE TO   
+1 #CHAR-DEST-VALID      (L)    /* WHETHER THE CHAR IS VALID TO MOVE TO 
+1 #GHOST-POS-DIRECTIONS (A40)  /* VALID POSSIBLE DIRECTIONS EG. 'URD'  
+1 #GHOSTS-UNDER         (N2)   /* NUMBER OF GHOSTS THAT SHARE THE POS  
+*                                                                      
+* CHARACTERS ON THE SCREEN                                             
+1 #CHAR-PACMAN          (A1) CONST<'@'>                                
+1 #CHAR-WALL            (A1) CONST<'#'>                                
+1 #CHAR-GATE            (A1) CONST<'-'>                                
+1 #CHAR-DOT             (A1) CONST<'.'>                                
+1 #CHAR-CHERRY          (A1) CONST<'%'>                                
+1 #CHAR-GHOST           (A1/#GHOST-MAX)                                
+  CONST(V) <'A','B','C','D','E','F','G','H','I','J','K','L'            
+  ,'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'>            
+*                                                                      
+* THESE ARE WHAT IS UNDERNEATH THE MOBS, LIKE DOTS OR GATES            
+* NEED TO LEAVE THEM BEHIND ON THE NEXT MOVE                           
+1 #CHAR-PACMAN-POO      (A1)                                           
+1 #CHAR-GHOST-POO       (A1/#GHOST-MAX)                                
+*                                                                      
+* USER INPUT - THE DIRECTION PACMAN IS TO TRAVEL                       
+1 #INPUT-DIRECTION      (A1)                                           
+*                                                                      
+* TIME STUFF FOR THE PSEUDO-RANDOMNESS                                 
+1 #TIME-ALPHA           (A10)                                          
+1 #TENTH-SECOND         (A1)                                           
+1 #TENTH-SECOND-NUM     (N2)                                           
+1 #RAND-NUM             (N2)                                           
+*                                                                      
+* MISC / RE-USABLE                                                     
+1 #I                    (N2)                                           
+1 #J                    (N2)                                           
+1 #TEMP-DECIMAL         (N2.4)                                         
+1 #STRING-LEN           (N1)                                           
+1 #MOD                  (N1)                                           
+1 #POWER-UP-COUNTER     (N3)                                           
+1 #POWER-UP             (L)   INIT <FALSE>                             
+1 #OUTPUT               (A30)                                          
+1 #CV-MAZE              (C)   INIT<(CD=NE)>                            
+*                                                                      
+END-DEFINE                                                             
+***********************************************************************
+*                                                                      
+INPUT (AD=UM) #GHOST-COUNT #MAZE-LEVEL #PACMAN-LIVES                   
+*                                                                      
+SET KEY PF3                                                            
+SET KEY PF5  /* CREATE LISTENERS FOR THE PF KEYS 5 TO 8                
+SET KEY PF6  /*  THESE WILL BE USED FOR DIRECTIONS                     
+SET KEY PF7                                                            
+SET KEY PF8                                                            
+SET KEY PF9                                                            
+*                                                                      
+PERFORM INITIALISE-PAC-MAZE                                            
+PERFORM FIND-POSITION-OF-MOBS                                          
+PERFORM COUNT-DOTS                                                     
+*                                                                      
+REPEAT                                                                 
+  INPUT USING MAP 'PAC001M0'                                           
+*                                                                      
+  IF *PF-KEY = 'PF3'                                                   
+    ESCAPE ROUTINE                                                     
+  END-IF                                                               
+*                                                                      
+  DECIDE FOR FIRST CONDITION                                           
+    WHEN #INPUT-DIRECTION = 'L' OR *PF-KEY = 'PF5'                     
+      PERFORM MOVE-PACMAN-LEFT                                         
+    WHEN #INPUT-DIRECTION = 'R' OR *PF-KEY = 'PF8'                     
+      PERFORM MOVE-PACMAN-RIGHT                                        
+    WHEN #INPUT-DIRECTION = 'U' OR *PF-KEY = 'PF6'                     
+      PERFORM MOVE-PACMAN-UP                                           
+    WHEN #INPUT-DIRECTION = 'D' OR *PF-KEY = 'PF7'                     
+      PERFORM MOVE-PACMAN-DOWN                                         
+    WHEN *PF-KEY = 'PF9'                                               
+      IGNORE                                                           
+    WHEN NONE REINPUT ' '                                              
+  END-DECIDE                                                           
+*                                                                      
+  PERFORM POWER-UP-COUNTDOWN                                           
+*                                                                      
+  PERFORM MOVE-GHOSTS                                                  
+*                                                                      
+END-REPEAT                                                             
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE MOVE-GHOSTS                                          
+#CURRENTLY-MOVING:= 'G'                                                
+PERFORM COMPUTE-TENTH-SECOND                                           
+*                                                                      
+FOR #GHOST-CURRENT = 1 TO #GHOST-COUNT                                 
+  IF #GHOST-LIVE(#GHOST-CURRENT) = FALSE                               
+    ESCAPE TOP                                                         
+  END-IF                                                               
+*                                                                      
+  #X-GHOST-CURRENT:= #X-GHOST(#GHOST-CURRENT)                          
+  #Y-GHOST-CURRENT:= #Y-GHOST(#GHOST-CURRENT)                          
+  PERFORM COUNT-GHOSTS-UNDER                                           
+*                                                                      
+  RESET #GHOST-POS-DIRECTIONS                                          
+  FOR #I = 1 TO 4                                                      
+    COMPUTE #TEMP-DECIMAL = #GHOSTS-UNDER + #GHOST-CURRENT             
+      + #TENTH-SECOND-NUM                                              
+    COMPUTE #TEMP-DECIMAL = #TEMP-DECIMAL / 4                          
+    COMPUTE #TEMP-DECIMAL = INT(#TEMP-DECIMAL)                         
+    COMPUTE #TEMP-DECIMAL = #TEMP-DECIMAL * 4                          
+    COMPUTE #MOD = #GHOSTS-UNDER + #GHOST-CURRENT + #TENTH-SECOND-NUM  
+      - #TEMP-DECIMAL                                                  
+*                                                                      
+    DECIDE ON FIRST VALUE OF #MOD                                      
+      VALUE 0  #GHOST-DIR-STRING:= 'LURD'                              
+      VALUE 1  #GHOST-DIR-STRING:= 'URDL'                              
+      VALUE 2  #GHOST-DIR-STRING:= 'RDLU'                              
+      VALUE 3  #GHOST-DIR-STRING:= 'DLUR'                              
+      NONE     WRITE 'ERR005: #MOD IS MESSED UP!'                      
+    END-DECIDE                                                         
+*                                                                      
+    MOVE SUBSTRING(#GHOST-DIR-STRING,#I,1) TO #GHOST-DIR-CURRENT       
+    #X-DEST:= #X-GHOST-CURRENT                                         
+    #Y-DEST:= #Y-GHOST-CURRENT                                         
+*                                                                      
+*   EXAMINE THE CHARACTERS SURROUNDING THE GHOST                       
+    DECIDE ON FIRST VALUE OF #GHOST-DIR-CURRENT                        
+      VALUE 'L'  #X-DEST:= #X-GHOST-CURRENT - 1                        
+      VALUE 'R'  #X-DEST:= #X-GHOST-CURRENT + 1                        
+      VALUE 'U'  #Y-DEST:= #Y-GHOST-CURRENT - 1                        
+      VALUE 'D'  #Y-DEST:= #Y-GHOST-CURRENT + 1                        
+      NONE       WRITE 'ERR004: #GHOST-DIR-CURRENT IS MESSED UP!'      
+    END-DECIDE /*(1660)                                                
+*                                                                      
+*   THIS SHOULD WORK FOR ALL DIRECTIONS                                
+    PERFORM VALIDATE-FOR-SCREEN-SCROLL                                 
+    MOVE SUBSTRING(#MAZE(#Y-DEST),#X-DEST,1) TO #CHAR-DEST             
+    PERFORM CHECK-CHAR-DEST-VALID                                      
+*                                                                      
+    IF #CHAR-DEST-VALID                                                
+      COMPRESS #GHOST-POS-DIRECTIONS #GHOST-DIR-CURRENT TO             
+        #GHOST-POS-DIRECTIONS LEAVING NO SPACE                         
+    END-IF /*(1790)                                                    
+  END-FOR /*(1440)                                                     
+*                                                                      
+  PERFORM MOVE-GHOST-FOR-REALZ                                         
+END-FOR /*(1340)                                                       
+PERFORM REDRAW-MOBS                                                    
+END-SUBROUTINE                                                         
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE MOVE-GHOST-FOR-REALZ                                 
+*                                                                      
+* GET RID OF THE ORIGINAL #GHOST-DIR                                   
+#SR-DIRECTION-SWITCH:= #GHOST-DIR(#GHOST-CURRENT)                      
+PERFORM DIRECTION-SWITCH                                               
+*                                                                      
+EXAMINE #GHOST-POS-DIRECTIONS FOR #SR-DIRECTION-SWITCH AND DELETE FIRST
+EXAMINE #GHOST-POS-DIRECTIONS FOR '@' GIVING LENGTH IN #STRING-LEN     
+*                                                                      
+#RAND-NUM:= 1                                                          
+DECIDE ON FIRST VALUE OF #STRING-LEN                                   
+  VALUE 2, 3                                                           
+    FOR #I = 1 TO 6                                                    
+      COMPRESS #GHOST-POS-DIRECTIONS #GHOST-POS-DIRECTIONS             
+        TO #GHOST-POS-DIRECTIONS LEAVING NO SPACE                      
+    END-FOR                                                            
+    COMPUTE #RAND-NUM = #TENTH-SECOND-NUM + #GHOSTS-UNDER              
+  VALUE 1 IGNORE                                                       
+  VALUE 0                                                              
+    #GHOST-POS-DIRECTIONS:= #SR-DIRECTION-SWITCH                       
+  NONE WRITE 'ERR001: #STRING-LEN IS MESSED UP!'                       
+END-DECIDE /*(2020)                                                    
+IF #RAND-NUM = 0 #RAND-NUM:= 1 END-IF                                  
+* WRITE #GHOST-POS-DIRECTIONS                                          
+*                                                                      
+* THIS IS THE DIRECTION WE WILL MOVE THE GHOST IN! FUCKING FINALLY!    
+MOVE SUBSTRING(#GHOST-POS-DIRECTIONS,#RAND-NUM,1) TO #GHOST-DIR-CURRENT
+*                                                                      
+#X-DEST:= #X-GHOST-CURRENT                                             
+#Y-DEST:= #Y-GHOST-CURRENT                                             
+*                                                                      
+DECIDE ON FIRST VALUE OF #GHOST-DIR-CURRENT                            
+  VALUE 'L'  #X-DEST:= #X-GHOST-CURRENT - 1                            
+  VALUE 'R'  #X-DEST:= #X-GHOST-CURRENT + 1                            
+  VALUE 'U'  #Y-DEST:= #Y-GHOST-CURRENT - 1                            
+  VALUE 'D'  #Y-DEST:= #Y-GHOST-CURRENT + 1                            
+  NONE       WRITE 'ERR003: #GHOST-DIR-CURRENT IS MESSED UP!'          
+END-DECIDE /*(2230)                                                    
+*                                                                      
+PERFORM VALIDATE-FOR-SCREEN-SCROLL                                     
+MOVE SUBSTRING(#MAZE(#Y-DEST),#X-DEST,1) TO #CHAR-DEST                 
+*                                                                      
+MOVE #CHAR-GHOST-POO(#GHOST-CURRENT)                                   
+  TO SUBSTRING(#MAZE(#Y-GHOST-CURRENT),#X-GHOST-CURRENT,1)             
+*                                                                      
+RESET #CHAR-GHOST-POO(#GHOST-CURRENT)                                  
+#CHAR-GHOST-POO(#GHOST-CURRENT):= #CHAR-DEST                           
+*                                                                      
+#X-GHOST(#GHOST-CURRENT):= #X-DEST                                     
+#Y-GHOST(#GHOST-CURRENT):= #Y-DEST                                     
+#GHOST-DIR(#GHOST-CURRENT):= #GHOST-DIR-CURRENT                        
+END-SUBROUTINE /*(1920)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE DIRECTION-SWITCH                                     
+DECIDE ON FIRST VALUE OF #SR-DIRECTION-SWITCH                          
+  VALUE 'L' #SR-DIRECTION-SWITCH:= 'R'                                 
+  VALUE 'R' #SR-DIRECTION-SWITCH:= 'L'                                 
+  VALUE 'U' #SR-DIRECTION-SWITCH:= 'D'                                 
+  VALUE 'D' #SR-DIRECTION-SWITCH:= 'U'                                 
+  NONE WRITE 'ERR002: #SR-DIRECTION-SWITCH IS MESSED UP!'              
+END-DECIDE /*(2480)                                                    
+END-SUBROUTINE /*(2470)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE COMPUTE-TENTH-SECOND                                 
+#TIME-ALPHA:= *TIME                                                    
+MOVE SUBSTRING(#TIME-ALPHA,10,1) TO #TENTH-SECOND                      
+MOVE EDITED #TENTH-SECOND TO #TENTH-SECOND-NUM (EM=9)                  
+ADD 1 TO #TENTH-SECOND-NUM                                             
+END-SUBROUTINE /*(2590)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE MOVE-PACMAN-LEFT                                     
+#X-DEST:= #X - 1                                                       
+#Y-DEST:= #Y                                                           
+PERFORM MOVE-PACMAN                                                    
+END-SUBROUTINE /*(2680)                                                
+*                                                                      
+DEFINE SUBROUTINE MOVE-PACMAN-RIGHT                                    
+#X-DEST:= #X + 1                                                       
+#Y-DEST:= #Y                                                           
+PERFORM MOVE-PACMAN                                                    
+END-SUBROUTINE /*(2740)                                                
+*                                                                      
+DEFINE SUBROUTINE MOVE-PACMAN-UP                                       
+#X-DEST:= #X                                                           
+#Y-DEST:= #Y - 1                                                       
+PERFORM MOVE-PACMAN                                                    
+END-SUBROUTINE /*(2800)                                                
+*                                                                      
+DEFINE SUBROUTINE MOVE-PACMAN-DOWN                                     
+#X-DEST:= #X                                                           
+#Y-DEST:= #Y + 1                                                       
+PERFORM MOVE-PACMAN                                                    
+END-SUBROUTINE /*(2860)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+* MAKE SURE THAT MOBS CAN JUMP TO THE OTHER SIDE OF THE SCREEN.        
+DEFINE SUBROUTINE VALIDATE-FOR-SCREEN-SCROLL                           
+DECIDE FOR FIRST CONDITION                                             
+  WHEN #X-DEST = 0              #X-DEST:= #X-MAX                       
+  WHEN #X-DEST = (#X-MAX + 1)   #X-DEST:= 1                            
+  WHEN #Y-DEST = 0              #Y-DEST:= #Y-MAX                       
+  WHEN #Y-DEST = (#Y-MAX + 1)   #Y-DEST:= 1                            
+  WHEN NONE IGNORE                                                     
+END-DECIDE /*(2960)                                                    
+END-SUBROUTINE /*(2950)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE MOVE-PACMAN                                          
+#CURRENTLY-MOVING:= 'P'                                                
+PERFORM VALIDATE-FOR-SCREEN-SCROLL                                     
+MOVE SUBSTRING(#MAZE(#Y-DEST),#X-DEST,1) TO #CHAR-DEST                 
+PERFORM CHECK-CHAR-DEST-VALID                                          
+*                                                                      
+IF #CHAR-DEST-VALID                                                    
+  DECIDE ON FIRST VALUE OF #CHAR-DEST                                  
+    VALUE #CHAR-DOT                                                    
+      ADD 1 TO #DOTS-PACMAN                                            
+      SUBTRACT 1 FROM #DOTS-LEFT                                       
+      IF #DOTS-LEFT = 0                                                
+        ADD 1 TO #MAZE-LEVEL                                           
+        FETCH 'PAC001P0' #GHOST-COUNT #MAZE-LEVEL #PACMAN-LIVES        
+      END-IF                                                           
+    VALUE #CHAR-CHERRY                                                 
+      PERFORM POWER-UP-FLIP                                            
+    NONE VALUES IGNORE                                                 
+  END-DECIDE                                                           
+*                                                                      
+  MOVE #CHAR-PACMAN TO SUBSTRING(#MAZE(#Y-DEST),#X-DEST,1)             
+  MOVE #CHAR-PACMAN-POO TO SUBSTRING(#MAZE(#Y),#X,1)                   
+*                                                                      
+  RESET #CHAR-PACMAN-POO                                               
+  IF #CHAR-DEST = #CHAR-GATE                                           
+    #CHAR-PACMAN-POO:= #CHAR-GATE                                      
+  END-IF                                                               
+*                                                                      
+  #X:= #X-DEST                                                         
+  #Y:= #Y-DEST                                                         
+ELSE                                                                   
+  REINPUT ' '                                                          
+END-IF /*(3130)                                                        
+*                                                                      
+PERFORM REDRAW-MOBS                                                    
+END-SUBROUTINE /*(3070)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE CHECK-CHAR-DEST-VALID                                
+DECIDE FOR FIRST CONDITION                                             
+  WHEN #CHAR-DEST = #CHAR-WALL                                         
+    MOVE FALSE TO #CHAR-DEST-VALID                                     
+  WHEN #CHAR-DEST = #CHAR-GATE AND #CURRENTLY-MOVING = 'G'             
+    MOVE FALSE TO #CHAR-DEST-VALID                                     
+  WHEN NONE                                                            
+    MOVE TRUE TO #CHAR-DEST-VALID                                      
+END-DECIDE                                                             
+END-SUBROUTINE /*(3460)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE POWER-UP-COUNTDOWN                                   
+IF #POWER-UP                                                           
+  ADD 1 TO #POWER-UP-COUNTER                                           
+  IF #POWER-UP-COUNTER = 20                                            
+    PERFORM POWER-UP-FLIP                                              
+  END-IF                                                               
+ELSE                                                                   
+  REINPUT ' '                                                          
+END-IF /*(3130)                                                        
+*                                                                      
+PERFORM REDRAW-MOBS                                                    
+END-SUBROUTINE /*(3070)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE CHECK-CHAR-DEST-VALID                                
+DECIDE FOR FIRST CONDITION                                             
+  WHEN #CHAR-DEST = #CHAR-WALL                                         
+    MOVE FALSE TO #CHAR-DEST-VALID                                     
+  WHEN #CHAR-DEST = #CHAR-GATE AND #CURRENTLY-MOVING = 'G'             
+    MOVE FALSE TO #CHAR-DEST-VALID                                     
+  WHEN NONE                                                            
+    MOVE TRUE TO #CHAR-DEST-VALID                                      
+END-DECIDE                                                             
+END-SUBROUTINE /*(3460)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE POWER-UP-COUNTDOWN                                   
+IF #POWER-UP                                                           
+  ADD 1 TO #POWER-UP-COUNTER                                           
+  IF #POWER-UP-COUNTER = 20                                            
+    PERFORM POWER-UP-FLIP                                              
+  END-IF                                                               
+END-IF                                                                 
+END-SUBROUTINE /*(3580)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE POWER-UP-FLIP                                        
+IF #POWER-UP AND #POWER-UP-COUNTER = 20                                
+  MOVE FALSE TO #POWER-UP                                              
+  MOVE (CD=NE) TO #CV-MAZE                                             
+  RESET #POWER-UP-COUNTER                                              
+ELSE                                                                   
+  MOVE TRUE TO #POWER-UP                                               
+  MOVE (CD=YE) TO #CV-MAZE                                             
+END-IF                                                                 
+END-SUBROUTINE /*(3780)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE REDRAW-MOBS                                          
+FOR #GHOST-CURRENT = 1 TO #GHOST-COUNT                                 
+* IF THE POSITION IS WHERE PACMAN IS, THEN ONE OF THEM IS DEAD         
+  IF #X-GHOST(#GHOST-CURRENT) = #X AND #Y-GHOST(#GHOST-CURRENT) = #Y   
+     AND #GHOST-LIVE(#GHOST-CURRENT) = TRUE                            
+    IF #POWER-UP                                                       
+      #GHOST-LIVE(#GHOST-CURRENT):= FALSE                              
+      MOVE 1 TO #X-GHOST(#GHOST-CURRENT) #Y-GHOST(#GHOST-CURRENT)      
+      #OUTPUT:= 'GHOST KILLED!'                                        
+    ELSE                                                               
+      #CHAR-GHOST-POO(#GHOST-CURRENT):= #CHAR-PACMAN-POO               
+      RESET INITIAL #X #Y                                              
+      SUBTRACT 1 FROM #PACMAN-LIVES                                    
+      IF #PACMAN-LIVES = 0 THEN                                        
+        WRITE 'PACMAN IS DEAD'                                         
+      END-IF                                                           
+    END-IF                                                             
+  END-IF                                                               
+*                                                                      
+* REPAINT THE POSITION WITH THE GHOST CHARACTER (IF IT'S ALIVE)        
+  IF #GHOST-LIVE(#GHOST-CURRENT) = TRUE                                
+    #X-DEST:= #X-GHOST(#GHOST-CURRENT)                                 
+    #Y-DEST:= #Y-GHOST(#GHOST-CURRENT)                                 
+    MOVE #CHAR-GHOST(#GHOST-CURRENT)                                   
+      TO SUBSTRING(#MAZE(#Y-DEST),#X-DEST,1)                           
+  END-IF                                                               
+END-FOR /*(3830)                                                       
+*                                                                      
+* IF PACMAN HAS JUST BEEN KILLED, THERE MAY BE AN EXTRA PACMAN CHAR    
+EXAMINE #MAZE(*) FOR #CHAR-PACMAN AND REPLACE WITH ' '                 
+MOVE #CHAR-PACMAN TO SUBSTRING(#MAZE(#Y),#X,1)                         
+END-SUBROUTINE /*(3830)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE COUNT-GHOSTS-UNDER                                   
+* IF THE GHOST IS IN THE SAME POSITION AS A PREVIOUS GHOST, ADD TO COUNT
+#GHOSTS-UNDER:= -1                                                     
+FOR #I = 1 TO #GHOST-CURRENT                                           
+  IF #X-GHOST(#I) = #X-GHOST(#GHOST-CURRENT) AND                       
+      #Y-GHOST(#I) = #Y-GHOST(#GHOST-CURRENT)                          
+    ADD 1 TO #GHOSTS-UNDER                                             
+  END-IF                                                               
+END-FOR                                                                
+*                                                                      
+* IF #GHOSTS-UNDER <> 0                                                
+*   WRITE #GHOSTS-UNDER                                                
+* END-IF                                                               
+END-SUBROUTINE                                                         
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE COUNT-DOTS                                           
+EXAMINE #MAZE(*) FOR #CHAR-DOT GIVING NUMBER IN #DOTS-IN-MAZE          
+EXAMINE #CHAR-GHOST-POO(1:#GHOST-COUNT) FOR #CHAR-DOT                  
+  GIVING NUMBER IN #DOTS-UNDER-GHOSTS                                  
+*                                                                      
+#DOTS-TOTAL:= #DOTS-IN-MAZE + #GHOST-COUNT                             
+#CHAR-GHOST-POO(*):= #CHAR-DOT                                         
+#DOTS-LEFT:= #DOTS-TOTAL                                               
+END-SUBROUTINE /*(4350)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE FIND-POSITION-OF-MOBS                                
+* SET THE GHOSTS IN PLAY TO BE ALIVE                                   
+#GHOST-LIVE(1:#GHOST-COUNT):= TRUE                                     
+*                                                                      
+* SET THE POSITION OF THE GHOSTS IN PLAY                               
+FOR #I = 1 TO #GHOST-COUNT                                             
+  EXAMINE #MAZE(*) FOR #CHAR-GHOST(#I) GIVING INDEX IN #Y-GHOST-CURRENT
+  EXAMINE #MAZE(#Y-GHOST-CURRENT) FOR #CHAR-GHOST(#I)                  
+    GIVING POSITION IN #X-GHOST-CURRENT                                
+  #X-GHOST(#I):= #X-GHOST-CURRENT                                      
+  #Y-GHOST(#I):= #Y-GHOST-CURRENT                                      
+END-FOR /*(4520)                                                       
+*                                                                      
+* REMOVE THE CHARACTERS OF THE EXTRA GHOSTS                            
+COMPUTE #J = #GHOST-COUNT + 1                                          
+FOR #I = #J TO #GHOST-MAX                                              
+  EXAMINE #MAZE(*) FOR #CHAR-GHOST(#I) AND REPLACE WITH #CHAR-DOT      
+END-FOR                                                                
+*                                                                      
+* DO THE SAME FOR PACMAN                                               
+EXAMINE #MAZE(*) FOR #CHAR-PACMAN GIVING INDEX IN #Y                   
+EXAMINE #MAZE(#Y) FOR #CHAR-PACMAN GIVING POSITION IN #X               
+END-SUBROUTINE /*(4470)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE INITIALISE-PAC-MAZE                                  
+DECIDE ON FIRST VALUE OF #MAZE-LEVEL                                   
+  VALUE 1  PERFORM INITIALISE-PAC-MAZE-1                               
+  VALUE 2  PERFORM INITIALISE-PAC-MAZE-2                               
+  VALUE 3  PERFORM INITIALISE-PAC-MAZE-3                               
+  VALUE 4  PERFORM INITIALISE-PAC-MAZE-4                               
+  NONE     PERFORM INITIALISE-PAC-MAZE-1                               
+END-DECIDE /*(4740)                                                    
+END-SUBROUTINE /*(4730)                                                
+*                                                                      
+***********************************************************************
+*                                                                      
+DEFINE SUBROUTINE INITIALISE-PAC-MAZE-1                                
+*                |5   |10  |15  |20  |25                               
+#MAZE(01):= '############################'                             
+#MAZE(02):= '#.E.........T##.Z..........#'                             
+#MAZE(03):= '#.####.#####.##.#####D####.#'                             
+#MAZE(04):= '#.####.#####.##.#####.####.#'                             
+#MAZE(05):= '#F....%......L.......%...K.#'                             
+#MAZE(06):= '#.####G##.########.##.####.#'                             
+#MAZE(07):= '#S.....##....##..U.##......#'                             
+#MAZE(08):= '######.#####.##.#####.######'                             
+#MAZE(09):= '     #.##%...J....%##.#     '                             
+#MAZE(10):= '     #.##.###--###.##.#     '                             
+#MAZE(11):= '######.##.#      #.##.######'                             
+#MAZE(12):= '..........#  @   #C.......X.'                             
+#MAZE(13):= '######.##V#      #.##.######'                             
+#MAZE(14):= '     #R##.########.##.#     '                             
+#MAZE(15):= '     #.##%........%##.#     '                             
+#MAZE(16):= '######.##.########.##.######'                             
+#MAZE(17):= '#A...........##P.........W.#'                             
+#MAZE(18):= '#.####B#####.##.#####.####.#'                             
+#MAZE(19):= '#...##.....Q..........##...#'                             
+#MAZE(20):= '###.##.##.########.##.##.###'                             
+#MAZE(21):= '#..%...##....##..H.##..I%..#'                             
+#MAZE(22):= '#.####.#####.##.##########.#'                             
+#MAZE(23):= '#M.....Y.......N.........O.#'                             
+#MAZE(24):= '############################'                             
+END-SUBROUTINE /*(4850)                                                
+*                                                                      
+DEFINE SUBROUTINE INITIALISE-PAC-MAZE-2                                
+*                |5   |10  |15  |20  |25                               
+#MAZE(01):= '############################'                             
+#MAZE(02):= '...A...##......I...##.......'                             
+#MAZE(03):= '######.##.########.##.######'                             
+#MAZE(04):= '#N.........Y####.....E.....#'                             
+#MAZE(05):= '#.#######.#.####.#.#######.#'                             
+#MAZE(06):= '#.#W.....H#.####.#.....V.#.#'                             
+#MAZE(07):= '#.#.#####.#.....M#.#####.#U#'                             
+#MAZE(08):= '#.......#.########.#.......#'                             
+#MAZE(09):= '#######.#%%......%P#.#######'                             
+#MAZE(10):= '#......D#K###--###.#...J...#'                             
+#MAZE(11):= '#.#######.#      #.#######.#'                             
+#MAZE(12):= '#G......#.#  @   #.#.......#'                             
+#MAZE(13):= '#.#####...#      #..B#####T#'                             
+#MAZE(14):= '#....L#.#.########.#.#.....#'                             
+#MAZE(15):= '#####.#.#....%.....#.#.#####'                             
+#MAZE(16):= '    #.#.###.####.###.#.#    '                             
+#MAZE(17):= '    #.....#.####.#.....#    '                             
+#MAZE(18):= '#####.###R.......X.###.#####'                             
+#MAZE(19):= '....C...#.########.#........'                             
+#MAZE(20):= '#####.#.#....##....#.#.#####'                             
+#MAZE(21):= '#.....#...##S##.##F..#.....#'                             
+#MAZE(22):= '#.#####.####.##.####.#####.#'                             
+#MAZE(23):= '#.O...............Z.......Q#'                             
+#MAZE(24):= '############################'                             
+END-SUBROUTINE /*(5130)                                                
+*                                                                      
+DEFINE SUBROUTINE INITIALISE-PAC-MAZE-3                                
+*                |5   |10  |15  |20  |25                               
+#MAZE(01):= '############################'                             
+#MAZE(02):= '#.......................E..#'                             
+#MAZE(03):= '#..........B...............#'                             
+#MAZE(04):= '#...A.............D........#'                             
+#MAZE(05):= '#..............C...........#'                             
+#MAZE(06):= '#...........H...........F..#'                             
+#MAZE(07):= '#..........................#'                             
+#MAZE(08):= '#...I.............G........#'                             
+#MAZE(09):= '#..........Z...............#'                             
+#MAZE(10):= '#.....J...###--###.........#'                             
+#MAZE(11):= '#.........#      #.....N...#'                             
+#MAZE(12):= '#.........#  @   #.........#'                             
+#MAZE(13):= '#....K....#      #.O.......#'                             
+#MAZE(14):= '#.........########.........#'                             
+#MAZE(15):= '#........M.............P...#'                             
+#MAZE(16):= '#.L........................#'                             
+#MAZE(17):= '#..................Q.......#'                             
+#MAZE(18):= '#.....S.......R............#'                             
+#MAZE(19):= '#......................Y...#'                             
+#MAZE(20):= '#..........................#'                             
+#MAZE(21):= '#....T.......V...W.........#'                             
+#MAZE(22):= '#.....................X....#'                             
+#MAZE(23):= '#........U.................#'                             
+#MAZE(24):= '############################'                             
+END-SUBROUTINE /*(5130)                                                
+*                                                                      
+DEFINE SUBROUTINE INITIALISE-PAC-MAZE-4                                
+*                |5   |10  |15  |20  |25                               
+#MAZE(01):= '............................'                             
+#MAZE(02):= '........................E...'                             
+#MAZE(03):= '...........B................'                             
+#MAZE(04):= '....A.............D.........'                             
+#MAZE(05):= '...............C............'                             
+#MAZE(06):= '............H...........F...'                             
+#MAZE(07):= '............................'                             
+#MAZE(08):= '....I.............G.........'                             
+#MAZE(09):= '...........Z................'                             
+#MAZE(10):= '......J...###--###..........'                             
+#MAZE(11):= '..........#      #.....N....'                             
+#MAZE(12):= '..........#  @   #..........'                             
+#MAZE(13):= '.....K....#      #.O........'                             
+#MAZE(14):= '..........########..........'                             
+#MAZE(15):= '.........M.............P....'                             
+#MAZE(16):= '..L.........................'                             
+#MAZE(17):= '...................Q........'                             
+#MAZE(18):= '......S.......R.............'                             
+#MAZE(19):= '.......................Y....'                             
+#MAZE(20):= '............................'                             
+#MAZE(21):= '.....T.......V...W..........'                             
+#MAZE(22):= '......................X.....'                             
+#MAZE(23):= '.........U..................'                             
+#MAZE(24):= '............................'                             
+END-SUBROUTINE /*(5130)                                                
+END                                                                    
+</pre>
+</body>
+</html>

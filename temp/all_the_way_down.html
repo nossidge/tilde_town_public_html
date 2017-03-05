@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All The Way Down</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style> 
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+All The Way Down
+Glen Hansard
+
+
+Bm       Bm/A       Bm/G
+You have broken me, all the way down
+Bm   Bm/A    Bm/G
+Down upon my knees
+Bm       Bm/A       Bm/G
+You have broken me, all the way now
+Bm            Bm/A         Bm/G
+You'll be the last, you'll see
+
+
+F#m            G
+Some fight you gave
+A      F#m        G
+When I pushed you away
+A    D
+From me
+           A
+And in the morning
+Bm       G
+When you turn in
+D       A      Bm
+I'll be far to sea
+
+
+Bm             Bm/A       Bm/G
+(and) You have broken me, all the way down
+Bm            Bm/A         Bm/G
+You'll be the last, you'll see
+
+
+Bm    Bm/A   Bm/G
+Bm    Bm/A   Bm/G
+Da di da, da di da
+
+
+F#m                 G
+What chance have we got
+A        F#m          G
+When you missed every shot
+A    D
+From me
+           A 
+And in the morning
+Bm       G
+When you turn in
+D       A      Bm
+I'll be out of reach
+D          A
+And in the darkness
+Bm        G
+When you find this
+D       A      Bm
+I'll be far to sea
+
+
+Bm             Bm/A       Bm/G
+(and) You have broken me, all the way down
+Bm            Bm/A         Bm/G
+You'll be the last, you'll see
+
+
+
+
+Alternate chords:
+
+Bm             D          A           G
+(and) You have broken me, all the way down
+Bm            A            G
+You'll be the last, you'll see</div>
+</body>
+</html>

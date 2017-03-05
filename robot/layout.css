@@ -1,0 +1,53 @@
+body { text-align:center; background-color:#FFFFFF; margin:0 0 0 0; padding: 0 0 0 0; font-family:verdana, arial, sans-serif; font-size:1em; color:#FFFFFF; }
+
+
+  .x {background-color:#FFFFFF;}
+
+  .t {background: url(round/dot.gif) 0 0 repeat-x; }
+  .b {background: url(round/dot.gif) 0 100% repeat-x}
+  .l {background: url(round/dot.gif) 0 0 repeat-y}
+  .r {background: url(round/dot.gif) 100% 0 repeat-y}
+  .bl {background: url(round/bl.gif) 0 100% no-repeat}
+  .br {background: url(round/br.gif) 100% 100% no-repeat}
+  .tl {background: url(round/tl.gif) 0 0 no-repeat}
+  .tr {background: url(round/tr.gif) 100% 0 no-repeat; padding:10px}
+
+
+div.robotLeft { position:absolute; top:383px; left:0px; height:226px; width:70px; background-image: url(images/robotLeft.gif); background-repeat: no-repeat; }
+
+div.robotRight { position:absolute; top:0px; right:0px; height:413px; width:70px; background-image: url(images/robotRight.gif); background-repeat: no-repeat; }
+
+/* Head & Feet */
+
+div.wrapper { position:relative; left:50%; margin:0 auto; text-align:left; }
+
+div.head { position:absolute; top:0px; left:-106px; margin: 0 0 0 0; height:150px; width:213px; text-align: left; background-image: url(images/robotHead.gif); }
+
+div.feet { position:absolute; top:-4px; left:-324px; margin: 0 0 0 0; height:118px; width:648px; text-align: left; background-image: url(images/robotFeet.gif); }
+
+div.feetLeft { position:absolute; top:51px; left:22px; margin: 0 0 0 0; height:39px; width:262px; text-align: left;}
+
+div.feetRight { position:absolute; top:51px; left:353px; margin: 0 0 0 0; height:39px; width:278px; text-align: left; background-image: url(images/blank.gif); background-repeat: no-repeat; }
+
+/* Main Panel */
+
+div.border0 { margin: 146px 70px 0px 70px; border-width: 2px 2px 2px 2px; border-color: #000000; border-style:solid; }
+
+div.border1 { margin: 0px 0px 0px 0px; border-width: 2px 2px 2px 2px; border-color: #7BABDC; border-style:solid; background-color:#8FC6FF; }
+
+div.border2 { margin: 10px 10px 10px 10px; border-width: 1px 1px 1px 1px; border-color: #7BABDC; border-style:solid; padding: 10px 10px 10px 10px; background-color:#51A8FF; }
+
+div.content { margin: 0 0 0 0; }
+
+span.left { float:left; }
+span.right { float:right; }
+
+/* Nav */
+
+div.navpos { position:absolute; top:10px; right:10px; width:188px; }
+
+div.navborder1 { border-width: 1px 1px 1px 1px; border-color: #000000; border-style:solid; background-color:#51A8FF; }
+
+div.navborder2 { margin: 2px 2px 2px 2px; border-width: 1px 1px 1px 1px; border-color: #000000; border-style:solid; padding: 5px 5px 5px 5px; background-color:#8FC6FF; }
+
+div.navlink { font-size:14px; font-weight:bold; margin: 2px 0 2px 5px; }

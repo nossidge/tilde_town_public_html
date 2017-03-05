@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <meta charset='UTF-8'></meta>
+  <title>Which Tildee are you?</title>
+    <script>
+
+//##############################################################################
+
+// Monkey patch to add #randomElement to Array class.
+Array.prototype.randomElement = function() {
+  return this[Math.floor(Math.random() * this.length)]
+}
+
+// http://stackoverflow.com/questions/11935175/sampling-a-random-subset-from-an-array/11935263
+function getRandomSubarray(arr, size) {
+  var shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
+  while (i-- > min) {
+    index = Math.floor((i + 1) * Math.random());
+    temp = shuffled[index];
+    shuffled[index] = shuffled[i];
+    shuffled[i] = temp;
+  }
+  return shuffled.slice(min);
+}
+
+// http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
+var randomKey = function(obj) {
+  var keys = Object.keys(obj);
+  return keys[ keys.length * Math.random() << 0];
+};
+
+//##############################################################################
+
+var objJSON;
+var tildeUsers;
+
+var nameOpeners = [
+  "NAME is a XXX tildee, and so are you.",
+  "NAME is full of XXX and XXX, which allows these tildees to thrive in situations of XXX.",
+  "NAME is a tildee of XXX, and XXX.",
+  "There is a XXX to NAME that no other tildee provides.",
+  "NAME gives you the XXX to open your XXX and be XXX. Such tildees are XXX.",
+  "NAME is a tildee that tends to XXX, but be careful; too much could lead to XXX and self-XXX.",
+  "NAME inspires XXX, but they are right on the cusp of XXX, so they are a complex tildee (as you are).",
+  "NAME is a XXX tildee; they imbue in you a sense of XXX and XXX.",
+  "NAME is a tildee that, like you, best represents themself with XXX and XXX action.",
+  "NAME is a tildee that knows who they truly are.",
+  "A tildee of XXX and XXX, this is NAME.",
+  "In NAME there is a beautiful balance of XXX, XXX, XXX, and XXX.",
+  "NAME is the tildee of XXX."
+]
+
+var filler = [
+  "Although somewhat XXX you are still XXX and have the capability to be XXX, though only with people you trust.",
+  "Rather than XXX and XXX, you are most XXX when XXX.",
+  "Like NAME, you are rather XXX and thrive from exposure to XXX.",
+  "The world is wide open for you to XXX, and you never pass up an oportunity to XXX.",
+  "Due to their gracious XXX and giving XXX, NAME tildees are often considered XXX by their friends.",
+  "You are by nature XXX, thus this tildee fits you perfectly.",
+  "You enjoy taking time to XXX and ask yourself important questions about XXX -- though the answers can sometimes be a bit too XXX to share!",
+  "NAME is also a tildee of XXX, and you deeply enjoy the XXX that provides.",
+  "Aside from your XXX side, you are XXX too, just like NAME.",
+  "This tildee is most XXX for you because you like the feeling of XXX and the promise it brings.",
+  "There is a XXX side to you and you adore XXX with a good XXX and a will to XXX something stimulating.",
+  "You are inspired by XXX around you, and by the XXX XXX that lets you XXX yourself.",
+  "The XXX before the XXX is a feeling you enjoy, and the XXX you gain from XXX prepares you for the XXX to come.",
+  "NAME is still somewhat of a XXX tildee, which you like, but the promise of XXX is what propels you the most.",
+  "These tildees thrive from getting out of their XXX comfort zone and by being XXX and XXX.",
+  "There is a XXX side to you, and the XXX from XXX inspires you to act on your XXX spirit.",
+  "The XXX and XXX of this tildee makes you take XXX and XXX at your best.",
+  "You are a XXX and XXX being, and your XXX side is ever present.",
+  "NAME is a tildee for XXX, and you thrive most from XXX and XXX.",
+  "NAME is a tildee for enjoying XXX and finding XXX, and you crave both.",
+  "You are a person that thrives off of XXX and XXX, and so this tildee fits you perfectly.",
+  "You like to XXX with friends and family, and enjoy the XXX that this tildee brings.",
+  "You are a XXX and XXX person with a creative XXX side that you can let wander.",
+  "You are a XXX person, and you enjoy coming together with friends for conversation about XXX and XXX.",
+  "Being XXX, yet XXX, makes for a nice balance.",
+  "NAME is a tildee for enjoying the moment and XXX.",
+  "Like NAME, you have a bounty of XXX to offer to others.",
+  "Being the XXX person that you are, naturally you are XXX.",
+  "Others are drawn to your XXX yet XXX personality, and they know that a conversation with you will leave them feeling XXX."
+]
+
+var questionArr = [
+  "What is best in life?",
+  "What is the lesser of these evils?",
+  "Which of these words has the calmest aura?",
+  "Which of these makes you feel happiest?",
+  "Which would taste better on toast?",
+  "Which most reminds you of your childhood?",
+  "You may keep only one. Which is it?",
+  "What would you take to a desert island?",
+  "What would you bring on a road trip?",
+  "What is your most accomplished skill?",
+  "When civilization has ended, what remains?",
+  "What is your preferred birthday gift?",
+  "What would you say to your great-grandfather?",
+  "What was your earliest taste of technology?",
+  "What is necessary for healthy living?",
+  "What music do you prefer?",
+  "What is your favourite web aesthetic?",
+  "What is the subject of your next poem?",
+  "What are you most likely to say to a loved one?",
+  "How would you describe your first pet?",
+  "What is your preferred pronoun?",
+  "What is most spiritually important?",
+  "What would you change your name to?"
+]
+
+var subjects = 'colour animal gemstone verb letter song sound smell flower bird genre place flavour feeling emotion concept discovery cause'.split(' ');
+
+//##############################################################################
+
+function writeDescriptionHtml(name) {
+  fullText = [];
+  fullText.push( '<h3>You are <a href="https://tilde.town/~NAME_HREF/">NAME</a></h3>' );
+  fullText.push( '<p>' );
+  fullText.push( nameOpeners.randomElement() );
+  fullText.push( getRandomSubarray(filler, 5).join(' ') );
+  fullText.push( '</p>' );
+  
+  var subjectArray = getRandomSubarray(subjects, 3);
+  for (var i = 0; i < subjectArray.length; i++) {
+    fullText.push( '<p>Your favourite ' + subjectArray[i] + ' is XXX</p>' );
+  }
+  fullText.push( '<h3>You are <a href="https://tilde.town/~NAME_HREF/">NAME</a></h3>' );
+  
+  fullText = fullText.join(' ');
+  while (fullText.search('NAME_HREF') != -1) {
+    fullText = fullText.replace('NAME_HREF', name); 
+  }
+  while (fullText.search('NAME') != -1) {
+    fullText = fullText.replace('NAME', '<strong>' + name + '</strong>'); 
+  }
+  while (fullText.search('XXX') != -1) {
+    fullText = fullText.replace('XXX', '<em>' + objJSON[name].randomElement() + '</em>'); 
+  }
+
+  document.getElementById('description').innerHTML = fullText;
+}
+
+//##############################################################################
+
+var questionCount = 6;
+
+function writeQuizHtml() {
+
+  // Get a random selection of users.
+  // (Because there's too many to chose from if we include them all.)
+  users = getRandomSubarray(tildeUsers, 12);
+  console.log( JSON.stringify(users) );
+
+  function getQuestionHtml(questionID, question) {
+  
+    // Get four random users.
+    question_users = getRandomSubarray(users, 4);
+  
+    html = '<h3>' + question + '</h3>'
+    for (var i = 0; i < 4; i++) {
+      var domID = String(questionID).concat(i);
+      var name  = question_users[i];
+      
+      // Get random word from each user, and make a radio button for each.
+      // Loads of DOM id and metadata stuff...
+      html = html + "<div class='question'>"
+      html = html + "<input id='" + domID + "' data-user='" + name + "' type='radio' name='question" + questionID + "' onclick='toggleRadioOn(\"" + domID + "\",\"" + questionID + "\")' />"
+      html = html + "<label id='label" + domID + "' class='" + questionID + " unselected' onclick='toggleRadioOn(\"" + domID + "\",\"" + questionID + "\")'>" + objJSON[name].randomElement() + "</label>"
+      html = html + "</div>"
+    }
+    return html;
+  }
+  
+  var html = '';
+  var questions = getRandomSubarray(questionArr, questionCount);
+  for (var i = 0; i < questionCount; i++) {
+    html = html + getQuestionHtml( i, questions[i] );
+  }
+
+  document.getElementById('questions').innerHTML = html;
+}
+
+//######################################
+
+// Flip the status of the labels' classes between "selected" and "unselected".
+// Also, check the actual radio button.
+function toggleRadioOn(domID, questionID) {
+  document.getElementById(domID).checked = true;
+  var labels = document.getElementsByClassName(questionID);
+  for (var i = 0; i < labels.length; i++) {
+    labels[i].classList.add('unselected');
+    labels[i].classList.remove('selected');
+  }
+  var label = document.getElementById('label'+domID);
+  label.classList.add('selected');
+  label.classList.remove('unselected');
+}
+
+//##############################################################################
+
+function clickButton() {
+  var all_selected = true;
+  var users = [];
+  
+  // Loop through radios to get selected users.
+  var form = document.forms['question_form'];
+  for (var q = 0; q < questionCount; q++) {
+    var radio_set = form['question' + q];
+    if (!radio_set.value) all_selected = false;
+    for (var a = 0; a < radio_set.length; a++) {
+      if (radio_set[a].checked) {
+        var user = radio_set[a].dataset.user;
+        users.push( user );
+      }
+    }
+  }
+
+  // Don't do anything if they haven't answered all the questions.
+  if (all_selected) {
+  
+    // Frequency by user.
+    var frequency = {};
+    var counts = {};
+    for(var i = 0; i< users.length; i++) {
+      var u = users[i];
+      counts[u] = counts[u] ? counts[u]+1 : 1;
+    }
+    
+    // User by frequency.
+    Object.keys(counts).forEach(function (u) {
+      if ( !(counts[u] in frequency) ) {
+        frequency[counts[u]] = new Array();
+      }
+      frequency[counts[u]].push( u );
+    });
+    
+    console.log( JSON.stringify(frequency) );
+    
+    // Get max key.
+    var biggestKey = Math.max.apply(Math, Object.keys(frequency));
+    
+    // http://stackoverflow.com/questions/521295/javascript-random-seeds#comment21596724_521323
+    function kindOfRandom(seed, max) {
+      var decimal = '0.' + Math.sin(seed).toString().substr(6);
+      return Math.floor( parseFloat(decimal) * max );
+    }
+    
+    // Get users with that key.
+    // Don't make it fully random; get the same user for the same series of answers.
+    var matchedUsers = frequency[ String(biggestKey) ];
+    var len = matchedUsers.length;
+    var user = matchedUsers[ kindOfRandom(len,len) ];
+    
+    // Write to the document.
+    writeDescriptionHtml(user);
+  }
+}
+
+//##############################################################################
+
+// Wait for JSON to load before creating the question HTML.
+window.addEventListener('load', function() {
+  var x = new XMLHttpRequest();
+  x.open('GET', 'words.json', true);
+  x.responseType = 'json';
+  x.onload = function() {
+    objJSON = x.response;
+    tildeUsers = Object.keys(objJSON);
+//  writeDescriptionHtml( randomKey(objJSON) );
+    writeQuizHtml();
+  }
+  x.send(null);
+});
+
+//##############################################################################
+
+  </script>
+  <style type='text/css'>
+    body {
+      background-color: #E0B0FF;
+      font-family: 'Lucida Console', Monaco, monospace;
+      text-align: center;
+      color: #ffffff;
+      font-size:175%
+    }
+    div.contents {
+      width: 1080px;
+      float: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    div.header, div.questions, div.results {
+      background-color: black;
+      border: 2px solid #ffffff;
+      padding: 30px;
+      margin: 50px 20px 50px 20px;
+      word-wrap: break-word;
+    }
+    div.header {
+      padding: 10px 30px;
+    }
+    div.question input {
+      padding: 10px 30px;
+    }
+    img { margin: 0px 8px; }
+    a:link, a:visited { color: #fff; }
+    a:hover, a:active { color: #ccc; }
+    
+    em {
+      font-style: normal;
+      color: #E0B0FF;
+    }
+    strong {
+      color: #66FFFF;
+    }
+    
+    /* Submit button */
+    #submit {
+      margin: 20px;
+    }
+    input[type=button]{
+      font-size: 110%;
+      margin-top: 25px;
+      padding: 8px 25px;
+    }
+    
+    /* Radio button labels */
+    .selected         { color: #66FFFF; }
+    .unselected       { color: #FFFFFF; }
+    .unselected:hover { color: #E0B0FF; }
+    
+  </style>
+</head>
+<body>
+  <div class='contents'>
+    <div class='header'>
+      <h1>Which Tildee are you?</h1>
+      <p>There are many types of Tildee in the Town. But which is most like you? Take this complicated and scientific questionnaire to find out!</p>
+    </div>
+    <div class='questions'>
+      <form name='question_form'>
+        <div id='questions'></div>
+        <div id='submit'>
+          <input type='button' value='Who am I?' onclick='clickButton()' />
+        </div>
+      </form>
+    </div>
+    <div class='results'>
+      <div id='description'><h3>Please answer all the above questions.</h3></div>
+    </div>
+  </div>
+</body>
+</html>
+

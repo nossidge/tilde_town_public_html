@@ -1,0 +1,67 @@
+<html>
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>Tildeverse Users</title>
+  
+  <!--    DataTables stuff  -->
+  <link rel="stylesheet" type="text/css" href="../jquery/src/jquery.dataTables.min.css">
+  <script type="text/javascript" charset="utf8" src="../jquery/src/jquery.js"></script>
+  <script type="text/javascript" charset="utf8" src="../jquery/src/jquery.dataTables.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready( function () {
+      var table = $('#table_id').DataTable({
+        'aLengthMenu': [[20, 50, 100, 200, 500, -1], [20, 50, 100, 200, 500, 'All']],
+      });
+      table.column('1:visible').order('asc');
+      table.column('0:visible').order('asc');
+    } );
+  </script>
+  <!--  / DataTables stuff  -->
+  
+  <style type="text/css">
+    #content {
+      width: 700px;
+      margin:0 auto; }
+    p { text-align: center; }
+  </style>
+</head>
+
+<body>
+<div id="content">
+
+<p><big>The <a href='boxes.html'>users</a> of the <a href="http://tilde.club/~pfhawkins/othertildes.html">Tildeverse</a>.</big></p>
+<p>This is entirely based on scraping the source of a Tilde's user directory or index.html.
+<br>If any of those pages change, this list will likely break.
+</p>
+<p>If you are a Tildebox owner, consider adding a <a href="http://protocol.club/~datagrok/beta-wiki/tdp.html">Tilde Description file</a> to your site.
+<br>A live example can be found at club6.nl <a href="https://club6.nl/tilde.json">here</a>.
+</p>
+<p>Here's a list of the <a href="boxes.html">boxes</a> being scanned, and the source file being read.
+<br>Here's a <a href="pie.html">pie chart</a> of the number of users on each box.
+<br>This list is also available as <a href="users.json">JSON</a>.
+</p>
+
+<hr>
+
+<table id="table_id" class="display">
+  <thead>
+    <tr>
+      <th>Tilde Box</th>
+      <th>User Name</th>
+      <th>User URL</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<!-- @USER_LIST -->
+
+  </tbody>
+</table>
+
+<hr>
+
+<p>Last updated: <!-- @TIME_STAMP -->
+<br>Pretty table courtesy of <a href='https://jquery.com/'>jQuery</a> and the <a href='https://datatables.net/'>DataTables</a> plug-in.</p>
+</div>
+</body>
+</html>

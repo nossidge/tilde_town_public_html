@@ -1,0 +1,17 @@
+/* Layout */
+
+@import "layout.css";
+
+/* General */
+
+body { background-color:#FFFFFF; margin:0 0 0 0; padding: 0 0 0 0; font-family:verdana, arial, sans-serif; font-size:0.8em; color:#000000; }
+
+h1 { font-family: arial, sans-serif; font-size:1.5em; color:#000000; margin-top:0px; margin-bottom:0.5em; }
+
+h2 { font-family: arial, sans-serif; font-size:1em; color:#000000; margin-top:1em; margin-bottom:0.5em; }
+
+/* Link Styles */
+a.nav:link {COLOR:#000000; TEXT-DECORATION:none}
+a.nav:visited {COLOR:#000000; TEXT-DECORATION:none}
+a.nav:hover {COLOR:#51A8FF; TEXT-DECORATION:none; CURSOR:hand;}
+a.nav:active {COLOR:#000000; TEXT-DECORATION:none}

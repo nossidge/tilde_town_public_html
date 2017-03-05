@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script language="javascript">
+
+      // This is the original. It is constant.
+      var poem = " I have eaten <br> the plums <br> that were in <br> the icebox <br> <br> and which <br> you were probably <br> saving <br> for breakfast <br> <br> Forgive me <br> they were delicious <br> so sweet <br> and so cold ";
+
+      // This is what will be displayed in the HTML. It changes each tick.
+      var poemArray = poem.split(" ");
+
+      // These functions select the random words.
+      function getRandomWordFromArray(inputArray) {
+        var rand = "";
+        do {
+          rand = inputArray[Math.floor(Math.random() * inputArray.length)];
+        } while (rand == "<br>" || rand == "");
+        return rand;
+      }
+      function getRandomWordFromString(inputString) {
+        var inputArray = inputString.split(" ");
+        return getRandomWordFromArray(inputArray);
+      }
+
+      var container;
+      function init() {
+        container = document.getElementById("poem");
+        container.innerHTML = poem;
+      }
+
+      function replaceWord() {
+
+        // Get 2 random words.
+        do {
+          var rand1 = getRandomWordFromArray(poemArray);
+          var rand2 = getRandomWordFromString(poem);
+        } while (rand1 == rand2);
+
+        // Replace first word with second.
+        for(var i=0; i < poemArray.length; i++) {
+          if (poemArray[i] == rand1) {
+            poemArray[i] = rand2;
+          }
+        }
+        container.innerHTML = poemArray.join(" ");
+      }
+
+      // Change every 10 seconds.
+      window.setInterval(
+        function() { replaceWord(); },
+        10000
+      );
+    </script>
+    <style>body { background-color:black; text-align:center; color:#0f0; }</style>
+  </head>
+  <body onload="init()">
+    <div id="poem"></div>
+  </body>
+</html>

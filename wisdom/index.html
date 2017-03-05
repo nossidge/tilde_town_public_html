@@ -1,0 +1,337 @@
+<!--
+Inspiration: http://ronsen.org/monkminkpinkpunk/17/nodepajomo.html
+-->
+<html>
+  <head>
+    <script type="text/javascript" charset="utf8" src="../jquery/src/jquery.js"></script>
+    <script type="text/javascript">
+    // http://stackoverflow.com/questions/3020904/how-to-rotate-a-div-using-jquery
+    // Rotate all the <p> elements just a little bit.
+      $(document).ready( function () {
+        jQuery.fn.rotate = function(degrees) {
+          $(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+                       '-moz-transform' : 'rotate('+ degrees +'deg)',
+                       '-ms-transform' : 'rotate('+ degrees +'deg)',
+                       'transform' : 'rotate('+ degrees +'deg)'});
+        };
+        $('p').each(function() {
+          var currentElement = $(this);
+          var degefes = 2;
+          var degrees = Math.floor(Math.random() * (degefes*2) - degefes);
+          currentElement.rotate( degrees );
+        });
+//        alert( $('.section').length );
+      });
+    </script>
+    <style>
+      body {
+        color: #1a1a1a;
+        margin: 0;
+      }
+      p {
+        background-color: #fafafa;
+        display: inline-block;
+        font-size: 230%;
+        font-weight: bold;
+        margin:8px;
+        padding: 6px;
+      }
+      .centred, .columns {
+        width: 1000px;
+        margin: 0 auto;
+      }
+      .colL, .colR, .colM {
+        border: 0px 0px 0px 0px;
+        float: left;
+      }
+      .colL {
+        width: 500px;
+      }
+      .colL p {
+        float: right;
+      }
+      .colM {
+        width: 0px;
+      }
+      .colR {
+        width: 500px;
+      }
+      .centred {
+        width: 800px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  
+  <!--
+  <body background="http://i.imgur.com/yIWuFbI.jpg">
+  <body background="back.jpg">
+  -->
+  <body background="http://i.imgur.com/yIWuFbI.jpg">
+    <div class="centred">
+      <p>From the lifetime achievements of Nossidge Paul Thompson comes this with wit and wisdom.</p>
+    </div>
+    <div class="section">
+      <div class="centred"><p>01 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>A message to all peoples: Is it now the time?</p>
+          <p>If can thing, then so! If not, then not! Be wisest.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Tickle the tongue buds once in the while. Be a daring one.</p>
+          <p>Every failure is little compared to what is learned.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>02 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Took to the new art style with aplomb.</p>
+          <p>Leave the things means make the worry.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR" style="min-height: 228px;">
+          <p>When? But when? You keep saying, BUT WHEN??!</p>
+          <p>The answer is "everythings".</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>03 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Does anyone know? Does anyone though?</p>
+          <p>Should not think upon that. Think upon the other.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Music has not need a structure. If the brain shivers, the ears win.</p>
+          <p>Don't be always unexpected. Sometimes it is.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>04 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>It can't always be. Sigh. Cry. Both fine. But accept.</p>
+          <p>Who knows you? Make it you!</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Thing about computers is the speed with the help. If not help -- of course! Discard!</p>
+          <p>But can you live without?</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>05 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Here is the today tip: DO!</p>
+          <p>Try change that thing. You know which thing.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Should be! Must be! Preferable! Says who?</p>
+          <p>There is a special joke for today. Make it not you.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>06 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>"Cold? How can I be cold when I'm in my hometown?!"</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>"My grandfather served the first ever ice cream. He thought it was a cloud."</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>07 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Think the thoughts.</p>
+          <p>The Google looks at others' outside faces. Not all answers are shared.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Why do people like you? Why do you like you? Do they? Do you?</p>
+          <p>Till try cannot know.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>08 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Happy not always. Ok though. Work through. It can.</p>
+          <p>It's ok. Is not? Then alterate.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Fast-becoming. Speeding up to the whole.</p>
+          <p>Ignore all sayings! Especial from me!</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>09 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Be wonderful. Full of wonder.</p>
+          <p>Be grateful. Full of greatness.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Be mindful. Full of minds.</p>
+          <p>Uncover and discover.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>10 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>There is a symphony in the public places. Fottsteps Bird and Voice.</p>
+          <p>Two opposites -- and both of them are facts.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>From the butterfly become the cocoon.</p>
+          <p>Don't be sad at the farewell times. We all will say as many goodbyes as hellos.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>11 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>I told me when younger that I never would. And yet.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>The promises of my past to my future. I hold myself remember to that.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>12 / 01 / 2015</p></div>
+      <div class="columns" style="min-height: 228px;">
+        <div class="colL">
+          <p>Paperwork is a pretend problem.</p>
+          <p>Why don't you believe him? It is only because he is a liar.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Memories can be edited. A good or bad thing?</p>
+          <p>Art is curation. Edit it small.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>13 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Sometimes stop.</p>
+          <p>What is the most special secret? Perhaps a one you yourself does not know...</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Is small? Decide on a coin flip. Is large? Then think, then think, then think!</p>
+          <p>Be unfazed. This is what is.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>14 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Words can make happy the heart. A happy heart is a happy word.</p>
+          <p>Which is flowers which is weeds? All is nature.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Face in the mirror is not what is seen by all.</p>
+          <p>Moment happens. Moment stops. If forgot then was ever?</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>15 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Look at interesting things.</p>
+          <p>Don't trouble with grammar. Structure is not meaning.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Could a book fly if it was feathers not words?</p>
+          <p>Stay attuned. You can decide to what.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>16 / 01 / 2015</p></div>
+      <div class="columns" style="min-height: 228px;">
+        <div class="colL">
+          <p>But but but but but but but. Ignore these word.</p>
+          <p>Alone most when surrounded.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>The crowd may engulf individaul thought diffs.</p>
+          <p>Try a French thing!</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>17 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Send. Tell. Give.</p>
+          <p>But small from large? How tell? How view?</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>Don't think about you know. Think about how you know.</p>
+          <p>Make happy people.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>18 / 01 / 2015</p></div>
+      <div class="columns">
+        <div class="colL">
+          <p>Make artinessess from the unartful.</p>
+          <p>Take care. But not too much.</p>
+        </div>
+        <div class="colM"></div>
+        <div class="colR">
+          <p>How about a cake made from the ingredient that are not best?</p>
+          <p>Take heart. But don't steal it.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="centred"><p>19 / 01 / 2015</p></div>
+      <div class="columns">
+        <p>Avoid contact with those negative peoples.</p>
+        <p>They will only talk in nothings.</p>
+        <p>Most perceive no thoughtful hand above the keyboard.</p>
+        <p>All have no thought of deliberate meaning outside their comfort scaffolding.</p>
+        <p>If "different" then "derision".</p>
+        <p>They don't.</p>
+        <p>Let them continue to not.</p>
+      </div>
+    </div>
+  </body>
+</html>

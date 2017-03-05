@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heaven On Their Minds</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style> 
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Heaven On Their Minds
+Andrew Lloyd Webber, Tim Rice
+
+
+           Dm              F            G
+My mind is clearer now. At last all too well
+      F            G             Dm
+I can see where we all soon will be
+                      F             G
+If you strip away the myth from the man
+         F            G             Dm
+You will see where we all soon will be
+                                     Em
+Jesus! You've started to believe the things they say of you
+    F                      G                     Dm
+You really do believe this talk of God is true
+                                  Em
+And all the good you've done will soon be swept away
+F                           G                         Dm
+You've begun to matter more than the things you say
+
+
+Dm                   F
+Listen Jesus I don't like what I see
+Dm                    G
+All I ask is that you listen to me
+Bb            C                             F           A
+And remember, I've been your right hand man all along
+         Dm                     Bb
+You have set them all on fire
+                   F                       A
+They think they've found the new Messiah
+            D/A                A            Bb      Dm7
+And they'll hurt you when they find they're wrong
+
+
+Dm                   F
+I remember when this whole thing began
+Dm                      G
+No talk of God then, we called you a man
+Bb             C                     F             A
+And believe me my admiration for you hasn't died
+          Dm                   Bb
+But every word you say today
+              F                      A
+Gets twisted 'round some other way
+            D/A              A            Bb     Dm7
+And they'll hurt you if they think you've lied
+
+
+Bb              F          Gm                   Dm
+Nazareth's most famous son should have stayed a great unknown
+Gm              Dm/A          A              Dm
+Like his father carving wood, he'd have made good
+Bb                 F            Gm                Dm
+Tables, chairs and oaken chests would have suited Jesus best
+Gm                 Dm/A       A              Dm
+He'd have caused nobody harm, no one alarm
+
+
+Dm                   F
+Listen Jesus, do you care for your race?
+Dm                    G
+Don't you see we must keep in our place?
+Bb               C                          F              A
+We are occupied! Have you forgotten how put down we are?
+     Dm                        Bb
+I am frightened by the crowd
+           F                       A
+For we are getting much too loud
+            Dm/A           A      Bb    Dm7
+And they'll crush us if we go too far
+
+
+Dm                  F
+Listen Jesus to the warning I give
+Dm                     G
+Please remember that I want us to live
+Bb                      C                      F            A
+But it's sad to see our chances weakening with ev'ry hour
+         Dm                    Bb
+All your followers are blind
+         F                       A
+Too much heaven on their minds
+       Dm/A           A        Bb
+It was beautiful, but now it's sour
+
+
+         Dm       Bbmaj7                   Dm
+Yes it's all gone sour Ah --- ah ah ah --- ah</div>
+</body>
+</html>

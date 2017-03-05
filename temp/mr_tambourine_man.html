@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mr. Tambourine Man</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Mr. Tambourine Man
+Bob Dylan
+
+
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+        F                Bb              C         Csus4   C
+I'm not sleepy and there is no place I'm going to
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+       F             Bb                C         F
+In the jingle jangle morning I'll come following you
+
+
+         Bb                 C          F             Bb
+Though I know that evenings empire has returned into sand
+F                Bb
+Vanished from my hand
+        F               Bb                  C          Csus4   C
+Left me blindly here to stand but still not sleeping
+   Bb         C             F             Bb
+My weariness amazes me, I'm branded on my feet
+  F              Bb
+I have no one to meet
+        F             Bb                C              Csus4   C
+And the ancient empty street's too dead for dreaming
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+        F                Bb              C         Csus4   C
+I'm not sleepy and there is no place I'm going to
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+       F             Bb                C         F
+In the jingle jangle morning I'll come following you
+
+
+Bb           C              F              Bb
+Take me on a trip upon your magic swirling ship
+   F                Bb
+My senses have been stripped
+   F                   Bb
+My hands can't feel to grip
+   F                Bb
+My toes too numb to step
+     F           Bb               C           Csus4   C
+Wait only for my boot heels to be wandering
+    Bb          C             F            Bb
+I'm ready to go anywhere, I'm ready for to fade
+  F           Bb
+Into my own parade
+          F                Bb             C           Csus4   C
+Cast your dancing spell my way, I promise to go under it
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+        F                Bb              C         Csus4   C
+I'm not sleepy and there is no place I'm going to
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+       F             Bb                C         F
+In the jingle jangle morning I'll come following you
+
+
+           Bb                   C                  F                Bb
+Though you might hear laughing, spinning, swinging madly across the sun
+         F           Bb
+It's not aimed at anyone
+           F              Bb
+It's just escaping on the run
+        F                 Bb            C        Csus4   C
+And but for the sky there are no fences facing
+           Bb         C         F                 Bb
+And if you hear vague traces of skipping reels of rhyme
+        F             Bb
+To your tambourine in time
+            F              Bb
+It's just a ragged clown behind
+           F          Bb
+I wouldn't pay it any mind
+            F             Bb               C         Csus4   C
+It's just a shadow you're seeing that he's chasing
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+        F                Bb              C         Csus4   C
+I'm not sleepy and there is no place I'm going to
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+       F             Bb                C         F
+In the jingle jangle morning I'll come following you
+
+
+Bb           C                   F                 Bb
+Take me disappearing through the smoke rings of my mind
+         F              Bb
+Down the foggy ruins of time
+    F               Bb
+Far past the frozen leaves
+    F                  Bb
+The haunted frightened trees
+    F            Bb
+Out to the windy beach
+    F                Bb             C        Csus4   C
+Far from the twisted reach of crazy sorrow
+        Bb                C                F               Bb
+Yes, to dance beneath the diamond sky with one hand waving free
+      F            Bb
+Silhouetted by the sea
+        F             Bb
+Circled by the circus sands
+         F          Bb
+With all memory and fate
+       F                Bb
+Driven deep beneath the waves
+          F         Bb            C        Csus4   C
+Let me forget about today until tomorrow
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+        F                Bb              C         Csus4   C
+I'm not sleepy and there is no place I'm going to
+Bb       C               F               Bb
+Hey, Mr. Tambourine Man, play a song for me
+       F             Bb                C         F
+In the jingle jangle morning I'll come following you</div>
+</body>
+</html>

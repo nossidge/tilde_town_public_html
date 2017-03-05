@@ -1,0 +1,202 @@
+<html>
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>here to say</title>
+  <style>
+    body {
+      background-color: black;
+      background-image: url('http://i.imgur.com/5rtZRF3.jpg');
+      background-size: 100% 100%;
+      font-family: 'Lucida Console', Monaco, monospace;
+      text-align: center;
+      font-size:500%;
+      overflow:hidden;
+    }
+    div.container {
+      width: 1080px;
+      float: center;
+      margin: 0 auto;
+    }
+    div.box {
+      position: fixed;
+      width: 1080px;
+      margin: 100px auto 10px auto;
+      word-wrap: break-word;
+      z-index: 1000;
+    }
+    
+    /* http://enjoycss.com/gallery/text_effects/39#text */
+    .neon {
+      text-decoration: normal;
+      -o-text-overflow: clip;
+      text-overflow: clip;
+      color: rgba(0,255,0,1);
+      text-shadow:
+        0 0 10px rgba(72,231,60,1),
+        0 0 20px rgba(72,231,60,1),
+        0 0 30px rgba(72,231,60,1),
+        0 0 40px #ff00de , 0 0 70px #ff00de,
+        0 0 80px #ff00de , 0 0 100px #ff00de
+      ;
+      -webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+      -moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+      -o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+      transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1);
+    }
+  </style>
+  <script>
+    
+    // Random number between two values.
+    function rand(max, min, _int) {
+      var max = (max === 0 || max)?max:1,
+          min = min || 0,
+          gen = min + (max - min) * Math.random();
+      return (_int) ? Math.round(gen) : gen;
+    };
+    
+    var verses = [
+"My name&#39;s abraxas and I&#39;m here to say<br><br>THERE&#39;S MORE TO LIFE THAN TOP-SHELF SUCCULENT #bantz MATE!",
+"My name&#39;s audiodude and I&#39;m here to say<br><br>England, Scotland, Northern Ireland and Wales",
+"My name&#39;s audiodude and I&#39;m here to say<br><br>I wrote a twitter bot today",
+"My name&#39;s brighty and I&#39;m here to say<br><br>Today is gonna be a GREAT day!",
+"My name&#39;s dan and I&#39;m here to say<br><br>Karlen saving the goddamn day",
+"My name&#39;s endorphant and I&#39;m here to say<br><br>It sounds more like something the haiku script made",
+"My name&#39;s hardmath1 and I&#39;m here to say<br><br>Lol datagrok every single day",
+"My name&#39;s insom and I&#39;m here to say<br><br>&#34;Do I look gamergate in these shades?&#34;",
+"My name&#39;s insom and I&#39;m here to say<br><br>Being in a tower sounds okay",
+"My name&#39;s insom and I&#39;m here to say<br><br>Fuck prometric in every possible way.",
+"My name&#39;s insom and I&#39;m here to say<br><br>I can imagine that, it&#39;s not far away",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Been really sour the last few days",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Building tunnels for the gravy trains",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Does jake gylinhaaal have a low blink rate?",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>I can only do rhymes in a really bad way",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>It&#39;s been so long since we had a parade",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Look I just want things to be sensual ok",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Ohh yeah going to the ai wei wei",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>Only one week left until I go away",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>We all knew it would come to this one day",
+"My name&#39;s jumblesale and I&#39;m here to say<br><br>What magical adventures await?",
+"My name&#39;s karlen and I&#39;m here to say<br><br>I think I am slowly going insane",
+"My name&#39;s karlen and I&#39;m here to say<br><br>I use these words every day",
+"My name&#39;s karlen and I&#39;m here to say<br><br>Krowbar used to have a big K",
+"My name&#39;s karlen and I&#39;m here to say<br><br>On the internet no one knows your age",
+"My name&#39;s karlen and I&#39;m here to say<br><br>Research has been mugging me right off mate",
+"My name&#39;s karlen and I&#39;m here to say<br><br>Snow is fun on the day but its a long term pain",
+"My name&#39;s karlen and I&#39;m here to say<br><br>These knives are so fucking sharp mate",
+"My name&#39;s karlen and I&#39;m here to say<br><br>When it was over, i cried tears in the rain",
+"My name&#39;s karlen and I&#39;m here to say<br><br>Yours is a premium brand though mate",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>A MAN CHOOSES, A SLAVE OBEYS",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>A nice, large cup of strong earl grey",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>Apparently there are 16 shades of gray",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>Did you come to celebrate Moonshine Day?",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>HAPPY INDIVIDUALS MAKE A HAPPY STATE!",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>Have you been productive today?",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>I have no outlet for my rage",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>My turn to vent at HN today",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>Today is laggy computer day",
+"My name&#39;s krowbar and I&#39;m here to say<br><br>You detect fait traces of flushed cocaine",
+"My name&#39;s marcus and I&#39;m here to say<br><br>Time to shut my brain off for the day.",
+"My name&#39;s mwelsh and I&#39;m here to say<br><br>I know the rules, but i rarely play",
+"My name&#39;s nossidge and I&#39;m here to say<br><br>Oh god, alpine broke my display.",
+"My name&#39;s nossidge and I&#39;m here to say<br><br>Oh god. I didn&#39;t mean that in a creepy way.",
+"My name&#39;s nossidge and I&#39;m here to say<br><br>Yep. I feel pretty good these days.",
+"My name&#39;s papa and I&#39;m here to say<br><br>USA! USA! USA!",
+"My name&#39;s santi and I&#39;m here to say<br><br>That&#39;s really cute, in a weird way.",
+"My name&#39;s selsky and I&#39;m here to say<br><br>How&#39;s everyone doing today?",
+"My name&#39;s sl2c and I&#39;m here to say<br><br>Memory foam pillows are great",
+"My name&#39;s snail and I&#39;m here to say<br><br>I just made a cool update to my page",
+"My name&#39;s tahnok and I&#39;m here to say<br><br>The highest compliment that can be paid",
+"My name&#39;s tahnok and I&#39;m here to say<br><br>The importance of the welfare state",
+"My name&#39;s tahnok and I&#39;m here to say<br><br>This one must be a silent play",
+"My name&#39;s tahnok and I&#39;m here to say<br><br>When will I get fiber to my brain?",
+"My name&#39;s troido and I&#39;m here to say<br><br>I wrote it on my index page",
+"My name&#39;s vilmibm and I&#39;m here to say<br><br>I hope to visit prague one day ^_^",
+"My name&#39;s vilmibm and I&#39;m here to say<br><br>I&#39;ll be speaking at PyDX that day",
+"My name&#39;s vilmibm and I&#39;m here to say<br><br>We signed up 9 new users today",
+"My name&#39;s zeether and I&#39;m here to say<br><br>Nic cage wicker man is great"
+    ]
+    
+    // Global vars for DOM elements.
+    var lyricsDiv;
+    var imagesDiv;
+    
+    // Add a random verse to the div.
+    function addVerse() {
+      var verse = verses[ rand(0,verses.length-1,1) ];
+      lyricsDiv.innerHTML = "<p>" + verse + "</p>";
+    }
+    
+    // Add verse on spacebar press, redraw images on R press.
+    window.addEventListener("keydown", addVerse_on_space, false);
+    function addVerse_on_space(e) {
+      if (e.keyCode == 32) {
+        addVerse();
+      } else if (e.keyCode == 82) {
+        resetImages();
+      }
+    }
+    
+    // Disable default space scroll down behaviour.
+    window.onkeydown = function(e) {
+      return !(e.keyCode == 32);
+    };
+    
+    // http://imgur.com/a/vgoAs
+    var imgsArray = [
+      'http://i.imgur.com/AbAkiiX.gif',
+      'http://i.imgur.com/Hkpdjts.gif',
+      'http://i.imgur.com/l9pTjqF.gif',
+      'http://i.imgur.com/XIvEURR.gif',
+      'http://i.imgur.com/yZRr0cc.gif',
+      'http://i.imgur.com/O3G6HVr.gif',
+      'http://i.imgur.com/PrjQv6i.gif',
+      'http://i.imgur.com/1xkwVFV.gif',
+      'http://i.imgur.com/CVrx8tM.gif',
+      'http://i.imgur.com/Or7txGU.gif',
+      'http://i.imgur.com/FDu0ksN.gif',
+      'http://i.imgur.com/wkFyxPr.gif',
+      'http://i.imgur.com/aNsdump.gif',
+      'http://i.imgur.com/YL45WoZ.gif',
+      'http://i.imgur.com/T8l80zh.gif',
+      'http://i.imgur.com/H2u0gRS.gif',
+      'http://i.imgur.com/8RF32HB.gif',
+      'http://i.imgur.com/bXa6aEd.gif',
+      'http://i.imgur.com/5oyKl4F.gif',
+      'http://i.imgur.com/PTvafKv.gif'
+    ];
+    
+    // Add a new image somewhere on the page.
+    function addImage() {
+      var img = imgsArray[rand(0,imgsArray.length-1,1)];
+      var left = rand(-20,90,1);
+      var top = rand(-20,80,1);
+      var rotate = rand(-40,40,1);
+      imagesDiv.innerHTML += "<img src='" + img + "' style='position:absolute;top:" + top + "%;left:" + left + "%;transform:rotate(" + rotate + "deg)'>";
+    }
+    
+    // Clear existing images and redraw.
+    function resetImages() {
+      imagesDiv.innerHTML = "";
+      for(var i=0; i<60; i++) {
+        addImage();
+      }
+    }
+    
+    // Run when loaded.
+    function pageInit() {
+      lyricsDiv = document.getElementById('lyrics');
+      imagesDiv = document.getElementById('images');
+      addVerse();
+      resetImages();
+    }
+  </script>
+</head>
+<body onload='pageInit()'>
+  <div id='images'></div>
+  <div class='container'>
+    <div class='box neon'>
+      <div id='lyrics'></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"></meta>
+  <title>tilde</title>
+  <script>
+var countTilde = true;
+var percentTilde = 0;
+var percentTildeIncrement = 4;
+
+var wordsArray = [5];
+wordsArray['t'] = ['Toads','Toddlers','Teeth','Thoughts','Travellers','Trees','Teenagers'];
+wordsArray['i'] = ['In','Interupting','Imagining','Inspiring','Ignoring','Involving','Inventing'];
+wordsArray['l'] = ['Lobsters','Locusts','Lions','Lava','Lighthouses','Lifeboats','Love','Lovers','Lust','Language','Loneliness'];
+wordsArray['d'] = ['Depart','Deplete','Devour','Drink','Dream','Discover','Die','Decompose','Dominate','Disappear','Deepen','Denounce','Describe'];
+wordsArray['e'] = ['Eerily','Endlessly','Earnestly','Early','Easily','Entirely','Eventually','Exquisitely','Everything','Ecstatically','Ethereally','Eternally','Expectantly','Equally','Europe'];
+
+function randBetween(min,max) { return Math.floor(Math.random()*(max-min+1)+min); }
+function randWord(id) { return wordsArray[id][randBetween(0,wordsArray[id].length-1)]; }
+
+function changeWord(id) {
+  var wordPara = document.getElementById(id);
+  var currentWord = wordPara.innerHTML;
+  var newWord = '';
+  do {
+    newWord = randWord(id);
+  } while (currentWord == newWord);
+  wordPara.innerHTML = newWord;
+  if (countTilde && percentTilde < 100) {
+    percentTilde = percentTilde + percentTildeIncrement;
+    if (percentTilde == 100) {
+      document.body.style.cursor = 'pointer';
+    }
+  }
+  if (countTilde) {
+    document.title = percentTilde + "% tilde";
+  }
+}
+
+var sentence = new Array();
+function init() {
+  sentence.push( ['Toddlers','In','Lava','Die','Easily'] );
+  sentence.push( ['Teeth','In','Lighthouses','Devour','Endlessly'] );
+  sentence.push( ['Thoughts','Involving','Lobsters','Dominate','Entirely'] );
+  sentence.push( ['Thoughts','Involving','Lust','Disappear','Eventually'] );
+  sentence.push( ['Thoughts','Involving','Love','Deepen','Exquisitely'] );
+  sentence.push( ['Thoughts','Inspiring','Love','Decompose','Easily'] );
+  sentence.push( ['Teenagers','Imagining','Love','Disappear','Entirely'] );
+  sentence.push( ['Toads','Inventing','Language','Discover','Everything'] );
+  sentence.push( ['Travellers','Ignoring','Lava','Decompose','Eventually'] );
+  sentence.push( ['Teenagers','In','Love','Devour','Earnestly'] );
+  sentence.push( ['Trees','In','Love','Dream','Endlessly'] );
+  sentence.push( ['Teenagers','Inventing','Love','Depart','Early'] );
+  sentence.push( ['Teenagers','Ignoring','Lust','Deplete','Eventually'] );
+  sentence.push( ['Toddlers','Interupting','Lovers','Discover','Everything'] );
+  sentence.push( ['Travellers','In','Lifeboats','Discover','Europe'] );
+  sentence.push( ['Travellers','In','Lifeboats','Depart','Europe'] );
+  sentence.push( ['Toads','Interupting','Lobsters','Drink','Ecstatically'] );
+  sentence.push( ['Toddlers','Inventing','Language','Describe','Earnestly'] );
+  randomSentence();
+}
+function randomSentence() {
+  chosen = sentence[randBetween(0,sentence.length-1)];
+  document.getElementById('t').innerHTML = chosen[0];
+  document.getElementById('i').innerHTML = chosen[1];
+  document.getElementById('l').innerHTML = chosen[2];
+  document.getElementById('d').innerHTML = chosen[3];
+  document.getElementById('e').innerHTML = chosen[4];
+}
+
+function clickBody() {
+  if (percentTilde == 100) {
+    window.location.href = 'linedup.html'; 
+  }
+}
+  </script>
+  <style type="text/css">
+    body {
+      background-color: #E0B0FF;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 420%;
+      text-align: center;
+    }
+    p {
+      margin: 0 auto;
+    }
+    .exactCenter {
+      position: fixed;
+      top:  50%;
+      left: 50%;
+      width:  480px;
+      margin-top:  -265px;
+      margin-left: -240px;
+    }
+  </style>
+</head>
+<body onload="init()" onclick="clickBody()">
+  <div class="exactCenter">
+    <p>~<p/>
+    <p id="t" onmouseover="changeWord('t');"><p/>
+    <p id="i" onmouseover="changeWord('i');"><p/>
+    <p id="l" onmouseover="changeWord('l');"><p/>
+    <p id="d" onmouseover="changeWord('d');"><p/>
+    <p id="e" onmouseover="changeWord('e');"><p/>
+    <p>~<p/>
+  </div>
+</body>
+</html>
