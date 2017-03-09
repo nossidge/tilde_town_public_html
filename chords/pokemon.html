@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pokémon Theme</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style> 
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Pokémon Theme
+
+
+Gm   Dm
+
+Gm   Dm
+
+Gm             F
+I wanna be the very best
+     Gm          F   
+Like no one ever was
+Eb               Bb
+To catch them is my real test
+   Bb         C     D 
+To train them is my cause
+Gm             F
+I will travel across the land
+Gm                F
+Searching far and wide
+Eb               Bb
+Teach Pokémon to understand
+    Bb    C        D
+The power that's inside
+
+
+    Eb
+Pokémon! (Gotta catch em' all)
+     Bb
+It's you and me
+Eb             F
+I know it's my destiny
+    Gm
+Pokémon!
+            F
+Ooh, you're my best friend
+     Bb       C      D
+In a world we must defend
+    Gm
+Pokémon! (Gotta catch em' all)
+    F
+Our hearts so true
+Gm               F
+Our courage will pull us through
+Eb               Bb
+You teach me and I'll teach you
+Bb C  D   
+Pokémon
+                Eb
+Gotta catch 'em all!
+      F         Gm
+Gotta catch 'em all!
+
+Yeah!
+
+
+Gm               F
+Every challenge along the way
+     Gm             F     
+With courage I will face
+Eb            Bb
+I will battle every day
+   Bb       C        D
+To claim my rightful place
+Gm                F
+Come with me, the time is right
+Gm                F     
+There's no better team
+Eb               Bb
+Arm in arm we'll win the fight
+     Bb     C        D
+It's always been our dream
+
+
+    Eb
+Pokémon! (Gotta catch em' all)
+     Bb
+It's you and me
+Eb             F
+I know it's my destiny
+    Gm
+Pokémon!
+            F
+Ooh, you're my best friend
+     Bb       C      D
+In a world we must defend
+    Gm
+Pokémon! (Gotta catch em' all)
+    F
+Our hearts so true
+Gm               F
+Our courage will pull us through
+Eb               Bb
+You teach me and I'll teach you
+Bb C D   
+Pokémon
+                Eb
+Gotta catch 'em all!
+      F         Gm
+Gotta catch 'em all!
+
+Pokémon!</div>
+</body>
+</html>
