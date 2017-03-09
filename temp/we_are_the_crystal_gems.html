@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>We Are The Crystal Gems</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+We Are The Crystal Gems
+Rebecca Sugar
+
+
+G                  B
+We are the Crystal Gems
+                      C
+We'll always save the day
+                    Cm
+And if you think we can't
+                    G
+We'll always find a way
+
+That's why the people 
+B               C
+Of this world believe in
+           Cm
+Garnet, Amethyst and Pearl
+    G 
+and Steven﻿!
+
+</div>
+</body>
+</html>

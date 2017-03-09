@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mardy Bum</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+      #lyrics {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+      }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Mardy Bum
+Arctic Monkeys
+
+
+D      F#      G      F#m      Em      A
+
+
+D                   F#
+Well now then Mardy Bum
+           G
+I see your frown and it's like
+F#m             Em           (A)
+looking down the barrel of a gun
+            D
+And it goes off
+                       F#
+And out come all these words
+             G             F#m
+Oh there's a very pleasant side to you
+  Em                    A
+A side I much prefer, it's one that
+
+
+G                 A
+Laughs and jokes around
+         D              A
+Remember cuddles in the kitchen, yeah
+   Bm                            (A)
+To get things off the ground and it was
+G          A
+Up up and away
+             D             A
+Oh, but it's right hard to remember that
+     Bm
+On a day like today, when you're all
+G             A
+Argumentative and you've got the face on
+
+
+D      F#      G      F#m      Em      A
+
+
+D                   F#
+Well now then Mardy Bum
+          G       F#m
+Oh I'm in trouble again
+Em        A            D
+Aren't I? I thought as much.
+                       F#
+Coz you've turned over there
+             G          F#m
+Pulling that silent disappointment face
+Em                   A
+The one that I can't bear. Can't we...
+
+
+G               A
+Laugh and joke around
+         D              A
+Remember cuddles in the kitchen, yeah
+   Bm                            (A)
+To get things off the ground and it was
+G          A
+Up up and away
+             D             A
+Oh, but it's right hard to remember that
+     Bm
+On a day like today, when you're all
+G             A
+Argumentative and you've got the face on
+
+
+F#5                  G5
+Yeah I'm sorry I was late
+F#5                                      G5
+I missed the train and the traffic was a state
+F#5                                  G5
+I can't be arsed to carry on in this debate that reoccurs
+F#5                                           G5
+Oh when you say I don't care, but of course I do
+                A5
+Yeah I clearly do.
+
+
+D      F#      G      F#m      Em      A
+
+
+   G               A
+So laugh and joke around
+         D              A
+Remember cuddles in the kitchen, yeah
+   Bm                            (A)
+To get things off the ground and it was
+G          A
+Up up and away
+             D             A
+Oh, but it's right hard to remember that
+     Bm
+On a day like today when you're all
+G             A                       D
+Argumentative and you've got the face on
+
+</div>
+</body>
+</html>
