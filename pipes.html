@@ -1,8 +1,9 @@
 <html>
   <head>
+    <title>pipes.html</title>
     <meta charset="UTF-8"></meta>
-    <script>
-    
+    <script language="javascript">
+
 // Global. All the double-line box drawing characters.
 var charsToOutput = [
   unescape(JSON.parse('"\\u2551"')),
@@ -41,11 +42,11 @@ function CharacterCell(xCell,yCell) {
   this.xCell = xCell;
   this.yCell = yCell;
   this.colour = '#000000';
-  
+
   // Random character and random lifespan.
   this.charSymbol = charsToOutput[randBetween(0,charsToOutput.length-1)];
   this.lifeLeft = randBetween(0,maxLife*0.8);
-  
+
   // When the time runs out, the character and brightness will be reset.
   this.tick = function() {
     this.lifeLeft = this.lifeLeft - 1;
@@ -56,12 +57,12 @@ function CharacterCell(xCell,yCell) {
     var colourVal = Math.floor( this.lifeLeft*(255/maxLife) );
     this.colour = rgbToHex(0,colourVal,0);
   }
-  
+
   this.getTableCellHTML = function() {
     this.tick();
     return "<td style='color:" + this.colour + "'>" + this.charSymbol + "</td>";
   }
-  
+
   this.getTableCellID = function() {
     var output = "x" + this.xCell + "y" + this.yCell;
     return output;
@@ -79,7 +80,7 @@ function makeTable() {
     row = "<tr>";
     for(var x = 0; x < 20; x++) {
       row = row + "<td id='x" + x + "y" + y + "'>" + charRand + "</td>";
-      
+
       var newCell = new CharacterCell(x,y);
       cells.push(newCell);
       newCell.getTableCellHTML();
@@ -106,30 +107,28 @@ function displayTable() {
 ////////////////////////////////////////////////////////////////////////////////
 
 // Change every so often.
-window.setInterval(
-  function() { displayTable(); },
-  100
-);
+window.setInterval(displayTable, 100);
 
 ////////////////////////////////////////////////////////////////////////////////
-     
+
     </script>
-  
-  <style type="text/css">
-    body {
-      font-family: "Courier New", Courier, monospace;
-      background-color:black;
-      text-align:center;
-      margin: 0px;
-      padding: 0px;
-    }
-    table {
-      margin: 0 auto;
-      font-size: 220%;
-    }
-    tr td { padding: 0px; }
-  </style>
-    
+    <style type="text/css">
+      body {
+        font-family: "Courier New", Courier, monospace;
+        background: none transparent;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+        color: rgba(0, 0, 0, 0);
+      }
+      table {
+        margin: 0 auto;
+        font-size: 220%;
+      }
+      tr td {
+        padding: 0px;
+      }
+    </style>
   </head>
   <body onload="makeTable()" >
     <table id="pipeTable" cellspacing="0px" cellpadding="0px"></table>

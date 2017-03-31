@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>This Is Sweet To Say</title>
+    <meta charset="UTF-8"></meta>
     <script language="javascript">
 
       // This is the original. It is constant.
@@ -45,12 +47,15 @@
       }
 
       // Change every 10 seconds.
-      window.setInterval(
-        function() { replaceWord(); },
-        10000
-      );
+      window.setInterval(replaceWord, 10000);
     </script>
-    <style>body { background-color:black; text-align:center; color:#0f0; }</style>
+    <style type="text/css">
+      body {
+        background: none transparent;
+        text-align: center;
+        color: #0f0;
+      }
+    </style>
   </head>
   <body onload="init()">
     <div id="poem"></div>
