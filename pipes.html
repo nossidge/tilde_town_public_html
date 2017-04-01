@@ -54,8 +54,19 @@ function CharacterCell(xCell,yCell) {
       this.lifeLeft = randBetween(maxLife/5,maxLife);
       this.charSymbol = charsToOutput[randBetween(0,charsToOutput.length-1)];
     }
-    var colourVal = Math.floor( this.lifeLeft*(255/maxLife) );
-    this.colour = rgbToHex(0,colourVal,0);
+//    var colourVal = Math.floor( this.lifeLeft*(255/maxLife) );
+//    this.colour = rgbToHex(0,colourVal,0);
+
+    // Let's make this more
+    //   a e s t h e t i c
+
+    // For reference:
+    // pink = rgbToHex(255,166,255);
+    // cyan = rgbToHex(107,255,255);
+
+    var rDiff = Math.floor((255-107)*(this.lifeLeft/maxLife));
+    var gDiff = Math.floor((255-166)*(this.lifeLeft/maxLife));
+    this.colour = rgbToHex(255-rDiff, 166+gDiff, 255);
   }
 
   this.getTableCellHTML = function() {
