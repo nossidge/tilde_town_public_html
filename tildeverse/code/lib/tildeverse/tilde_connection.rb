@@ -9,6 +9,12 @@
 #   unless the connection failed (then it's nil).
 ################################################################################
 
+require 'net/http'
+require 'net/https'
+require 'open-uri'
+
+################################################################################
+
 module Tildeverse
   class TildeConnection
     attr_accessor :name
@@ -27,21 +33,14 @@ module Tildeverse
     def test_connection
 
       # Test the user list page.
-  #    begin
-        uri = URI(@list_url)
-        Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-          request = Net::HTTP::Get.new uri
-          @user_list = http.request(request).body
-        end
-        if @user_list.encoding.name != 'UTF-8'
-          @user_list.force_encoding('UTF-8').encode
-        end
+      begin
+        @user_list = open(@list_url).read
         @list_url_connection = true
         @root_url_connection = true
-    #  rescue
+      rescue
         @user_list = nil
         @list_url_connection = false
-    #  end
+      end
 
       # If that failed, test the root page.
       if @list_url_connection == false

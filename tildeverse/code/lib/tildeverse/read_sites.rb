@@ -7,6 +7,14 @@
 #   scraping wise. It wouldn't make sense to try to work out commonalities.
 ################################################################################
 
+require 'json'
+
+require_relative 'core_extensions/string.rb'
+require_relative 'tilde_connection.rb'
+require_relative 'misc.rb'
+
+################################################################################
+
 module Tildeverse
 
 ################################################################################
@@ -781,28 +789,33 @@ end
 
 ################################################################################
 
-# A nice easy JSON format. Hooray!
+# A few lists to choose from here:
 # https://protocol.club/~insom/protocol.24h.json
+# http://protocol.club/~silentbicycle/homepages.html
+# http://protocol.club/~insom/protocol.24h.html
 
-# There's also HTML lists here:
-# https://protocol.club/~silentbicycle/homepages.html
-# https://protocol.club/~insom/protocol.24h.html
+# 201x/xx/xx  Use https://protocol.club/~insom/protocol.24h.json
+# 2017/04/11  Use http://protocol.club/~insom/protocol.24h.html
+#             Also, the https has expired, do use http.
 def self.read_protocol_club
   output = {}
 
   tilde_connection = TildeConnection.new('protocol.club')
-  tilde_connection.root_url = 'https://protocol.club/'
-  tilde_connection.list_url = 'http://protocol.club/~insom/protocol.24h.json'
+  tilde_connection.root_url = 'http://protocol.club/'
+  tilde_connection.list_url = 'http://protocol.club/~insom/protocol.24h.html'
   user_list = tilde_connection.test_connection
   if tilde_connection.error
     puts tilde_connection.error_message
 
   else
-    parsed = JSON.parse( user_list.gsub("\t",'') )
-    parsed['pagelist'].each do |i|
-      name = i['username']
-      url = i['homepage'].remove_trailing_slash
-      output[name] = url
+    user_list.split("\n").each do |i|
+      if i.match(/^<li>/)
+        url = i.sub('class="homepage-link"', '')
+        url = url.first_between_two_chars('"')
+        url = url.remove_trailing_slash
+        name = url.partition('~').last.strip
+        output[name] = tilde_connection.root_url + '~' + name
+      end
     end
     puts "ERROR: Empty hash in method: #{__method__}" if output.length == 0
   end
@@ -1094,8 +1107,7 @@ end
 
 ################################################################################
 
-# New box 2015/01/03
-# A nice easy JSON format.
+# 2015/01/03  New box, a nice easy JSON format.
 # 2016/01/13  RIP
 def self.read_club6_nl
   output = {}
@@ -1197,7 +1209,8 @@ end
 # 2016/08/10  New box
 # 2017/11/04  Okay, something weird is going on here. Every page but the index
 #             reverts to root. I guess consider it dead?
-def self.read_spookyscary_science
+#             Alright, for now just use cached users. But keep a watch on it.
+def self.read_spookyscary_science_live
   output = {}
   return output unless TRY_KNOWN_DEAD_SITES
 
@@ -1221,16 +1234,24 @@ def self.read_spookyscary_science
   end
   sort_hash_by_keys(output)
 end
+def self.read_spookyscary_science
+  output = {}
+  %w{_vax aerandir arthursucks deuslapis
+    drip roob spiff sternalrub wanderingmind}.each do |i|
+    output[i] = "https://spookyscary.science/~#{i}"
+  end
+  sort_hash_by_keys(output)
+end
 #puts_hash(read_spookyscary_science)
 
 ################################################################################
 
-# New box 2016/09/12
+# 2016/09/12  New box
 # This one is weird. It doesn't like me scraping the index.html
 # So I'm reading from a saved archive.is backup.
 def self.read_botb_club
   output = {}
-  return output unless TRY_KNOWN_DEAD_SITES
+#  return output unless TRY_KNOWN_DEAD_SITES
 
   tilde_connection = TildeConnection.new('botb.club')
   tilde_connection.root_url = 'https://botb.club/'
@@ -1255,6 +1276,58 @@ def self.read_botb_club
   sort_hash_by_keys(output)
 end
 #puts_hash(read_botb_club)
+
+################################################################################
+
+# 2017/04/11  New box, user list on index.html
+def self.read_crime_team
+  output = {}
+
+  tilde_connection = TildeConnection.new('crime.team')
+  tilde_connection.root_url = 'https://crime.team/'
+  tilde_connection.list_url = 'https://crime.team/'
+  user_list = tilde_connection.test_connection
+  if tilde_connection.error
+    puts tilde_connection.error_message
+
+  else
+    user_list.split("\n").each do |i|
+      if i.strip.match(/^<li>/)
+        url = i.first_between_two_chars('"')
+        name = url.partition('~').last.strip
+        output[name] = tilde_connection.root_url + '~' + name
+      end
+    end
+    puts "ERROR: Empty hash in method: #{__method__}" if output.length == 0
+  end
+  sort_hash_by_keys(output)
+end
+#puts_hash(read_crime_team)
+
+################################################################################
+
+# 2017/04/11  New box
+# Manually found 8 users, but no list.
+def self.read_backtick_town
+  output = {}
+  %w{alyssa j jay nk kc nickolas360 nix tb10}.each do |i|
+    output[i] = "https://backtick.town/~#{i}"
+  end
+  sort_hash_by_keys(output)
+end
+#puts_hash(read_backtick_town)
+
+################################################################################
+
+# Manually found 2 users, but no list.
+def self.read_ofmanytrades_com
+  output = {}
+  %w{ajroach42 noah}.each do |i|
+    output[i] = "https://ofmanytrades.com/~#{i}"
+  end
+  sort_hash_by_keys(output)
+end
+#puts_hash(read_ofmanytrades_com)
 
 ################################################################################
 

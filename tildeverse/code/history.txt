@@ -50,3 +50,7 @@
             Use 'Net::HTTP.get URI(url)' instead of 'open-uri'
               This should fix certain HTTPS errors
             Fix string encoding issues. Should now all be in 'UTF-8'
+2017/04/11  Update: protocol.club
+            New Tildebox: crime.team
+            New Tildebox: backtick.town
+            New Tildebox: ofmanytrades.com

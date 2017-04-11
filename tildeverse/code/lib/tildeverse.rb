@@ -39,10 +39,10 @@ TWITTER_ACCOUNT  = 'the_tildeverse'
 
 ################################################################################
 
-TEMPLATE_FILE_HTML    = File.dirname(__FILE__) +'/../../users_template.html'
-OUTPUT_FILE_HTML      = File.dirname(__FILE__) +'/users.html'
-OUTPUT_FILE_JSON      = File.dirname(__FILE__) +'/users.json'
-OUTPUT_FILE_JSON_PREV = File.dirname(__FILE__) +'/users_prev.json'
+TEMPLATE_FILE_HTML    = File.dirname(__FILE__) +'/../users_template.html'
+OUTPUT_FILE_HTML      = File.dirname(__FILE__) +'/../../users.html'
+OUTPUT_FILE_JSON      = File.dirname(__FILE__) +'/../../users.json'
+OUTPUT_FILE_JSON_PREV = File.dirname(__FILE__) +'/../../users_prev.json'
 
 WRITE_TO_FILES          = true   # This is necessary.
 CHECK_FOR_NEW_BOXES     = false  # This is fast.
@@ -59,10 +59,12 @@ module Tildeverse
 def self.output_to_files
   read_all_to_hash = lambda do
     userHash = {}
+    userHash['https://backtick.town'] = read_backtick_town
     userHash['https://bleepbloop.club'] = read_bleepbloop_club
     userHash['https://botb.club'] = read_botb_club
     userHash['http://catbeard.city'] = read_catbeard_city
     userHash['https://club6.nl'] = read_club6_nl
+    userHash['https://crime.team'] = read_crime_team
     userHash['http://ctrl-c.club'] = read_ctrl_c_club
     userHash['http://cybyte.club'] = read_cybyte_club
     userHash['http://drawbridge.club'] = read_drawbridge_club
@@ -72,6 +74,7 @@ def self.output_to_files
     userHash['http://losangeles.pablo.xyz'] = read_losangeles_pablo_xyz
     userHash['http://matilde.club'] = read_matilde_club
     userHash['http://noiseandsignal.com'] = read_noiseandsignal_com
+    userHash['https://ofmanytrades.com'] = read_ofmanytrades_com
     userHash['http://oldbsd.club'] = {}
     userHash['http://palvelin.club'] = read_palvelin_club
     userHash['http://pebble.ink'] = read_pebble_ink
