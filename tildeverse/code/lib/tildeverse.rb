@@ -105,7 +105,9 @@ def self.output_to_files
   all_hash = read_all_to_hash.call
 
   # Rename the existing JSON with 'previous' file name.
-  File.rename(OUTPUT_FILE_JSON, OUTPUT_FILE_JSON_PREV)
+  if TWEET_USER_DIFFS
+    File.rename(OUTPUT_FILE_JSON, OUTPUT_FILE_JSON_PREV)
+  end
 
   # Write to JSON while we have the hash.
   File.open(OUTPUT_FILE_JSON,'w') do |f|
@@ -300,12 +302,3 @@ end
 Tildeverse.run_all
 
 ################################################################################
-
-__END__
-
-# 2016/08/??  New Tildebox: https://backtick.town/
-
-# https://backtick.town/~kc/
-# https://backtick.town/~j/
-# https://backtick.town/~nickolas360/
-
