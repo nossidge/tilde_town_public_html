@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>We Are The Crystal Gems</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Overkill
+Man at Work
+
+
+D              A
+I can't get to sleep
+C                 G
+I think about the implications
+D                A
+Of diving in too deep
+C                G
+And possibly the complications
+D             A
+Especially at night
+C            G
+I worry over situations
+D                A
+I know will be alright
+C                 G
+Perhaps it's just imagination
+
+
+Bm                   Asus4  A
+Day after day it reappears
+Bm                             Asus4     A
+Night after night my heartbeat shows the fear
+F#sus4   F#            G
+Ghosts appear and fade away
+Asus4     A
+
+
+D                 A
+Alone between the sheets
+C            G
+Only brings exasperation
+D                     A
+It's time to walk the streets
+C         G
+Smell the desperation
+D                       A
+At least there's pretty lights
+C                         G
+And though there's little variation
+D                A
+It nullifies the night
+C        G
+From overkill
+
+
+Bm                   Asus4  A
+Day after day it reappears
+Bm                             Asus4     A
+Night after night my heartbeat shows the fear
+F#sus4   F#            G
+Ghosts appear and fade away
+Asus4     A
+Come back another day
+
+
+D              A
+I can't get to sleep
+C                 G
+I think about the implications
+D                A
+Of diving in too deep
+C                G
+And possibly the complications
+D             A
+Especially at night
+C            G
+I worry over situations
+D                A
+I know will be alright
+C         G
+It's just overkill
+
+
+Bm                   Asus4  A
+Day after day it reappears
+Bm                             Asus4     A
+Night after night my heartbeat shows the fear
+F#sus4   F#            G
+Ghosts appear and fade away
+F#sus4   F#            G
+Ghosts appear and fade away
+F#sus4   F#            G
+Ghosts appear and fade away</div>
+</body>
+</html>
