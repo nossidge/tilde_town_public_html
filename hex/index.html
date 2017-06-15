@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+Concept stolen with love:
+http://c0ffee.surge.sh/
+-->
+<html>
+  <head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <title>hex colour words</title>
+    <script src="../lib/tracery.js"></script>
+    <script type="text/javascript">
+      function pageInit() {
+
+        // Tracery grammars.
+        let input = {
+          "?":["tatoos","tictoc","its"],
+          "JJ":["acetic","acidic","beaded","dissed","dotted","edited","fatted","fitted","footed","seated","sedate","seeded","sooted","stated","static","tactic","tested","ace","aft","bad","cis","fat","fit","sad","set"],
+          "JJS":["basest","iciest","oddest","safest"],
+          "NN":["abbess","acacia","access","accost","addict","affect","assist","bobcat","bodice","cicada","coffee","cootie","decade","defeat","defect","diacid","doodad","effect","estate","facade","fiasco","fiesta","iodide","office","offset","otitis","sadist","seabed","sestet","settee","siesta","soffit","softie","stasis","static","tactic","tattoo","tictac","tidbit","toffee","ace","act","ado","aid","ate","bat","bed","bet","bid","bit","boa","cab","cad","cat","cob","cod","cot","dab","die","doe","dot","eat","eta","fad","fat","fib","fit","foe","ice","ide","oaf","oat","ode","sac","sea","set","sit","sob","sod","sot","tab","tad","tea","tic","tie","toe"],
+          "NNP":["odessa"],
+          "NNS":["abodes","adobes","babies","basses","biases","bodies","booses","bosses","castes","cities","dadoes","daises","deists","dicots","diodes","disses","dittos","edicts","facies","faeces","ibises","octets","ootids","scoffs","scoots","seccos","states","steeds","stiffs","stoics","taboos","tastes","teases","testes","tibiae","tibias","toasts","tosses","abs","ads","ais","dos","efs","ids","ifs"],
+          "RB":["aft","oft"],
+          "VBD":["abased","abated","abided","aboded","babied","baited","basted","batted","beaded","bedded","beefed","bested","bitted","boated","bobbed","bodied","boobed","boosed","booted","bossed","cabbed","casted","catted","ceased","coated","cobbed","codded","dabbed","deeded","defied","deiced","dibbed","dieted","dissed","dotted","edited","fasted","fibbed","fitted","fobbed","footed","sassed","seated","seeded","sifted","sobbed","sodded","sooted","stated","tabbed","tasted","teased","teated","tested","tidied","tooted","tossed","fed","sat"],
+          "VBI":["accede","affect","assist","attest","decide","defect","offset","secede","act","aid","bat","bed","bet","bid","dab","die","dot","eat","fib","fit","ice","set","sit","sob","tie","toe"],
+          "VBT":["accost","addict","affect","assess","assist","attest","bisect","debase","decide","decode","deface","defeat","deseed","detest","efface","effect","obsess","offset","sedate","tattoo","ace","act","aid","bat","bed","bet","bid","bit","dab","die","dot","eat","fat","fit","ice","set","sit","sob","sod","tab","tie","toe"],
+          "VBZ":["abases","abates","abides","babies","bastes","biases","bosses","ceases","cosies","defats","defies","deices","disses","sasses","scoffs","scoots","states","stiffs","tastes","teases","tidies","toasts","tosses"],
+          "origin": [
+            "#JJ# #JJ# #NN# #VBZ# #JJ# #NNS#",
+            "#JJ# #JJ# #NNS# #VBI# #JJ# #NNS#",
+            "#JJ# #NNS# #VBT# #JJ# #NNS#",
+            "#JJ# #NN# #VBZ# #NN# #NNS#",
+            "#JJ# #NN# #VBD# #NN# #NNS#",
+            "#JJ# #NN# #VBZ# #JJ# #NNS#",
+            "#JJ# #NN# #VBD# #JJ# #NNS#",
+            "#JJ# #NNS# #VBT# #NNS#",
+            "#JJ# #NNS# #VBT# #JJ# #NNS#"
+          ]
+        }
+
+        // Create a trace from the grammar.
+        let grammar = tracery.createGrammar(input)
+        let flatTrace = grammar.createFlattened()
+
+        // To array, and convert to hex.
+        let arrayTrace = flatTrace.split(" ").map(function(x) {
+          let obj = {}
+          obj.word = x.toUpperCase()
+          obj.hex = "#" + x.toUpperCase()
+          obj.hex = obj.hex.replace(/I/g, "1").replace(/O/g, "0")
+          obj.hex = obj.hex.replace(/S/g, "5").replace(/T/g, "7")
+          obj.display_hex = obj.hex
+          if (obj.word.length == 3) {
+            obj.word        = "&nbsp;" + obj.word + "&nbsp;&nbsp;"
+            obj.display_hex = "&nbsp;" + obj.hex  + "&nbsp;&nbsp;"
+          }
+          return obj
+        })
+
+        // Build up a table with the colours as the background.
+        let tableBody = ""
+        let tdHTML = `<td style="background-color: HEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
+        switch(arrayTrace.length) {
+          case 4:
+            tableBody = "<tr><TD><TD></tr><tr><TD><TD></tr>"
+            break
+          case 5:
+            tableBody = "<tr><TD><TD><TD><TD><TD></tr>"
+            break
+          case 6:
+            tableBody = "<tr><TD><TD><TD></tr><tr><TD><TD><TD></tr>"
+            break
+        }
+
+        // Replace with the actual hex values.
+        for (i = 0; i < arrayTrace.length; i++) {
+          tableBody = tableBody.replace("<TD>", tdHTML)
+          tableBody = tableBody.replace("HEX", arrayTrace[i].hex)
+          tableBody = tableBody.replace("DISPHEX", arrayTrace[i].display_hex)
+          tableBody = tableBody.replace("WORD", arrayTrace[i].word)
+          tableBody = tableBody.replace("WORD", arrayTrace[i].word)
+        }
+
+        // Display in the table body.
+        document.getElementById("tbody").innerHTML = tableBody
+      }
+    </script>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+        color: #111111;
+        font-size: 110%;
+        text-align: center;
+        font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+      }
+      html, body {
+        height: 100%;
+      }
+      table {
+        border-spacing: 0px;
+        min-height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body onload="pageInit()">
+    <div id="dave"></div>
+    <div id="count"></div>
+    <table>
+      <tbody id="tbody">
+        <!-- JavaScript will populate this -->
+      </tbody>
+    </table>
+  </body>
+</html>
