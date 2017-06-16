@@ -5,7 +5,7 @@ http://c0ffee.surge.sh/
 -->
 <html>
   <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>hex colour words</title>
     <script src="../lib/tracery.js"></script>
     <script type="text/javascript">
@@ -33,7 +33,12 @@ http://c0ffee.surge.sh/
             "#JJ# #NN# #VBZ# #JJ# #NNS#",
             "#JJ# #NN# #VBD# #JJ# #NNS#",
             "#JJ# #NNS# #VBT# #NNS#",
-            "#JJ# #NNS# #VBT# #JJ# #NNS#"
+            "#JJ# #NNS# #VBT# #JJ# #NNS#",
+            "#NN# #VBZ# #NN# #NNS#",
+            "#NN# #VBD# #NN# #NNS#",
+            "#NN# #VBZ# #JJ# #NNS#",
+            "#NN# #VBD# #JJ# #NNS#",
+            "#NN# #NN# #NN#"
           ]
         }
 
@@ -59,16 +64,15 @@ http://c0ffee.surge.sh/
         // Build up a table with the colours as the background.
         let tableBody = ""
         let tdHTML = `<td style="background-color: HEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
-        switch(arrayTrace.length) {
-          case 4:
-            tableBody = "<tr><TD><TD></tr><tr><TD><TD></tr>"
-            break
-          case 5:
-            tableBody = "<tr><TD><TD><TD><TD><TD></tr>"
-            break
-          case 6:
-            tableBody = "<tr><TD><TD><TD></tr><tr><TD><TD><TD></tr>"
-            break
+        if (arrayTrace.length == 9) {
+          let td = "<TD>".repeat(arrayTrace.length / 3)
+          tableBody = ("<tr>" + td + "</tr>").repeat(3)
+        } else if (arrayTrace.length % 2 == 0) {
+          let td = "<TD>".repeat(arrayTrace.length / 2)
+          tableBody = ("<tr>" + td + "</tr>").repeat(2)
+        } else {
+          let td = "<TD>".repeat(arrayTrace.length)
+          tableBody = "<tr>" + td + "</tr>"
         }
 
         // Replace with the actual hex values.
@@ -104,8 +108,6 @@ http://c0ffee.surge.sh/
     </style>
   </head>
   <body onload="pageInit()">
-    <div id="dave"></div>
-    <div id="count"></div>
     <table>
       <tbody id="tbody">
         <!-- JavaScript will populate this -->
