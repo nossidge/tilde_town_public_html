@@ -10,6 +10,25 @@ http://c0ffee.surge.sh/
     <script src="../lib/tracery.js"></script>
     <script type="text/javascript">
 
+      // http://www.javascripter.net/faq/hextorgb.htm
+      function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+      function getHex(hex) {
+        let h = cutHex(hex);
+        return (h.length == 3) ? h[0]+h[0]+h[1]+h[1]+h[2]+h[2] : h;
+      }
+      function hexToR(h) {return parseInt((getHex(h)).substring(0,2),16)}
+      function hexToG(h) {return parseInt((getHex(h)).substring(2,4),16)}
+      function hexToB(h) {return parseInt((getHex(h)).substring(4,6),16)}
+
+      // Figure out what colour to use for text.
+      // Light text on a dark background, dark on light.
+      // https://stackoverflow.com/a/1855903
+      function contrastColour(h) {
+        let r = hexToR(h), g = hexToG(h), b = hexToB(h);
+        let a = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return (a < 0.5) ? '#333' : '#fff';
+      }
+
       // Tracery grammars.
       let traceryInput = {
         /* Ruby will populate this */
@@ -55,7 +74,7 @@ http://c0ffee.surge.sh/
 
         // Build up a table with the colours as the background.
         let tableBody = ""
-        let tdHTML = `<td style="background-color: HEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
+        let tdHTML = `<td style="background-color: HEX; color: TEXTHEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
         if (arrayTrace.length == 9) {
           let td = "<TD>".repeat(arrayTrace.length / 3)
           tableBody = ("<tr>" + td + "</tr>").repeat(3)
@@ -69,8 +88,10 @@ http://c0ffee.surge.sh/
 
         // Replace with the actual hex values.
         for (i = 0; i < arrayTrace.length; i++) {
+          let colourText = contrastColour(arrayTrace[i].hex)
           tableBody = tableBody.replace("<TD>", tdHTML)
           tableBody = tableBody.replace("HEX", arrayTrace[i].hex)
+          tableBody = tableBody.replace("TEXTHEX", colourText)
           tableBody = tableBody.replace("DISPHEX", arrayTrace[i].display_hex)
           tableBody = tableBody.replace("WORD", arrayTrace[i].word)
           tableBody = tableBody.replace("WORD", arrayTrace[i].word)

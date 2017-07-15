@@ -10,19 +10,38 @@ http://c0ffee.surge.sh/
     <script src="../lib/tracery.js"></script>
     <script type="text/javascript">
 
+      // http://www.javascripter.net/faq/hextorgb.htm
+      function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+      function getHex(hex) {
+        let h = cutHex(hex);
+        return (h.length == 3) ? h[0]+h[0]+h[1]+h[1]+h[2]+h[2] : h;
+      }
+      function hexToR(h) {return parseInt((getHex(h)).substring(0,2),16)}
+      function hexToG(h) {return parseInt((getHex(h)).substring(2,4),16)}
+      function hexToB(h) {return parseInt((getHex(h)).substring(4,6),16)}
+
+      // Figure out what colour to use for text.
+      // Light text on a dark background, dark on light.
+      // https://stackoverflow.com/a/1855903
+      function contrastColour(h) {
+        let r = hexToR(h), g = hexToG(h), b = hexToB(h);
+        let a = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return (a < 0.5) ? '#333' : '#fff';
+      }
+
       // Tracery grammars.
       let traceryInput = {
         "?":["beside","tatoos","tictoc","its"],
-          "JJ":["acetic","acidic","beaded","biased","biotic","deific","dissed","dotted","edited","fatted","fitted","foetid","footed","seated","sedate","seeded","sooted","stated","static","tactic","tested","ace","aft","bad","cis","fat","fit","sad","set"],
-          "JJS":["basest","iciest","oddest","safest"],
-          "NN":["abbess","acacia","access","accost","addict","affect","assist","basset","bobcat","bodice","booboo","caddie","cicada","coffee","cootie","dacite","decade","deceit","defeat","defect","diacid","doodad","effect","estate","facade","fascia","fiasco","fiesta","iodide","oboist","office","offset","otitis","sadist","seabed","sestet","settee","siesta","soffit","softie","stasis","static","tactic","tattoo","tictac","tidbit","toffee","ace","act","ado","aid","ate","bat","bed","bet","bid","bit","boa","cab","cad","cat","cob","cod","cot","dab","die","doe","dot","eat","eta","fad","fat","fib","fit","foe","ice","ide","oaf","oat","ode","sac","sea","set","sit","sob","sod","sot","tab","tad","tea","tic","tie","toe"],
-          "NNP":["odessa"],
-          "NNS":["abbots","abodes","adobes","assets","attics","babies","basics","basses","beasts","biases","bidets","biotas","bodies","boffos","booses","boosts","bosses","cacaos","cadets","castes","cities","coasts","cocoas","dadoes","daises","debits","deists","dicots","diodes","discos","disses","dittos","eddies","edicts","facets","facies","faeces","feasts","ibises","idiots","octets","ootids","scoffs","scoots","seccos","staffs","states","steeds","stiffs","stoics","taboos","tastes","teases","testes","tibiae","tibias","toasts","tosses","abs","ads","ais","dos","efs","ids","ifs"],
-          "RB":["aft","oft"],
-          "VBD":["abased","abated","abided","aboded","babied","baited","basted","batted","beaded","bedded","beefed","bested","biased","bitted","boated","bobbed","bodied","boobed","boosed","booted","bossed","cabbed","casted","catted","ceased","coated","cobbed","codded","dabbed","deeded","defied","deiced","dibbed","dieted","dissed","dotted","eddied","edited","fasted","fibbed","fitted","fobbed","footed","sassed","seated","seeded","sifted","sobbed","sodded","sooted","stated","tabbed","tasted","teased","teated","tested","tidied","tooted","tossed","fed","sat"],
-          "VBI":["accede","affect","assist","attest","coedit","debate","decide","defect","desist","offset","secede","act","aid","bat","bed","bet","bid","dab","die","dot","eat","fib","fit","ice","set","sit","sob","tie","toe"],
-          "VBT":["accost","addict","affect","assess","assist","attest","betide","bisect","debase","decide","decoct","decode","deface","defeat","deseed","detect","detest","efface","effect","iodise","obsess","offset","sedate","tattoo","ace","act","aid","bat","bed","bet","bid","bit","dab","die","dot","eat","fat","fit","ice","set","sit","sob","sod","tab","tie","toe"],
-          "VBZ":["abases","abates","abides","babies","bastes","befits","besets","besots","biases","boasts","boosts","bosses","ceases","coasts","cosies","debits","defats","defies","deices","disses","eddies","feasts","sasses","scoffs","scoots","staffs","states","stiffs","tastes","teases","tidies","toasts","tosses"],
+        "JJ":["acetic","acidic","beaded","biased","biotic","deific","dissed","dotted","edited","fatted","fitted","foetid","footed","seated","sedate","seeded","sooted","stated","static","tactic","tested","ace","aft","bad","cis","fat","fit","sad","set"],
+        "JJS":["basest","iciest","oddest","safest"],
+        "NN":["abbess","acacia","access","accost","addict","affect","assist","basset","bobcat","bodice","booboo","caddie","cicada","coffee","cootie","dacite","decade","deceit","defeat","defect","diacid","doodad","effect","estate","facade","fascia","fiasco","fiesta","iodide","oboist","office","offset","otitis","sadist","seabed","sestet","settee","siesta","soffit","softie","stasis","static","tactic","tattoo","tictac","tidbit","toffee","ace","act","ado","aid","ate","bat","bed","bet","bid","bit","boa","cab","cad","cat","cob","cod","cot","dab","die","doe","dot","eat","eta","fad","fat","fib","fit","foe","ice","ide","oaf","oat","ode","sac","sea","set","sit","sob","sod","sot","tab","tad","tea","tic","tie","toe"],
+        "NNP":["odessa"],
+        "NNS":["abbots","abodes","adobes","assets","attics","babies","basics","basses","beasts","biases","bidets","biotas","bodies","boffos","booses","boosts","bosses","cacaos","cadets","castes","cities","coasts","cocoas","dadoes","daises","debits","deists","dicots","diodes","discos","disses","dittos","eddies","edicts","facets","facies","faeces","feasts","ibises","idiots","octets","ootids","scoffs","scoots","seccos","staffs","states","steeds","stiffs","stoics","taboos","tastes","teases","testes","tibiae","tibias","toasts","tosses","abs","ads","ais","dos","efs","ids","ifs"],
+        "RB":["aft","oft"],
+        "VBD":["abased","abated","abided","aboded","babied","baited","basted","batted","beaded","bedded","beefed","bested","biased","bitted","boated","bobbed","bodied","boobed","boosed","booted","bossed","cabbed","casted","catted","ceased","coated","cobbed","codded","dabbed","deeded","defied","deiced","dibbed","dieted","dissed","dotted","eddied","edited","fasted","fibbed","fitted","fobbed","footed","sassed","seated","seeded","sifted","sobbed","sodded","sooted","stated","tabbed","tasted","teased","teated","tested","tidied","tooted","tossed","fed","sat"],
+        "VBI":["accede","affect","assist","attest","coedit","debate","decide","defect","desist","offset","secede","act","aid","bat","bed","bet","bid","dab","die","dot","eat","fib","fit","ice","set","sit","sob","tie","toe"],
+        "VBT":["accost","addict","affect","assess","assist","attest","betide","bisect","debase","decide","decoct","decode","deface","defeat","deseed","detect","detest","efface","effect","iodise","obsess","offset","sedate","tattoo","ace","act","aid","bat","bed","bet","bid","bit","dab","die","dot","eat","fat","fit","ice","set","sit","sob","sod","tab","tie","toe"],
+        "VBZ":["abases","abates","abides","babies","bastes","befits","besets","besots","biases","boasts","boosts","bosses","ceases","coasts","cosies","debits","defats","defies","deices","disses","eddies","feasts","sasses","scoffs","scoots","staffs","states","stiffs","tastes","teases","tidies","toasts","tosses"],
         "origin": [
           "#JJ# #JJ# #NN# #VBZ# #JJ# #NNS#",
           "#JJ# #JJ# #NNS# #VBI# #JJ# #NNS#",
@@ -65,7 +84,7 @@ http://c0ffee.surge.sh/
 
         // Build up a table with the colours as the background.
         let tableBody = ""
-        let tdHTML = `<td style="background-color: HEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
+        let tdHTML = `<td style="background-color: HEX; color: TEXTHEX;" onmouseover="this.innerHTML = 'DISPHEX';" onmouseout="this.innerHTML = '&nbsp;WORD';">&nbsp;WORD</td>`
         if (arrayTrace.length == 9) {
           let td = "<TD>".repeat(arrayTrace.length / 3)
           tableBody = ("<tr>" + td + "</tr>").repeat(3)
@@ -79,8 +98,10 @@ http://c0ffee.surge.sh/
 
         // Replace with the actual hex values.
         for (i = 0; i < arrayTrace.length; i++) {
+          let colourText = contrastColour(arrayTrace[i].hex)
           tableBody = tableBody.replace("<TD>", tdHTML)
           tableBody = tableBody.replace("HEX", arrayTrace[i].hex)
+          tableBody = tableBody.replace("TEXTHEX", colourText)
           tableBody = tableBody.replace("DISPHEX", arrayTrace[i].display_hex)
           tableBody = tableBody.replace("WORD", arrayTrace[i].word)
           tableBody = tableBody.replace("WORD", arrayTrace[i].word)

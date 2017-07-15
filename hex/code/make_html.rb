@@ -33,7 +33,7 @@ end
 
 # Convert the hash to JSON, and format it.
 json = sort_hash(by_pos).to_json
-json = json.gsub('],"',"],\n#{' '*10}\"")
+json = json.gsub('],"',"],\n#{' '*8}\"")
 json = json.gsub(/[{}]/,'') + ','
 
 # Output the JSON to the HTML file.
