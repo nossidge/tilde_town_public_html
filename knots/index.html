@@ -13,7 +13,14 @@ https://www.flickr.com/photos/brenda-starr/4676651435
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>celtic knots</title>
+
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/knots" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/css/bootstrap-slider.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script>
+
     <script type="text/javascript">
 
     // These are the characters that the Knots font uses.
@@ -109,6 +116,15 @@ https://www.flickr.com/photos/brenda-starr/4676651435
         dir = "" + obj.n + obj.e + obj.s + obj.w;
         return boxChars[dir];
       }
+      function weightedRandom(values, weights) {
+        let arr = [];
+        for (let i = 0; i < weights.length; i++) {
+          for (let j = 0; j < weights[i]; j++) {
+            arr.push(values[i]);
+          }
+        }
+        return arr[Math.floor(Math.random()*arr.length)] || 0;
+      }
 
       // Create an array of the boundaries between characters.
       // Horizontal is E&W, vertical is N&S.
@@ -120,7 +136,7 @@ https://www.flickr.com/photos/brenda-starr/4676651435
           if ( output[mirrorI] != undefined ) {
             output[i] = output[mirrorI];
           } else {
-            output[i] = randBetween(0, 2);
+            output[i] = weightedRandom([0,1,2], options.boundaryWeights);
           }
         }
         return output;
@@ -191,9 +207,7 @@ https://www.flickr.com/photos/brenda-starr/4676651435
 
       // Make a new knot!
       function newKnot() {
-        let width = 20;
-        let height = 8;
-        generateKnot(width, height);
+        generateKnot(options.width, options.height);
       }
 
       // New output on spacebar press.
@@ -202,19 +216,41 @@ https://www.flickr.com/photos/brenda-starr/4676651435
         if (e.keyCode == 32) newKnot();
       }
 
+      // Options and form control events.
+      let options = {
+        width: 20,
+        height: 8,
+        boundaryWeights: [2,2,2]
+      };
+      function changeBoundaries(self) {
+        let labelTexts = ["none", "few", "some", "many", "lots"];
+        let label = document.getElementById(self.id + "_text");
+        let value = self.value - 1;
+        let no = self.getAttribute("boundaries-no");
+        label.innerHTML = labelTexts[value];
+        options.boundaryWeights[no] = value;
+        newKnot();
+      }
+      function changeSize(self) {
+        let label = document.getElementById(self.id + "_text");
+        label.innerHTML = self.value;
+        options[self.id] = self.value;
+        newKnot();
+      }
     </script>
     <style type="text/css">
       * {
         margin: 0;
         padding: 0;
+        color: rgb(23, 15, 4);
         text-align: center;
-        color: rgb(23,15,4);
       }
       body {
         background-image: url("https://c1.staticflickr.com/2/1308/4676651435_cfc717b697_b.jpg");
         background-size: 100% 100%;
+        overflow: hidden;
       }
-      table {
+      #knotTable {
         height: 100vh;
         width: 100vw;
       }
@@ -224,15 +260,139 @@ https://www.flickr.com/photos/brenda-starr/4676651435
         font-size: 40px;
         line-height: 97%;
       }
+      #controls, #instructions {
+        position: absolute;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      #controls td {
+        font-size: 15px;
+        padding: 10px 20px;
+      }
+      #instructions {
+        right: 0;
+        padding: 16px 40px;
+      }
+      #instructions p {
+        margin: 0;
+        padding: 0;
+        font-size: 18px;
+      }
+      #controls tr td:nth-child(3) {
+        width: 80px;
+      }
+      a:link, a:visited {
+        color: rgb(23, 15, 4);
+        text-decoration: underline;
+      }
+      a:hover, a:active {
+        color: #ccc;
+      }
     </style>
   </head>
   <body onload="newKnot()">
-    <table>
+    <table id="knotTable">
       <tr>
         <td>
           <div id="knot" class="knots"></div>
         </td>
       </tr>
     </table>
+    <div id="instructions" onclick="newKnot()">
+      <p>Generate a random rectangular <a href="https://en.wikipedia.org/wiki/Celtic_knot">Celtic knot</a>.</p>
+      <p>Use the controls on the left to set the size.</p>
+      <p>You can also control the probability of each type of knot crossing.</p>
+      <p>Click here or press space to generate a new knot.</p>
+    </div>
+    <div id="controls">
+      <table onclick="newKnot()">
+        <tr>
+          <td>Height</td>
+          <td>
+            <input id="height" type="text"
+              style="width: 260px;"
+              data-provide="slider"
+              data-slider-min="3"
+              data-slider-max="24"
+              data-slider-step="1"
+              data-slider-value="8"
+              data-slider-tooltip="hide"
+              onchange="changeSize(this)"
+            />
+          </td>
+          <td id="height_text">8</td>
+        </tr>
+        <tr>
+          <td>Width</td>
+          <td>
+            <input id="width" type="text"
+              style="width: 260px;"
+              data-provide="slider"
+              data-slider-min="3"
+              data-slider-max="48"
+              data-slider-step="1"
+              data-slider-value="20"
+              data-slider-tooltip="hide"
+              onchange="changeSize(this)"
+            />
+          </td>
+          <td id="width_text">20</td>
+        </tr>
+        <tr>
+          <td>Blocked</td>
+          <td>
+            <input id="boundaries0" type="text"
+              boundaries-no="0"
+              style="width: 260px;"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="3"
+              data-slider-tooltip="hide"
+              onchange="changeBoundaries(this)"
+            ></input>
+          </td>
+          <td id="boundaries0_text">some</td>
+        </tr>
+        <tr>
+          <td>Crossed</td>
+          <td>
+            <input id="boundaries1" type="text"
+              boundaries-no="1"
+              style="width: 260px;"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="3"
+              data-slider-tooltip="hide"
+              onchange="changeBoundaries(this)"
+            ></input>
+          </td>
+          <td id="boundaries1_text">some</td>
+        </tr>
+        <tr>
+          <td>Straight</td>
+          <td>
+            <input id="boundaries2" type="text"
+              boundaries-no="2"
+              style="width: 260px;"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="3"
+              data-slider-tooltip="hide"
+              onchange="changeBoundaries(this)"
+            ></input>
+          </td>
+          <td id="boundaries2_text">some</td>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>
