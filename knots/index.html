@@ -21,222 +21,38 @@ https://www.flickr.com/photos/brenda-starr/4676651435
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script>
 
+    <script src="celtic_knot.js"></script>
+
     <script type="text/javascript">
 
-    // These are the characters that the Knots font uses.
-      let boxChars = {
-        "2222": "╋",
-        "2122": "╉",
-        "2022": "┫",
-        "2221": "╊",
-        "2121": "╂",
-        "2021": "┨",
-        "2220": "┣",
-        "2120": "┠",
-        "2020": "┃",
-        "2212": "╇",
-        "2112": "╃",
-        "2012": "┩",
-        "2211": "╄",
-        "2111": "╀",
-        "2011": "┦",
-        "2210": "┡",
-        "2110": "┞",
-        "2010": "╿",
-        "2202": "┻",
-        "2102": "┹",
-        "2002": "┛",
-        "2201": "┺",
-        "2101": "┸",
-        "2001": "┚",
-        "2200": "┗",
-        "2100": "┖",
-        "2000": "╏",
-        "1222": "╈",
-        "1122": "╅",
-        "1022": "┪",
-        "1221": "╆",
-        "1121": "╁",
-        "1021": "┧",
-        "1220": "┢",
-        "1120": "┟",
-        "1020": "╽",
-        "1212": "┿",
-        "1112": "┽",
-        "1012": "┥",
-        "1211": "┾",
-        "1111": "┼",
-        "1011": "┤",
-        "1210": "┝",
-        "1110": "├",
-        "1010": "│",
-        "1202": "┷",
-        "1102": "┵",
-        "1002": "┙",
-        "1201": "┶",
-        "1101": "┴",
-        "1001": "┘",
-        "1200": "┕",
-        "1100": "└",
-        "1000": "┈",
-        "0222": "┳",
-        "0122": "┱",
-        "0022": "┓",
-        "0221": "┲",
-        "0121": "┰",
-        "0021": "┒",
-        "0220": "┏",
-        "0120": "┎",
-        "0020": "╻",
-        "0212": "┯",
-        "0112": "┭",
-        "0012": "┑",
-        "0211": "┮",
-        "0111": "┬",
-        "0011": "┐",
-        "0210": "┍",
-        "0110": "┌",
-        "0010": "╷",
-        "0202": "━",
-        "0102": "╾",
-        "0002": "╸",
-        "0201": "╼",
-        "0101": "─",
-        "0001": "╴",
-        "0200": "╺",
-        "0100": "╶",
-        "0000": "&nbsp;&nbsp;&nbsp;&nbsp;"
-      }
-
-      // Misc functions.
-      function randBetween(min, max) {
-        return min + Math.floor(Math.random() * (max - min + 1));
-      }
-      function charFromDirs(obj) {
-        dir = "" + obj.n + obj.e + obj.s + obj.w;
-        return boxChars[dir];
-      }
-      function weightedRandom(values, weights) {
-        let arr = [];
-        for (let i = 0; i < weights.length; i++) {
-          for (let j = 0; j < weights[i]; j++) {
-            arr.push(values[i]);
-          }
-        }
-        return arr[Math.floor(Math.random()*arr.length)] || 0;
-      }
-
-      // Create an array of the boundaries between characters.
-      // Horizontal is E&W, vertical is N&S.
-      // Mirror for symmetry.
-      function boundaries(width) {
-        let output = [];
-        for (let i = 0; i < width - 1; i++) {
-          let mirrorI = width - i - 2;
-          if ( output[mirrorI] != undefined ) {
-            output[i] = output[mirrorI];
-          } else {
-            output[i] = weightedRandom([0,1,2], options.boundaryWeights);
-          }
-        }
-        return output;
-      }
-
-      // Make a knot based on specific inputs.
-      function generateKnot(width, height) {
-
-        // The final array that will be output.
-        let knotArray = [];
-        for (let y = 0; y < height; y++) {
-          knotArray[y] = [];
-          for (let x = 0; x < width; x++) {
-            knotArray[y][x] = {n: 0, e: 0, s: 0, w: 0};
-          }
-        }
-
-        // Create an array of the boundaries between characters.
-        let boundariesHoriz = [];
-        for (let i = 0; i < height; i++) {
-          let mirrorI = height - i - 1;
-          if ( boundariesHoriz[mirrorI] != undefined ) {
-            boundariesHoriz[i] = boundariesHoriz[mirrorI];
-          } else {
-            boundariesHoriz[i] = boundaries(width);
-          }
-        }
-
-        // Map the boundaries to the knotArray.
-        for (let y = 0; y < boundariesHoriz.length; y++) {
-          for (let x = 0; x < boundariesHoriz[0].length; x++) {
-            knotArray[y][x].e   = boundariesHoriz[y][x];
-            knotArray[y][x+1].w = boundariesHoriz[y][x];
-          }
-        }
-
-        // Create an array of the boundaries between rows.
-        let boundariesVert = [];
-        for (let i = 0; i < width; i++) {
-          let mirrorI = width - i - 1;
-          if ( boundariesVert[mirrorI] != undefined ) {
-            boundariesVert[i] = boundariesVert[mirrorI];
-          } else {
-            boundariesVert[i] = boundaries(height);
-          }
-        }
-
-        // Map the boundaries to the knotArray.
-        for (let x = 0; x < boundariesVert.length; x++) {
-          for (let y = 0; y < boundariesVert[0].length; y++) {
-             knotArray[y][x].s   = boundariesVert[x][y];
-             knotArray[y+1][x].n = boundariesVert[x][y];
-          }
-        }
-
-        // Find the char that matches the directions.
-        let finalHtml = "";
-        for (let y = 0; y < height; y++) {
-          for (let x = 0; x < width; x++) {
-            finalHtml += charFromDirs(knotArray[y][x]);
-          }
-          finalHtml += "<br>";
-        }
-
-        // Display in the table body.
-        document.getElementById("knot").innerHTML = finalHtml;
-      }
-
-      // Make a new knot!
+      // New CelticKnot instance, and function for displaying in DOM.
+      var celticKnot = new CelticKnot();
       function newKnot() {
-        generateKnot(options.width, options.height);
+        document.getElementById("knot").innerHTML = celticKnot.gen();
       }
 
-      // New output on spacebar press.
+      // New knot output on spacebar press.
       window.addEventListener("keydown", newKnotOnSpace, false);
       function newKnotOnSpace(e) {
         if (e.keyCode == 32) newKnot();
       }
 
-      // Options and form control events.
-      let options = {
-        width: 20,
-        height: 8,
-        boundaryWeights: [2,2,2]
-      };
+      // Form control events to change CelticKnot state.
       function changeBoundaries(self) {
         let labelTexts = ["none", "few", "some", "many", "lots"];
         let label = document.getElementById(self.id + "_text");
-        let value = self.value - 1;
         let no = self.getAttribute("boundaries-no");
-        label.innerHTML = labelTexts[value];
-        options.boundaryWeights[no] = value;
+        label.innerHTML = labelTexts[self.value];
+        celticKnot.boundaryWeights[no] = self.value;
         newKnot();
       }
       function changeSize(self) {
         let label = document.getElementById(self.id + "_text");
         label.innerHTML = self.value;
-        options[self.id] = self.value;
+        celticKnot[self.id] = self.value;
         newKnot();
       }
+
     </script>
     <style type="text/css">
       * {
@@ -345,11 +161,11 @@ https://www.flickr.com/photos/brenda-starr/4676651435
               boundaries-no="0"
               style="width: 260px;"
               data-provide="slider"
-              data-slider-ticks="[1, 2, 3, 4, 5]"
-              data-slider-min="1"
-              data-slider-max="5"
+              data-slider-ticks="[0, 1, 2, 3, 4]"
+              data-slider-min="0"
+              data-slider-max="4"
               data-slider-step="1"
-              data-slider-value="3"
+              data-slider-value="2"
               data-slider-tooltip="hide"
               onchange="changeBoundaries(this)"
             ></input>
@@ -363,11 +179,11 @@ https://www.flickr.com/photos/brenda-starr/4676651435
               boundaries-no="1"
               style="width: 260px;"
               data-provide="slider"
-              data-slider-ticks="[1, 2, 3, 4, 5]"
-              data-slider-min="1"
-              data-slider-max="5"
+              data-slider-ticks="[0, 1, 2, 3, 4]"
+              data-slider-min="0"
+              data-slider-max="4"
               data-slider-step="1"
-              data-slider-value="3"
+              data-slider-value="2"
               data-slider-tooltip="hide"
               onchange="changeBoundaries(this)"
             ></input>
@@ -381,11 +197,11 @@ https://www.flickr.com/photos/brenda-starr/4676651435
               boundaries-no="2"
               style="width: 260px;"
               data-provide="slider"
-              data-slider-ticks="[1, 2, 3, 4, 5]"
-              data-slider-min="1"
-              data-slider-max="5"
+              data-slider-ticks="[0, 1, 2, 3, 4]"
+              data-slider-min="0"
+              data-slider-max="4"
               data-slider-step="1"
-              data-slider-value="3"
+              data-slider-value="2"
               data-slider-tooltip="hide"
               onchange="changeBoundaries(this)"
             ></input>
