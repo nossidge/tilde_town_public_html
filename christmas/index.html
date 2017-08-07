@@ -36,15 +36,15 @@ http://tvtropes.org/pmwiki/pmwiki.php/Main/CommonMeter
     a:link, a:visited { color: #fff; }
     a:hover, a:active { color: #ccc; }
   </style>
-	<script src="https://tilde.town/~novas1x/snowstorm/snowstorm.js"></script>
+  <script src="https://tilde.town/~novas1x/snowstorm/snowstorm.js"></script>
   <script>
-		var songs = {
-			"http://picosong.com/cdn/8ad212c5e25f26d43f89a472825e7cc4.mp3": "O little town of Bethlehem,<br>How still we see thee lie!<br>Above your deep and dreamless sleep,<br>The silent stars go by.",
-			"http://picosong.com/cdn/253a6788643b925d35a4a91935adbd6c.mp3": "While shepherds watched their flocks by night,<br>All seated on the ground,<br>The angel of the Lord came down,<br>And glory shone around.",
-			"http://picosong.com/cdn/9c69a0fcef1e65d24ba6ca7754f36d23.mp3": "It came upon the midnight clear,<br>That glorious song of old,<br>From angels bending near the earth,<br>To touch their harps of gold:"
-		}
+    let songs = {
+      "http://picosong.com/cdn/8ad212c5e25f26d43f89a472825e7cc4.mp3": "O little town of Bethlehem,<br>How still we see thee lie!<br>Above your deep and dreamless sleep,<br>The silent stars go by.",
+      "http://picosong.com/cdn/253a6788643b925d35a4a91935adbd6c.mp3": "While shepherds watched their flocks by night,<br>All seated on the ground,<br>The angel of the Lord came down,<br>And glory shone around.",
+      "http://picosong.com/cdn/9c69a0fcef1e65d24ba6ca7754f36d23.mp3": "It came upon the midnight clear,<br>That glorious song of old,<br>From angels bending near the earth,<br>To touch their harps of gold:"
+    }
 
-		var verses = [
+    let verses = [
 "Here we come a-wassailing<br>Among the leaves so green,<br>Here we come a-wand&#39;ring<br>So fair to be seen.",
 "We are not daily beggars<br>That beg from door to door;<br>But we are neighbours&#39; children,<br>Whom you have seen before.",
 "Call up the butler of this house,<br>Put on his golden ring.<br>Let him bring us a glass of beer,<br>And better we shall sing.",
@@ -427,74 +427,74 @@ http://tvtropes.org/pmwiki/pmwiki.php/Main/CommonMeter
 "I learned to do the laundry, feed the cat,<br>And clean the house<br>I promised to be patient while<br>She worked her problems out",
 "When she packed her bags,<br>Her destination wasn&#39;t clear<br>But I sensed that her intentions<br>Were honest and sincere",
 "Her mama&#39;s been a little vague<br>As to her whereabouts<br>Her sister says &quot;I&#39;m certain your<br>Romance is headed south&quot;"
-		]
+    ]
 
-		// Global vars.
-		var keys = Object.keys(songs);
-		var mp3_index = -1;
-		var audio, lyrics_div;
+    // Global vars.
+    let keys = Object.keys(songs);
+    let mp3_index = -1;
+    let audio, lyrics_div;
 
-		// Run when loaded.
-		function page_init() {
-			audio = document.getElementsByTagName("audio")[0];
-			lyrics_div = document.getElementById("lyrics");
-			choose_random_mp3();
-		}
+    // Run when loaded.
+    function page_init() {
+      audio = document.getElementsByTagName("audio")[0];
+      lyrics_div = document.getElementById("lyrics");
+      choose_random_mp3();
+    }
 
-		// Cycle through the mp3s in the list.
-		function mp3_next() {
-			mp3_index += 1;
-			if (mp3_index >= keys.length) mp3_index = 0;
-			change_mp3(mp3_index);
-		}
-		function mp3_prev() {
-			mp3_index -= 1;
-			if (mp3_index < 0) mp3_index = keys.length - 1;
-			change_mp3(mp3_index);
-		}
+    // Cycle through the mp3s in the list.
+    function mp3_next() {
+      mp3_index += 1;
+      if (mp3_index >= keys.length) mp3_index = 0;
+      change_mp3(mp3_index);
+    }
+    function mp3_prev() {
+      mp3_index -= 1;
+      if (mp3_index < 0) mp3_index = keys.length - 1;
+      change_mp3(mp3_index);
+    }
 
-		// Assumes an index in the correct range.
-		function change_mp3(index) {
-			var key = Object.keys(songs)[index];
-			audio.setAttribute("src", key);
-			lyrics_div.innerHTML = "<p>" + songs[key] + "</p>";
-		}
+    // Assumes an index in the correct range.
+    function change_mp3(index) {
+      let key = Object.keys(songs)[index];
+      audio.setAttribute("src", key);
+      lyrics_div.innerHTML = "<p>" + songs[key] + "</p>";
+    }
 
-		// Select an mp3 at random.
-		function choose_random_mp3() {
-			mp3_index = Math.floor(keys.length * Math.random());
-			change_mp3(mp3_index);
-		}
+    // Select an mp3 at random.
+    function choose_random_mp3() {
+      mp3_index = Math.floor(keys.length * Math.random());
+      change_mp3(mp3_index);
+    }
 
-		// Add a random verse to the div.
-		function add_verse() {
-			var verse = verses[Math.floor(verses.length * Math.random())];
-			lyrics_div.innerHTML = lyrics_div.innerHTML + "<p>" + verse + "</p>";
-		}
+    // Add a random verse to the div.
+    function add_verse() {
+      let verse = verses[Math.floor(verses.length * Math.random())];
+      lyrics_div.innerHTML = lyrics_div.innerHTML + "<p>" + verse + "</p>";
+    }
 
-		// Add verse on spacebar press.
-		window.addEventListener("keydown", add_verse_on_space, false);
-		function add_verse_on_space(e) {
-			if (e.keyCode == 32) add_verse();
-		}
+    // Add verse on spacebar press.
+    window.addEventListener("keydown", add_verse_on_space, false);
+    function add_verse_on_space(e) {
+      if (e.keyCode == 32) add_verse();
+    }
 
   </script>
 </head>
 <body onload="page_init()">
-	<div class="contents">
-		<div class="header">
-			<h1>Christmas Sing-along!</h1>
-			<p>Let us IRC in each others' good company, gather round the warm CRT glow of the old family monitor, and sing in joyful union our defiance of these desolate short days.</p>
-			<p>( Press the spacebar for the next verse )</p>
-		</div>
-		<div class="player">
-			<img src="prev.png" width="55" height="30" onclick="javascript:mp3_prev()">
-			<audio controls preload="auto" autoplay="autoplay"></audio>
-			<img src="next.png" width="55" height="30" onclick="javascript:mp3_next()">
-		</div>
-		<div class="lyrics">
-			<div id="lyrics"></div>
-		</div>
-	</div>
+  <div class="contents">
+    <div class="header">
+      <h1>Christmas Sing-along!</h1>
+      <p>Let us IRC in each others' good company, gather round the warm CRT glow of the old family monitor, and sing in joyful union our defiance of these desolate short days.</p>
+      <p>( Press the spacebar for the next verse )</p>
+    </div>
+    <div class="player">
+      <img src="prev.png" width="55" height="30" onclick="javascript:mp3_prev()">
+      <audio controls preload="auto" autoplay="autoplay"></audio>
+      <img src="next.png" width="55" height="30" onclick="javascript:mp3_next()">
+    </div>
+    <div class="lyrics">
+      <div id="lyrics"></div>
+    </div>
+  </div>
 </body>
 </html>
