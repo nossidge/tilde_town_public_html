@@ -7,7 +7,7 @@
       body {
         margin: 0px;
         padding: 0px;
-        
+
         background-color: white;
         background: white; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(left, white, #E0B0FF, white); /* For Safari 5.1 to 6.0 */
@@ -88,7 +88,7 @@ Particle.prototype.draw = function() {
   this.hue -= 0.5;
   this.vx = Math.abs( (w/2) - (this.x + this.xMidOffset) ) / 100 + 0.1 ;
   if (this.vx >= 10) { this.vx = 10 }
-  
+
   if (this.vx <= 1 && this.inFormation == false) {
     this.inFormation = true;
     tildeCountParticles += 1;
@@ -96,19 +96,19 @@ Particle.prototype.draw = function() {
     this.inFormation = false;
     tildeCountParticles -= 1;
   }
-  
+
   // Middle (do nothing)
   if ( Math.abs( (h/2) - this.y ) <= (h/2.1) ) {
-  
+
   // Top
   } else if ( ( (h/2) - this.y ) >= 0 ) {
     this.vy = Math.abs(this.vy);
-    
+
   // Bottom
   } else {
     this.vy = - Math.abs(this.vy);
   }
-  
+
   this.paint();
 
   // reset particle
@@ -137,7 +137,7 @@ function drawScene() {
       particles[i].build(0);
     }
   }
-  
+
   c.textAlign = "center";
   c.textBaseline = "middle";
 
@@ -156,7 +156,7 @@ function initCanvas() {
     ANIMATION;
     console.log(ANIMATION);
   }
-  
+
   w = a.width = window.innerWidth;
   h = a.height = window.innerHeight - 4;
 
@@ -179,10 +179,9 @@ function initCanvas() {
 
 //helper functions
 function rand(max, min, _int) {
-  var max = (max === 0 || max)?max:1, 
-      min = min || 0, 
+  var max = (max === 0 || max)?max:1,
+      min = min || 0,
       gen = min + (max - min) * Math.random();
-
   return (_int) ? Math.round(gen) : gen;
 };
 
@@ -190,7 +189,7 @@ function rand(max, min, _int) {
 // Update the document title.
 var percentTildeTimer = 200;
 function percentTilde() {
-  return Math.min(100, Math.ceil(tildeCountParticles / (particleNum * 0.85) * 100));  
+  return Math.min(100, Math.ceil(tildeCountParticles / (particleNum * 0.85) * 100));
 }
 window.setInterval(function() {
   var percent = percentTilde();
@@ -199,17 +198,15 @@ window.setInterval(function() {
     document.body.style.cursor = 'pointer';
   } else {
     document.body.style.cursor = 'context-menu';
-    
   }
 }, percentTildeTimer);
 
 // Click through.
 a.addEventListener('click', function() {
   if ( (percentTilde() == 100) ) {
-    window.location.href = 'pipes.html'; 
+    window.location.href = 'window.html';
   }
 }, false);
-
 
     </script>
   </body>
