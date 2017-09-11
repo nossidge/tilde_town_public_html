@@ -1,5 +1,5 @@
 // Processing.
-// JS ported from Java. 
+// JS ported from Java.
 //
 
 // No of cells between the centre and edge DIAGONALLY
@@ -23,7 +23,7 @@ var cellW = 7;
 var cellH = cellW;
 
 // The ideal pixel size for the canvas
-var yPixelIdeal = 256;
+var yPixelIdeal = (cellW + 1) * (25 + cellW);
 var xPixelIdeal = yPixelIdeal * 1;
 //var xPixelIdeal = yPixelIdeal * 0.9;
 //var xPixelIdeal = yPixelIdeal * 1.8;
@@ -43,26 +43,26 @@ var colourType = 8;
 function setup() {
   var crossCanvas = createCanvas(xCells*cellW,yCells*cellH);
   crossCanvas.parent('noisy_cross');
-  
+
   background(0);
   frameRate(8);
 }
 
 function draw() {
   background(0);
-  
+
   // Draw five crosses, with the centres in an X
-  // (like the pips of a 5 on a die)  
+  // (like the pips of a 5 on a die)
   newPattern(triangleRadius*2          , triangleRadius*2);
   newPattern(triangleRadius*2          , yCells-1-triangleRadius*2);
   newPattern(xCells-1-triangleRadius*2 , triangleRadius*2);
   newPattern(xCells-1-triangleRadius*2 , yCells-1-triangleRadius*2);
   newPattern(centreCellX, centreCellY);
-  
-  
+
+
   /*
   // Let's just keep it green for now.
-  
+
   if (mouseIsPressed) {
     colourType++;
     if (colourType > 12) {
@@ -70,7 +70,7 @@ function draw() {
     }
   }
   */
-  
+
 }
 
 
@@ -80,60 +80,60 @@ function newPattern(centreCellX, centreCellY) {
 
   for(i=0; i<triangleRadius; i++){
     for(j=0; j<( (triangleRadius*2) - (starness*i) ); j++){
-      
+
       //// Colours /////////////////////////////////
       switch(colourType) {
-      
+
         // White
         case 0:
           fill(255);
           break;
-          
+
         // Grey
         case 1:
           fill(255-i*60, 255-i*60, 255-i*60);
           break;
-          
+
         // Dark red
         case 2:
           fill(210-(150/triangleRadius)*i, 20, 0);
           break;
-          
+
         // Cross red (makes a more pronounced 'cross' effect)
         case 3:
           fill(220-(220/triangleRadius)*i, 0, 0);
           break;
-          
+
         // Red cross
         case 4:
           fill(255-i*60, 0, 0);
           break;
-          
+
         // Dark blue
         case 5:
           fill(0, 0, 255-(255/triangleRadius)*i );
           break;
-          
+
         // Lighter blue
         case 6:
           fill(0, 0, random(100,255));
           break;
-          
+
         // Blue cross
         case 7:
           fill(0, 0, 255-i*60);
           break;
-          
+
         // Green cross
         case 8:
           fill(0, 255-i*60, 0);
           break;
-          
+
         // Yellow cross
         case 9:
           fill(255-i*60, 255-i*60, 0);
           break;
-          
+
         // Completely random (stained glass window / rag rug effect)
         // (Warning: kinda lame)
         case 10:
@@ -145,11 +145,17 @@ function newPattern(centreCellX, centreCellY) {
         case 12:
           fill(random(255)-i*60, random(255)-i*60, random(255)-i*60);
           break;
-          
+
+        // tilde.town pink.
+        case 13:
+          var div = 4.4;
+          fill(224-i*(224/div), 176-i*(176/div), 255-i*(255/div));
+          break;
+
         default:
       }
       //////////////////////////////////////////////
-      
+
       // Split the square into eighths, and have each square in each eighth behave the same
       var rand = Math.floor(Math.random() * randomUpperLimit);
       if (rand<1) {

@@ -26,7 +26,7 @@ http://c0ffee.surge.sh/
       function contrastColour(h) {
         let r = hexToR(h), g = hexToG(h), b = hexToB(h);
         let a = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        return (a < 0.5) ? '#333' : '#fff';
+        return (a < 0.5) ? '#333' : '#f0f0f0';
       }
 
       // Tracery grammars.
