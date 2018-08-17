@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Here and Now</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Here and Now
+Letters To Cleo
+
+
+E
+Just living on a Sunday morning
+G
+Got my toast and tea and I'm warm and
+A      E
+I just thought I'd think about
+E
+All the things to get and keep getting
+G
+Never enough, not enough and never ending
+A      E
+I just thought I'd think about
+E   G   A   E
+[ x2 ]
+
+
+B            D   A   E
+And it might be
+B
+The comfort of a knowledge of a rise above the sky above
+Could never parallel the challenge of an acquisition in the
+D             A        E
+Here and now, here and now
+E   G   A   E
+
+
+E
+Parody of yourself in color
+G
+Giving it to everybody but your mother
+A              E
+And you've got much to think about
+E
+Soaring higher with every treason
+G                    A
+Never justify, never reason
+           E              G      A
+You've got much to think about
+
+
+B            D   A   E
+And it might be
+B
+The comfort of a knowledge of a rise above the sky above
+Could never parallel the challenge of an acquisition in the
+D             A        E
+Here and now, here and now
+[ x2 ]
+
+
+B            D   A   E
+And it might be...
+
+
+E
+Parody of yourself in color
+G
+Giving it to everybody but your mother
+A              E
+And you've got much to think about
+E
+Soaring higher with every treason
+G                    A
+Never justify, never reason
+           E              G      A
+You've got much to think about
+
+
+B            D   A   E
+And it might be
+B
+The comfort of a knowledge of a rise above the sky above
+Could never parallel the challenge of an acquisition in the
+D             A        E
+Here and now, here and now
+[ x2 ]
+
+
+B            D   A   E
+And it might be
+B
+The comfort of a knowledge of a rise above the sky above
+Could never parallel the challenge of an acquisition in the
+D             A        E
+Here and now, here and now
+
+
+B              D
+And it might,
+A   E
+Might...</div>
+</body>
+</html>
