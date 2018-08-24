@@ -12,13 +12,31 @@
     <meta charset="utf-8">
     <title>My dog's got no...</title>
     <style type="text/css">
+      @font-face {
+        font-family: 'Comic Sans MS';
+        src: local('Comic Sans MS'), local('ComicSansMS'),
+          url('../lib/fonts/ComicSansMS.woff2') format('woff2'),
+          url('../lib/fonts/ComicSansMS.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
       body {
         background-image: url(https://i.imgur.com/PGvUxk4.jpg);
         background-attachment: fixed;
         background-size: 100% 100%;
-        font-family: Comic Sans MS, Comic Sans, cursive;
+        font-family: 'Comic Sans MS';
         font-size: 200%;
         margin: 40px;
+      }
+      @media only screen and (max-width: 600px) {
+        body {
+          background-image: url(https://i.imgur.com/bxEhZNE.jpg);
+          background-attachment: fixed;
+          background-size: auto;
+          background-repeat: repeat;
+          text-shadow: 2px 2px 5px rgb(255,181,92);
+          font-weight: bold;
+        }
       }
     </style>
   </head>
