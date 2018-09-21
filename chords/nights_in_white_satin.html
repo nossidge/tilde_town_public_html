@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nights in White Satin</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Nights in White Satin
+The Moody Blues
+
+
+Em              D      Em                 D
+Nights in white satin, never reaching the end,
+C            G        F                Em
+Letters I've written, never meaning to send
+Em          D              Em                D
+Beauty I've always missed, with these eyes before
+C             G         F              Em
+Just what the truth is, I can't say anymore
+
+       A               C
+'Cos I love you, yes I love you
+         Em       D   Em   D
+Oh how I love you
+
+Em        D       Em           D
+Gazing at people, some hand in hand
+C             G             F               Em
+Just what I'm going through they can't understand
+Em          D        Em                   D
+Some try to tell me, thoughts they cannot defend
+C             G           F                  Em
+Just what you want to be, you will be in the end
+
+      A               C
+And I love you, yes I love you
+         Em        D        Em       D
+Oh how I love you, oh how I love you</div>
+</body>
+</html>
