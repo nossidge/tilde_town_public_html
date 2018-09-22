@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Whiter Shade of Pale</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+A Whiter Shade of Pale
+Procol Harum
+
+
+C  C/B                Am      Am/G
+We skipped the light fandango
+F      F/E                   Dm    Dm/C
+Turned cartwheels 'cross the floor
+G     G/F           Em      Em/D
+I was feeling kinda seasick
+C       C/B                  Am   Am/G
+But the crowd called out for more
+F            F/E     Dm     Dm/C
+The room was humming harder
+G      G/F           Em  Em/D
+As the ceiling flew away
+C       C/B            Am      Am/G
+When we called out for another drink
+F          F/E       Dm
+The waiter brought a tray
+
+G7        C  C/B      Am   Am/G
+And so it was___ that later____
+F      F/E             Dm   Dm/C
+As the miller told his tale
+G        G/F                 Em      Em/D
+That her face, at first just ghostly
+         C     F         C    G
+Turned a whiter shade of pale
+
+She said, there is no reason
+And the truth is plain to see
+But I wandered through my playing cards
+And would not let her be
+One of sixteen vestal virgins
+Who were leaving for the coast
+And although my eyes were open
+They might have just as well've been closed
+
+And so it was that later
+As the miller told his tale
+That her face at first just ghostly
+Turned a whiter shade of pale</div>
+</body>
+</html>
