@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>One Tin Soldier</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+One Tin Soldier
+The Original Caste
+
+[Verse 1]
+F               C
+Listen children to a story
+Dm               Am
+That was written long ago
+Bb                   F
+'Bout a kingdom on a mountain
+Bb             C
+And the valley folk below
+F               C
+On the mountain was a treasure
+Dm            Am
+Buried deep beneath a stone
+Bb             F
+And the valley people swore
+       Bb                C    F
+They'd have it for their very own
+
+[Chorus]
+F                      C
+Go ahead and hate your neighbour
+Bb                   F
+Go ahead and cheat a friend
+F                    C
+Do it in the name of heaven
+Bb                F
+Justify it in the end
+      F                     C
+There won't be any trumpets blowing
+Bb                 F
+Come the judgement day
+       F              C
+On the bloody morning after
+                       F
+One tin soldier rides away
+
+[Verse 2]
+So the people of the valley
+Sent a message up the hill
+Asking for the buried treasure
+Tons of gold for which they'd kill
+Came an answer from the kingdom
+"With our brothers we will share
+All the secrets of our mountain
+All the riches buried there"
+
+[Verse 3 (key of G)]
+G              D
+Now the valley cried with anger
+Em                  Bm
+"Mount your horses, draw your sword"
+C                   G
+And they killed the mountain people
+C                 D
+So they won their just reward
+G                D
+Now they stood beside the treasure
+Em              Bm
+On the mountain darkened red
+C                    G
+Turned the stone and looked beneath it
+C                           G
+"Peace on earth" was all it said
+
+[Chorus (key of G)]</div>
+</body>
+</html>
