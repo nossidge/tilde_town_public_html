@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Don't Stop Movin'</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Don't Stop Movin'
+S Club 7
+
+
+[Funky riff]
+Gm   
+Don't stop moving to the funky, funky beat
+Don't stop moving to the funky, funky beat
+Cm   
+Don't stop moving to the funky, funky beat
+Gm   
+Don't stop moving to the S Club beat
+
+
+Gm   
+DJ got the party started, there's no end in sight
+Everybody's moving to the rhythm that's inside
+       Cm                                       Gm
+It's a crazy world, but tonight's the right situation
+Don't get left behind
+
+Gm   
+I can feel the music moving through me everywhere
+Ain't no destination, baby we don't even care
+          Cm                                   Gm
+There's a place to be if you need the right education
+Let it take you there
+
+         Eb          D
+And just go with the magic baby
+Gm7                        C
+I can see it there in your eyes
+Eb            D
+Let it flow, stop the waiting
+Right here on the dance floor is where you gotta let it go
+
+
+[Chorus]
+Gm                 Bb
+Don't stop moving, can you feel the music?
+Cm                 D
+DJ's got us going around, 'round
+Gm                 Bb
+Don't stop moving, find your own way to it
+Cm   
+Listen to the music
+D   
+Taking you to places that you've never been before
+Baby now
+
+
+[Funky riff]
+
+
+Gm   
+You can touch the moment, almost feel it in the air
+Don't know where we're going baby, we don't even care
+         Cm                          Gm
+Ain't no mystery, just use your imagination
+Let it take you there
+
+         Eb          D
+And just go with the magic baby
+Gm7                        C
+I can see it there in your eyes
+Eb            D
+Let it flow, stop the waiting
+Right here on the dance floor is where you gotta let it go
+
+
+[Chorus]
+
+
+Eb                D
+Forget about your fears tonight
+Gm                               Bb
+Listen to your heart, let's just touch the sky
+Eb         D
+No need to reason why
+Just listen to the sound, let it make you come alive
+
+
+[Chorus]
+
+
+[Funky riff]</div>
+</body>
+</html>
