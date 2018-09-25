@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Say You'll Be There</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Say You'll Be There
+The Spice Girls
+
+
+Bbm   Eb   F#m   C#
+
+Bbm            Eb                   F#m                   C#
+I'm giving you everything, all that joy can bring, this I swear
+
+Bbm       Eb                            F#m                    C#
+Last time that we had this conversation I decided we should be friends
+Bbm           Eb                              F#m                     C#
+but now we're going round in circles, tell me will this deja vu never end?
+
+Bbm                         Eb                     F#m                           C#
+Now you tell me that you've fallen in love, well I never ever thought that would be
+Bbm           Eb                           F#m                      C#
+This time you gotta take it easy, throwing far too much emotions at me
+
+        B                    F#               C#m           Ab7
+But any fool can see they're falling, I gotta make you understand
+
+
+Bbm            Eb                  F#m                  C#
+I'm giving you everything all that joy can bring this I swear
+Bbm            Eb                 F#m                 C#
+And all that I want from you is a promise you will be there
+</div>
+</body>
+</html>
+<!--
+  https://tabs.ultimate-guitar.com/tab/spice_girls/say_youll_be_there_chords_1675234
+-->
