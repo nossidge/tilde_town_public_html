@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Rock Show</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+The Rock Show
+Blink-182
+
+
+[Verse 1]
+A   
+Hanging out behind the club on the weekend
+D                      E
+Acting stupid, getting drunk with my best friends
+A   
+I couldn't wait for the summer at the Warped Tour
+D                    E
+I remember it's the first time that I saw her there
+
+[Verse 2]
+She's getting kicked out of school 'cause she's failing
+I'm kinda nervous, 'cause I think all her friends hate me
+She's the one, she'll always be there
+She took my hand and I made it, I swear
+
+[Chorus]
+          A                     F#m         D
+Because I fell in love with the girl at the rock show
+A                      F#m             D
+She said "what?" and I told her that I didn't know
+A                    F#m                  D
+She's so cool, gonna sneak in through her window
+E                        D
+Everything's better when she's around
+  E                              D
+I can't wait 'til her parents go out of town
+  E                     D           E          A
+I fell in love with the girl at the rock show
+
+[Verse 3]
+When we said we were gonna move to Vegas
+I remember the look her mother gave us
+17 without a purpose or direction
+We don't owe anyone a fuckin' explanation
+
+[Chorus]
+
+[Bridge]
+F#m                            D
+Black and white picture of her on my wall
+         A                        E
+I waited for her call, she always kept me waiting
+F#m                D
+And if I ever got another chance,
+              A                         E       D
+I'd still ask her to dance, because she kept me waiting
+
+[Chorus]
+
+[Outro]</div>
+</body>
+</html>
