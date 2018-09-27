@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sk8er Boi</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Sk8er Boi
+Avril Lavigne
+
+[Intro]
+D    A/C#    Bm    Bb  A
+D    A/C#    Bm    Bb  A
+
+[Verse 1]
+D        A/C#           Bm
+He was a boy, she was a girl
+              Bb
+Can I make it any more obvious?
+D        A/C#             Bm
+He was a punk, she did ballet
+     C
+What more can I say?
+D         A/C#             Bm
+He wanted her, she'd never tell
+             Bb
+But secretly she wanted him as well
+D              A/C#                   Bm
+But all of her friends stuck up their nose
+           C
+They had a problem with his baggy clothes
+
+[Chorus 1]
+F        C                            Bb
+He was a sk8er boi, she said "see you later, boy"
+          A
+He wasn't good enough for her
+F         C                             Bb
+She had a pretty face, but her head was up in space
+              A                 Bb
+She needed to come back down to earth
+
+[Verse 2]
+Five years from now, she sits at home
+Feeding the baby, she's all alone
+She turns on TV, guess who she sees
+Sk8er boi rocking up MTV
+She calls up her friends, they already know
+And they've all got tickets to see his show
+She tags along, stands in the crowd
+Looks up at the man that she turned down
+
+[Chorus 2]
+He was a sk8er boi, she said "see you later, boy"
+He wasn't good enough for her
+Now he's a superstar, slamming on his guitar
+Does your pretty face see what he's worth?
+He was a sk8er boi, she said "see you later, boy"
+He wasn't good enough for her
+Now he's a superstar, slamming on his guitar
+Does your pretty face see what he's worth?
+
+[Bridge]
+Dm                          F
+Sorry, girl, but you missed out
+                                  C
+Well, tough luck, that boy's mine now
+                           Bb
+We are more than just good friends
+        A             Dm
+This is how the story ends
+                          F
+Too bad that you couldn't see
+                           C
+See the man that boy could be
+                             Bb
+There is more than meets the eye
+          A              D
+I see the soul that is inside
+
+[Breakdown]
+He's just a boy and I'm just a girl
+Can I make it any more obvious?
+We are in love, haven't you heard
+How we rock each other's world?
+
+[Chorus 3]
+I'm with the sk8er boi, I said "see you later, boy"
+I'll be backstage after the show
+I'll be at a studio, singing the song we wrote
+About a girl you used to know
+I'm with the sk8er boi, I said "see you later, boy"
+I'll be backstage after the show
+I'll be at a studio, singing the song we wrote
+About a girl you used to know</div>
+</body>
+</html>
