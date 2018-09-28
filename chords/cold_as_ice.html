@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cold as Ice</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('  ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Cold as Ice
+Foreigner
+
+
+[Verse 1]
+Ebm                  B                                Ebm   B
+You're as cold as ice you're willing to sacrifice our love
+Ebm                   B
+You never take advice. Some day you'll pay the price, I know
+
+[Chorus]
+     F#                         C#
+I've seen it before, it happens all the time
+       Ebm                             B
+You're closing the door, you leave the world behind
+       F#                       C#
+You're digging for gold, you're throwing away
+  Ebm                      C#
+A fortune in feelings, but some day you'll pay
+
+[Verse 2]
+Ebm                  B                                Ebm   B
+You're as cold as ice you're willing to sacrifice our love
+Ebm              B
+You want paradise but some day you'll pay the price, I know
+
+[Chorus]
+
+[Bridge]
+Ebm  C# B
+Cold as ice - you know that you are
+Ebm  C# B
+Cold as ice - as cold as ice to me
+Ebm  C# B
+Cold as ice
+
+[Outro]
+Ebm   B   (repeat to fade)
+Ooh, ooh, ooh, cold as, cold as ice
+You're as cold as ice
+You're as cold as ice, cold as ice, I know
+You're as cold as ice, yes I know
+You're as cold as ice, cold as ice, I know
+You're as cold as ice, oh, yes I know
+You're as cold as ice, cold as ice, I know
+You're as cold as ice, oh, yes I know
+You're as cold as ice, cold as ice</div>
+</body>
+</html>
