@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Logical Song</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+The Logical Song
+Supertramp
+
+
+[Verse 1]
+Cm                               Abmaj7      Gm7
+When I was young, it seemed that life was so wonderful
+  Bb                  Fm7/Ab     F7/A
+A miracle, oh, it was beautiful, magical
+            Cm                                  Abmaj7     Gm7
+And all the birds in the trees, well, they'd be singing so happily
+Bb        Fm7/Ab    Am7-5
+Joyfully, playfully watching me
+              Cm                       Abmaj7    Gm7
+But then they sent me away to teach me how to be sensible
+Bb       Fm7/Ab       F7/A
+Logical, responsible, practical
+         Cm                              Abmaj7  Gm7
+And they showed me a world where I could be so dependable
+Bb             Fm7/Ab   Am7-5
+Clinical, intellectual, cynical
+
+
+[Chorus]
+          Eb                          Am7-5/Eb
+There are times when all the world's asleep
+                      Abmaj7
+The questions run too deep
+                  Db  Dbmaj7/C  Bbm7  Bbm7/Ab
+For such a simple man
+          Eb                                Am7-5/Eb
+Won't you please, please tell me what we've learned?
+                   Abmaj7
+I know it sounds absurd
+                          Db  Dbmaj7/C  Bbm7  Bbm7/Ab
+But please, tell me who I am
+
+
+[Verse 2]
+            Cm                               Abmaj7        Gm7
+I said, now watch what you say or they'll be calling you a radical
+  Bb       Fm7/Ab     F7/A
+A liberal, fanatical, criminal
+          Cm                              Abmaj7      Gm7
+Won't you sign up your name, we'd like to feel you're acceptable
+  Bb            Fm7/Ab      F7/A
+Respectable, presentable, a vegetable
+
+Oh, take, take, take it, yeah!
+
+
+[Instrumental bridge]
+
+
+[Chorus]</div>
+</body>
+</html>
