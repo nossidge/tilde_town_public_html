@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>'39</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+'39
+Queen
+
+
+[Verse 1]
+       Eb                    Fm
+In the year of '39 assembled here the volunteers
+       C#        Ab         Eb
+In the days when lands were few
+         Fm                       C#
+Here the ship sailed out into the blue and sunny morn
+Ebsus4   Eb         Ab
+Sweetest sight ever seen
+        Eb                         Edim
+And the night followed day and the storytellers say
+         Fm                  Bbm
+That the score brave souls inside
+    Ab                        Eb
+For many a lonely day sailed across the milky seas
+             C#          Eb            Ab
+Never looked back, never feared, never cried
+
+
+[Chorus]
+          Ab                         C#
+Don't you hear my call though you're many years away
+          Ab              Eb
+Don't you hear me calling you
+           Ab      C7     Fm
+Write your letters in the sand
+Ab      C#    Ab        Bbm
+For the day I take your hand
+       Ab            Eb            Ab
+In the land that our grandchildren knew
+
+
+[Verse 2]
+In the year of '39 came a ship in from the blue
+The volunteers came home that day
+And they bring good news of a world so newly born
+Though their hearts so heavily weigh
+For the Earth is old and grey, little darling we'll away
+But my love this cannot be
+Oh so many years are gone though I'm older but a year
+Your mother's eyes from your eyes cry to me
+
+
+[Chorus]
+Don't you hear my call though you're many years away
+Don't you hear me calling you
+Write your letters in the sand
+For the day I take your hand
+In the land that our grandchildren knew
+
+
+[Outro]
+Don't you hear my call though you're many years away
+Don't you hear me calling you
+All your letters in the sand cannot heal me like your hand
+For my life
+Still ahead
+Pity me</div>
+</body>
+</html>
