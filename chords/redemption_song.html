@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redemption Song</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+Redemption Song
+Bob Marley & the Wailers
+(pasty white boy version)
+
+
+[Verse 1]
+    G                  Em
+Old pirates, yes, they rob I
+C                      D
+Sold I to the merchant ships
+G                  Em
+Minutes after they took I
+C                   D
+From the bottomless pit
+       G        Em
+But my hand was made strong
+C                  D
+By the hand of the Almighty
+   G               Em
+We forward in this generation
+C      D
+Triumphantly
+
+[Chorus]
+                  G
+Won't you help to sing
+C     D        G
+These songs of freedom?
+C     D          Em
+Cause all I ever have
+C  D       G
+Redemption songs
+C  D       G
+Redemption songs
+
+[Verse 2]
+Emancipate yourselves from mental slavery
+None but ourselves can free our minds!
+Have no fear for atomic energy
+Cause none of them can stop the time
+How long shall they kill our prophets
+While we stand aside and look?
+Some say it's just a part of it
+We've got to fulfil the book
+
+[Chorus]
+
+[Verse 2 Reprieve]
+
+[Chorus]
+
+[Outro]
+Em   Emadd8   Em6</div>
+</body>
+</html>
