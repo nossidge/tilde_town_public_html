@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>She's Always a Woman</title>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <style>
+      pre { margin: 0; }
+      .chords { color: #007FBF; }
+    </style>
+    <script>
+      window.addEventListener('load', function() {
+        lyricDiv = document.getElementById('lyrics');
+        lyricLines = lyricDiv.innerHTML.split('\n');
+        html = '';
+        for(var i=0; i < lyricLines.length; i++){
+          var line = lyricLines[i];
+          var isChords = (line.search('   ') >= 0);
+          if (line == '' && html != '') line = '&nbsp;';
+          if (isChords) {
+            html += '<pre class="chords">' + line + '</pre>';
+          } else {
+            html += '<pre>' + line + '</pre>';
+          }
+        }
+        lyricDiv.innerHTML = html;
+      });
+    </script>
+  </head>
+  <body><div id='lyrics'>
+She's Always a Woman
+Billy Joel
+
+
+Eb   Ebsus4   Eb   Bb
+
+
+        Bb          Eb             Bb             Eb
+She can kill with a smile, she can wound with her eyes
+        Eb        Ab             Eb          Ab
+She can ruin your faith with her casual lies
+        Bb      Eb            Bb           G
+And she only reveals what she wants you to see
+    Cm           Cm/Bb           Ab       Bb       Eb  Ab  Eb
+She hides like a child but she's always a woman to me
+
+
+She can lead you to love, she can take you or leave you
+She can ask for the truth but she'll never believe you
+And she'll take what you give her as long as it's free
+Yeah she steals like a thief but she's always a woman to me
+
+
+Cm  F                 Bb Dm/A Gm                   Ab Ab/G
+Oh, she takes care of herself, she can wait if she wants
+Fm                 Bb
+She's ahead of her time
+Ebm Ab                  C#                      Bbm
+Oh, and she never gives out and she never gives in
+                     F
+She just changes her mind
+
+
+And she'll promise you more than the Garden of Eden
+Then she'll carelessly cut you and laugh while you're bleeding
+But she'll bring out the best and the worst you can be
+Blame it all on yourself cause she's always a woman to me
+
+
+Oh, she takes care of herself, she can wait if she wants
+She's ahead of her time
+Oh, and she never gives out and she never gives in
+She just changes her mind
+
+
+She is frequently kind and she's suddenly cruel
+She can do as she pleases, she's nobody's fool
+But she can't be convicted, she's earned her degree
+And the most she will do is throw shadows at you
+But she's always a woman to me</div>
+</body>
+</html>
