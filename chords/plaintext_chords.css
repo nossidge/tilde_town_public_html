@@ -1,0 +1,12 @@
+.pc {
+  margin: 0;
+}
+.pc_chord {
+  color: #007FBF;
+}
+.pc_button {
+  height: 40px;
+  width: 90px;
+  margin-bottom: 6px;
+  margin-right: 4px;
+}

@@ -3,30 +3,10 @@
   <head>
     <title>Cold as Ice</title>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-    <style>
-      pre { margin: 0; }
-      .chords { color: #007FBF; }
-    </style>
-    <script>
-      window.addEventListener('load', function() {
-        lyricDiv = document.getElementById('lyrics');
-        lyricLines = lyricDiv.innerHTML.split('\n');
-        html = '';
-        for(var i=0; i < lyricLines.length; i++){
-          var line = lyricLines[i];
-          var isChords = (line.search('  ') >= 0);
-          if (line == '' && html != '') line = '&nbsp;';
-          if (isChords) {
-            html += '<pre class="chords">' + line + '</pre>';
-          } else {
-            html += '<pre>' + line + '</pre>';
-          }
-        }
-        lyricDiv.innerHTML = html;
-      });
-    </script>
+    <link rel='stylesheet' href='plaintext_chords.css'>
+    <script src='plaintext_chords.js'></script>
   </head>
-  <body><div id='lyrics'>
+  <body><div id='plaintext_chords'>
 Cold as Ice
 Foreigner
 
@@ -56,11 +36,11 @@ You want paradise but some day you'll pay the price, I know
 [Chorus]
 
 [Bridge]
-Ebm  C# B
+Ebm  C# B   
 Cold as ice - you know that you are
-Ebm  C# B
+Ebm  C# B   
 Cold as ice - as cold as ice to me
-Ebm  C# B
+Ebm  C# B   
 Cold as ice
 
 [Outro]

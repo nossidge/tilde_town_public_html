@@ -3,30 +3,10 @@
   <head>
     <title>Nights in White Satin</title>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-    <style>
-      pre { margin: 0; }
-      .chords { color: #007FBF; }
-    </style>
-    <script>
-      window.addEventListener('load', function() {
-        lyricDiv = document.getElementById('lyrics');
-        lyricLines = lyricDiv.innerHTML.split('\n');
-        html = '';
-        for(var i=0; i < lyricLines.length; i++){
-          var line = lyricLines[i];
-          var isChords = (line.search('   ') >= 0);
-          if (line == '' && html != '') line = '&nbsp;';
-          if (isChords) {
-            html += '<pre class="chords">' + line + '</pre>';
-          } else {
-            html += '<pre>' + line + '</pre>';
-          }
-        }
-        lyricDiv.innerHTML = html;
-      });
-    </script>
+    <link rel='stylesheet' href='plaintext_chords.css'>
+    <script src='plaintext_chords.js'></script>
   </head>
-  <body><div id='lyrics'>
+  <body><div id='plaintext_chords'>
 Nights in White Satin
 The Moody Blues
 

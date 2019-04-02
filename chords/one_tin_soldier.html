@@ -3,30 +3,10 @@
   <head>
     <title>One Tin Soldier</title>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-    <style>
-      pre { margin: 0; }
-      .chords { color: #007FBF; }
-    </style>
-    <script>
-      window.addEventListener('load', function() {
-        lyricDiv = document.getElementById('lyrics');
-        lyricLines = lyricDiv.innerHTML.split('\n');
-        html = '';
-        for(var i=0; i < lyricLines.length; i++){
-          var line = lyricLines[i];
-          var isChords = (line.search('   ') >= 0);
-          if (line == '' && html != '') line = '&nbsp;';
-          if (isChords) {
-            html += '<pre class="chords">' + line + '</pre>';
-          } else {
-            html += '<pre>' + line + '</pre>';
-          }
-        }
-        lyricDiv.innerHTML = html;
-      });
-    </script>
+    <link rel='stylesheet' href='plaintext_chords.css'>
+    <script src='plaintext_chords.js'></script>
   </head>
-  <body><div id='lyrics'>
+  <body><div id='plaintext_chords'>
 One Tin Soldier
 The Original Caste
 
@@ -76,7 +56,7 @@ Came an answer from the kingdom
 All the secrets of our mountain
 All the riches buried there"
 
-[Verse 3 (key of G)]
+[Verse 3 (key up one tone)]
 G              D
 Now the valley cried with anger
 Em                  Bm
@@ -94,6 +74,6 @@ Turned the stone and looked beneath it
 C                           G
 "Peace on earth" was all it said
 
-[Chorus (key of G)]</div>
+[Chorus (key up one tone)]</div>
 </body>
 </html>
